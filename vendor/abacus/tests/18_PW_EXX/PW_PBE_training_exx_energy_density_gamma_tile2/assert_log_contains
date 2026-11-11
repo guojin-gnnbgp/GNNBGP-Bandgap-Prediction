@@ -1,0 +1,4 @@
+training_exx_label: full EXX energy =
+write_training_dump: EXX energy density integral =
+max imaginary =
+write_training_dump: wrote

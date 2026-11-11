@@ -1,0 +1,37 @@
+精确高效带隙预测软件 bandgap-predictor 0.1.0（快速开始）
+================================================================
+一、软件简介
+  四后端带隙预测软件：
+    gnn-hse06    机器学习带隙预测（GNN 回归＋直接/间接判别，秒级，开箱即用）
+    abacus-hse06 GPU 杂化泛函计算（需编译 vendor/abacus）
+    abacus-pbe0  PBE0 参考（需编译 vendor/abacus）
+    cider-pbe0   机器学习非局域泛函（需编译 vendor/abacus）
+  当前捆绑模型：20250421 MACE 骨干经两轮低学习率校准微调
+  （InSb VASP HSE06+SOC aexx 参考 0.241 eV），判别头为半导体专属训练版。
+
+二、安装（gnn-hse06 后端，约 5 分钟）
+    pip install -r requirements.txt
+    pip install -e .
+
+三、使用示例
+    bgp predict examples/InSb.cif --backend gnn-hse06
+  输出：Band gap / Classification / Gap type，结果 JSON 在 bgp-runs/ 下
+  （含带隙值、类型及概率、模型哈希溯源、耗时）。
+
+  实测参考值（examples 目录四样例，CPU 4 核，约 3 秒/结构）：
+    InSb  0.2495 eV  direct    （考核体系：对 HSE06 理论参考 0.241 eV 误差
+                                0.0085 eV，对实验 0.235 eV 误差 0.0145 eV）
+    Si    1.3846 eV  indirect
+    GaAs  0.9396 eV  direct
+    MgO   6.4160 eV  direct    （宽带隙离子晶体为已知弱区）
+
+四、资源控制（环境变量）
+    BGP_OMP=1/4/8              CPU 核数（默认 4）
+    BGP_GNN_DEVICE=cuda        GNN 用 GPU（默认 cpu）
+
+五、更多信息
+    README.md         软件总览
+    docs/             安装（含 ABACUS 编译）、方法、结果、schema 文档
+    tests/            测试套件（gnn 后端 6/6 通过）
+    assets/           模型与特征文件（SHA-256 清单锁定）
+    vendor/abacus     ABACUS 组合源码（三个 DFT 后端用）

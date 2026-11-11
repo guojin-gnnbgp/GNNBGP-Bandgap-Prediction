@@ -1,0 +1,13 @@
+.coverage
+.integration/
+.planning/
+.pytest_cache/
+.ruff_cache/
+.venv/
+__pycache__/
+*.py[cod]
+bgp-runs/
+build/
+dist/
+/gnnbgp/
+hardware-runs/

@@ -1,0 +1,831 @@
+#include "source_pw/module_pwdft/op_pw_exx.h"
+#include "source_pw/module_pwdft/exx_tile_policy.h"
+#include "source_pw/module_pwdft/radial_proj.h"
+#include "source_pw/module_pwdft/op_pw_exx.h"
+#include "source_pw/module_pwdft/exx_tile_policy.h"
+#include <gtest/gtest.h>
+#include <algorithm>
+#include <numeric>
+#include <fftw3.h>
+#include <random>
+#include <type_traits>
+
+#define DOUBLETHRESHOLD 1e-15
+
+namespace
+{
+K_Vectors::ExxFullKPoint make_exx_kpoint(int full_index,
+                                         int rep_index,
+                                         int rep_local_index,
+                                         int rep_pool,
+                                         bool active = true)
+{
+    K_Vectors::ExxFullKPoint point;
+    point.full_index = full_index;
+    point.rep_index = rep_index;
+    point.rep_local_index = rep_local_index;
+    point.rep_pool = rep_pool;
+    point.active = active;
+    point.identity = full_index == rep_index;
+    point.weight = 0.125 * (full_index + 1);
+    return point;
+}
+
+hamilt::ExxTilePolicyInput make_exx_tile_input()
+{
+    hamilt::ExxTilePolicyInput input;
+    input.auto_tiling = true;
+    input.device = "gpu";
+    input.precision = "double";
+    input.memory_budget_mb = 1024.0;
+    input.nbands = 32;
+    input.active_q_count = 8;
+    input.max_star_size = 4;
+    input.nrxx = 4096;
+    input.npw = 2048;
+    input.npwk_max = 1024;
+    input.fft_nx = 16;
+    input.fft_ny = 16;
+    input.fft_nz = 16;
+    return input;
+}
+} // namespace
+
+TEST(ExxTilePolicyTest, CheckedArithmeticRejectsOverflow)
+{
+    std::size_t result = 0;
+    EXPECT_TRUE(hamilt::checked_exx_size_product({2, 3, 5, 7}, result));
+    EXPECT_EQ(result, 210u);
+    EXPECT_FALSE(hamilt::checked_exx_size_product({std::numeric_limits<std::size_t>::max(), 2}, result));
+    EXPECT_TRUE(hamilt::checked_exx_size_sum({2, 3, 5, 7}, result));
+    EXPECT_EQ(result, 17u);
+    EXPECT_FALSE(hamilt::checked_exx_size_sum({std::numeric_limits<std::size_t>::max(), 1}, result));
+}
+
+TEST(ExxTilePolicyTest, EstimatesPotentialCacheModes)
+{
+    const hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    hamilt::ExxTileMemoryEstimate full_estimate;
+    hamilt::ExxTileMemoryEstimate tiled_estimate;
+    ASSERT_TRUE(hamilt::estimate_exx_managed_bytes(input,
+                                                   8,
+                                                   8,
+                                                   2,
+                                                   hamilt::ExxPotentialCacheMode::full_target_k,
+                                                   full_estimate));
+    ASSERT_TRUE(hamilt::estimate_exx_managed_bytes(input,
+                                                   8,
+                                                   8,
+                                                   2,
+                                                   hamilt::ExxPotentialCacheMode::q_tile,
+                                                   tiled_estimate));
+    EXPECT_EQ(full_estimate.potential_cache_entries, 8u);
+    EXPECT_EQ(tiled_estimate.potential_cache_entries, 8u);
+    EXPECT_GT(full_estimate.total_bytes, 0u);
+    EXPECT_GT(full_estimate.cufft_workspace_bytes, 0u);
+}
+
+TEST(ExxTilePolicyTest, CountsBothResidentGpuFftBundles)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.fixed_scratch_bytes = 0;
+    hamilt::ExxTileMemoryEstimate estimate;
+    ASSERT_TRUE(hamilt::estimate_exx_managed_bytes(input,
+                                                   8,
+                                                   8,
+                                                   2,
+                                                   hamilt::ExxPotentialCacheMode::full_target_k,
+                                                   estimate));
+    const std::size_t fft_grid = 16u * 16u * 16u;
+    const std::size_t one_batch_buffer = 8u * fft_grid * sizeof(std::complex<double>);
+    const std::size_t one_base_buffer = fft_grid * sizeof(std::complex<double>);
+    EXPECT_EQ(estimate.fft_buffer_bytes, 4u * one_batch_buffer + 2u * one_base_buffer);
+    EXPECT_EQ(estimate.cufft_workspace_bytes, 2u * one_batch_buffer);
+}
+
+TEST(ExxTilePolicyTest, CountsOneIncrementalMixedTargetFftBundle)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.fft_bundle_count = 1;
+    hamilt::ExxTileMemoryEstimate estimate;
+    ASSERT_TRUE(hamilt::estimate_exx_managed_bytes(input,
+                                                   8,
+                                                   8,
+                                                   2,
+                                                   hamilt::ExxPotentialCacheMode::full_target_k,
+                                                   estimate));
+    const std::size_t fft_grid = 16u * 16u * 16u;
+    const std::size_t one_base_buffer = fft_grid * sizeof(std::complex<double>);
+    const std::size_t one_batch_buffer = 8u * one_base_buffer;
+    EXPECT_EQ(estimate.fft_buffer_bytes, 2u * one_batch_buffer + one_base_buffer);
+    EXPECT_EQ(estimate.cufft_workspace_bytes, one_batch_buffer);
+}
+
+TEST(ExxTilePolicyTest, StressWorkloadCountsBothPotentialTiles)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.workload = hamilt::ExxTileWorkload::stress;
+    hamilt::ExxTileMemoryEstimate estimate;
+    ASSERT_TRUE(hamilt::estimate_exx_managed_bytes(input,
+                                                   8,
+                                                   8,
+                                                   2,
+                                                   hamilt::ExxPotentialCacheMode::q_tile,
+                                                   estimate));
+    EXPECT_EQ(estimate.potential_cache_entries, 4u);
+    EXPECT_EQ(estimate.potential_bytes, 2u * 2u * input.npw * sizeof(double));
+}
+
+TEST(ExxTilePolicyTest, ZeroBudgetUsesOneGiBAndGpuBatchIsBounded)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.memory_budget_mb = 0.0;
+    input.nbands = 256;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    ASSERT_TRUE(result.fits);
+    EXPECT_EQ(result.budget_bytes, static_cast<std::size_t>(1024) * 1024 * 1024);
+    EXPECT_LE(result.batch_fft_size, 128);
+    EXPECT_EQ(result.batch_fft_size & (result.batch_fft_size - 1), 0);
+}
+
+TEST(ExxTilePolicyTest, CpuAutomaticModeUsesScalarFftBatch)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.device = "cpu";
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    ASSERT_TRUE(result.fits);
+    EXPECT_EQ(result.batch_fft_size, 1);
+}
+
+TEST(ExxTilePolicyTest, PositiveTileValuesAreExactOverrides)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.requested_batch_fft_size = 7;
+    input.requested_band_tile_size = 5;
+    input.requested_q_tile_size = 3;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    ASSERT_TRUE(result.fits);
+    EXPECT_EQ(result.batch_fft_size, 7);
+    EXPECT_EQ(result.band_tile_size, 5);
+    EXPECT_EQ(result.q_tile_size, 3);
+}
+
+TEST(ExxTilePolicyTest, BandAndQOverridesAreClippedToAvailableWork)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.nbands = 5;
+    input.active_q_count = 3;
+    input.requested_batch_fft_size = 4;
+    input.requested_band_tile_size = 64;
+    input.requested_q_tile_size = 64;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    ASSERT_TRUE(result.fits);
+    EXPECT_EQ(result.batch_fft_size, 4);
+    EXPECT_EQ(result.band_tile_size, 5);
+    EXPECT_EQ(result.q_tile_size, 3);
+}
+
+TEST(ExxTilePolicyTest, ManualModeRequiresAllTileOverrides)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.auto_tiling = false;
+    input.requested_batch_fft_size = 8;
+    input.requested_band_tile_size = 8;
+    input.requested_q_tile_size = 0;
+
+    EXPECT_FALSE(hamilt::choose_exx_tiles(input).fits);
+
+    input.requested_q_tile_size = 4;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+    ASSERT_TRUE(result.fits);
+    EXPECT_EQ(result.batch_fft_size, 8);
+    EXPECT_EQ(result.band_tile_size, 8);
+    EXPECT_EQ(result.q_tile_size, 4);
+}
+
+TEST(ExxTilePolicyTest, PrioritySelectsLargestBatchThenBandThenQ)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.nbands = 32;
+    input.active_q_count = 7;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    ASSERT_TRUE(result.fits);
+    EXPECT_EQ(result.batch_fft_size, 32);
+    EXPECT_EQ(result.band_tile_size, 32);
+    EXPECT_EQ(result.q_tile_size, 7);
+}
+
+TEST(ExxTilePolicyTest, FallsBackToQTilePotentialCache)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.active_q_count = 64;
+    input.max_star_size = 1;
+    input.npw = 100000;
+    input.requested_batch_fft_size = 1;
+    input.requested_band_tile_size = 1;
+    input.requested_q_tile_size = 1;
+
+    hamilt::ExxTileMemoryEstimate full_estimate;
+    hamilt::ExxTileMemoryEstimate tiled_estimate;
+    ASSERT_TRUE(hamilt::estimate_exx_managed_bytes(input,
+                                                   1,
+                                                   1,
+                                                   1,
+                                                   hamilt::ExxPotentialCacheMode::full_target_k,
+                                                   full_estimate));
+    ASSERT_TRUE(hamilt::estimate_exx_managed_bytes(input,
+                                                   1,
+                                                   1,
+                                                   1,
+                                                   hamilt::ExxPotentialCacheMode::q_tile,
+                                                   tiled_estimate));
+    ASSERT_LT(tiled_estimate.total_bytes, full_estimate.total_bytes);
+    input.memory_budget_mb = static_cast<double>(tiled_estimate.total_bytes + full_estimate.total_bytes)
+                             / (2.0 * 1024.0 * 1024.0);
+
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+    ASSERT_TRUE(result.fits);
+    EXPECT_EQ(result.cache_mode, hamilt::ExxPotentialCacheMode::q_tile);
+}
+
+TEST(ExxTilePolicyTest, ReportsImpossibleMinimumConfiguration)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.memory_budget_mb = 0.001;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    EXPECT_FALSE(result.fits);
+    EXPECT_GT(result.minimum_required_bytes, result.budget_bytes);
+}
+
+TEST(ExxTilePolicyTest, ReportsExplicitTupleRequirement)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.memory_budget_mb = 1.0;
+    input.requested_batch_fft_size = 32;
+    input.requested_band_tile_size = 32;
+    input.requested_q_tile_size = 8;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    EXPECT_FALSE(result.fits);
+    EXPECT_GT(result.requested_bytes, result.budget_bytes);
+}
+
+TEST(ExxTilePolicyTest, ReportsPartiallyExplicitConstraintRequirement)
+{
+    hamilt::ExxTilePolicyInput input = make_exx_tile_input();
+    input.memory_budget_mb = 1.0;
+    input.requested_batch_fft_size = 32;
+    const hamilt::ExxTilePolicyResult result = hamilt::choose_exx_tiles(input);
+
+    EXPECT_FALSE(result.fits);
+    EXPECT_GT(result.requested_bytes, result.budget_bytes);
+}
+
+TEST(ExxTilePolicyTest, CacheEntryLimitsFollowSelectedLifetime)
+{
+    std::size_t limit = 0;
+    EXPECT_TRUE(hamilt::operator_exx_potential_cache_entry_limit(
+        hamilt::ExxPotentialCacheMode::full_target_k, 8, 2, limit));
+    EXPECT_EQ(limit, 8u);
+    EXPECT_TRUE(hamilt::operator_exx_potential_cache_entry_limit(
+        hamilt::ExxPotentialCacheMode::q_tile, 8, 2, limit));
+    EXPECT_EQ(limit, 2u);
+    EXPECT_TRUE(hamilt::direct_exx_potential_cache_entry_limit(4, 2, limit));
+    EXPECT_EQ(limit, 8u);
+    EXPECT_FALSE(hamilt::direct_exx_potential_cache_entry_limit(std::numeric_limits<std::size_t>::max(),
+                                                                2,
+                                                                limit));
+}
+
+TEST(ExxTilePolicyTest, QTileWorkspaceCountsAreChecked)
+{
+    std::size_t target_count = 0;
+    std::size_t q_count = 0;
+    std::size_t weight_count = 0;
+    EXPECT_TRUE(hamilt::checked_exx_qtile_workspace_counts(8,
+                                                          16,
+                                                          4,
+                                                          1024,
+                                                          target_count,
+                                                          q_count,
+                                                          weight_count));
+    EXPECT_EQ(target_count, 8192u);
+    EXPECT_EQ(q_count, 65536u);
+    EXPECT_EQ(weight_count, 64u);
+    EXPECT_FALSE(hamilt::checked_exx_qtile_workspace_counts(1,
+                                                           std::numeric_limits<std::size_t>::max(),
+                                                           2,
+                                                           2,
+                                                           target_count,
+                                                           q_count,
+                                                           weight_count));
+}
+
+TEST(ExxTilePolicyTest, AllocationElementAndByteCountsAreChecked)
+{
+    std::size_t element_count = 0;
+    EXPECT_TRUE(hamilt::checked_exx_size_product(16, 1000, element_count));
+    EXPECT_EQ(element_count, 16000u);
+    EXPECT_TRUE(hamilt::checked_exx_allocation_bytes(element_count, sizeof(std::complex<double>)));
+    EXPECT_FALSE(hamilt::checked_exx_allocation_bytes(std::numeric_limits<std::size_t>::max(),
+                                                      sizeof(std::complex<double>)));
+    int narrowed = 0;
+    EXPECT_TRUE(hamilt::checked_exx_size_to_int(256, narrowed));
+    EXPECT_EQ(narrowed, 256);
+    EXPECT_FALSE(hamilt::checked_exx_size_to_int(static_cast<std::size_t>(std::numeric_limits<int>::max()) + 1,
+                                                 narrowed));
+}
+
+TEST(ExxEnergyKPolicyTest, ChoosesLocalReducedKPointsForUnpolarizedEnergyLoop)
+{
+    K_Vectors kv;
+    kv.exx_full_k_map = {make_exx_kpoint(0, 0, 0, 0),
+                         make_exx_kpoint(1, 0, 0, 0),
+                         make_exx_kpoint(2, 2, 1, 0),
+                         make_exx_kpoint(3, 2, 1, 0)};
+
+    const std::vector<hamilt::ExxLocalEnergyKPoint> points
+        = hamilt::exx_energy_k_policy::choose_local_representative_k_points(kv, 2, 1, 0);
+
+    ASSERT_EQ(points.size(), 2);
+    EXPECT_EQ(points[0].ik_rep_spin, 0);
+    EXPECT_EQ(points[0].ispin, 0);
+    EXPECT_EQ(points[0].kpoint.full_index, 0);
+    EXPECT_EQ(points[0].kpoint.rep_local_index, 0);
+
+    EXPECT_EQ(points[1].ik_rep_spin, 1);
+    EXPECT_EQ(points[1].ispin, 0);
+    EXPECT_EQ(points[1].kpoint.full_index, 2);
+    EXPECT_EQ(points[1].kpoint.rep_local_index, 1);
+}
+
+TEST(ExxEnergyKPolicyTest, ChoosesSpinResolvedLocalReducedKPoints)
+{
+    K_Vectors kv;
+    kv.exx_full_k_map = {make_exx_kpoint(0, 0, 0, 1),
+                         make_exx_kpoint(1, 1, 1, 1),
+                         make_exx_kpoint(2, 2, 0, 0)};
+
+    const std::vector<hamilt::ExxLocalEnergyKPoint> points
+        = hamilt::exx_energy_k_policy::choose_local_representative_k_points(kv, 4, 2, 1);
+
+    ASSERT_EQ(points.size(), 4);
+    EXPECT_EQ(points[0].ik_rep_spin, 0);
+    EXPECT_EQ(points[0].ispin, 0);
+    EXPECT_EQ(points[0].kpoint.rep_local_index, 0);
+    EXPECT_EQ(points[1].ik_rep_spin, 1);
+    EXPECT_EQ(points[1].ispin, 0);
+    EXPECT_EQ(points[1].kpoint.rep_local_index, 1);
+    EXPECT_EQ(points[2].ik_rep_spin, 2);
+    EXPECT_EQ(points[2].ispin, 1);
+    EXPECT_EQ(points[2].kpoint.rep_local_index, 0);
+    EXPECT_EQ(points[3].ik_rep_spin, 3);
+    EXPECT_EQ(points[3].ispin, 1);
+    EXPECT_EQ(points[3].kpoint.rep_local_index, 1);
+}
+
+TEST(ExxEnergyKPolicyTest, SkipsNonlocalInactiveAndNonrepresentativeFullPoints)
+{
+    K_Vectors kv;
+    kv.exx_full_k_map = {make_exx_kpoint(5, 4, 0, 0),
+                         make_exx_kpoint(4, 4, 0, 2),
+                         make_exx_kpoint(4, 4, 0, 0, false),
+                         make_exx_kpoint(4, 4, 0, 0),
+                         make_exx_kpoint(7, 6, 1, 0),
+                         make_exx_kpoint(6, 6, 1, 0)};
+
+    const std::vector<hamilt::ExxLocalEnergyKPoint> points
+        = hamilt::exx_energy_k_policy::choose_local_representative_k_points(kv, 2, 1, 0);
+
+    ASSERT_EQ(points.size(), 2);
+    EXPECT_EQ(points[0].ik_rep_spin, 0);
+    EXPECT_EQ(points[0].kpoint.full_index, 4);
+    EXPECT_TRUE(points[0].kpoint.active);
+    EXPECT_EQ(points[0].kpoint.rep_pool, 0);
+
+    EXPECT_EQ(points[1].ik_rep_spin, 1);
+    EXPECT_EQ(points[1].kpoint.full_index, 6);
+    EXPECT_EQ(points[1].kpoint.rep_local_index, 1);
+}
+
+TEST(ExxEnergyKPolicyTest, ChoosesEveryActiveFullKPointForDefensiveEnergyLoop)
+{
+    K_Vectors kv;
+    kv.set_nks(4);
+    kv.para_k.nks_pool = {2};
+    kv.exx_full_k_map = {make_exx_kpoint(0, 0, 0, 0),
+                         make_exx_kpoint(1, 0, 0, 0),
+                         make_exx_kpoint(2, 2, 1, 0, false),
+                         make_exx_kpoint(3, 2, 1, 0)};
+
+    const std::vector<hamilt::ExxLocalEnergyKPoint> points
+        = hamilt::exx_energy_k_policy::choose_active_full_k_points(kv, 2);
+
+    ASSERT_EQ(points.size(), 6);
+    EXPECT_EQ(points[0].ik_rep_spin, 0);
+    EXPECT_EQ(points[0].ispin, 0);
+    EXPECT_EQ(points[0].kpoint.full_index, 0);
+    EXPECT_EQ(points[1].ik_rep_spin, 0);
+    EXPECT_EQ(points[1].ispin, 0);
+    EXPECT_EQ(points[1].kpoint.full_index, 1);
+    EXPECT_EQ(points[2].ik_rep_spin, 1);
+    EXPECT_EQ(points[2].ispin, 0);
+    EXPECT_EQ(points[2].kpoint.full_index, 3);
+    EXPECT_EQ(points[3].ik_rep_spin, 2);
+    EXPECT_EQ(points[3].ispin, 1);
+    EXPECT_EQ(points[3].kpoint.full_index, 0);
+    EXPECT_EQ(points[5].ik_rep_spin, 3);
+    EXPECT_EQ(points[5].ispin, 1);
+    EXPECT_EQ(points[5].kpoint.full_index, 3);
+}
+
+TEST(ExxEnergyKPolicyTest, ExpandsReducedRepresentativeToFullKStar)
+{
+    K_Vectors kv;
+    kv.exx_full_k_map = {make_exx_kpoint(0, 0, 0, 0),
+                         make_exx_kpoint(1, 0, 0, 0),
+                         make_exx_kpoint(2, 0, 0, 0, false),
+                         make_exx_kpoint(3, 3, 1, 0)};
+
+    const hamilt::ExxLocalEnergyKPoint representative{0, 0, kv.exx_full_k_map[0]};
+    const std::vector<hamilt::ExxLocalEnergyKPoint> star
+        = hamilt::exx_energy_k_policy::choose_star_member_k_points(kv, representative);
+
+    ASSERT_EQ(star.size(), 2);
+    EXPECT_EQ(star[0].ik_rep_spin, 0);
+    EXPECT_EQ(star[0].kpoint.full_index, 0);
+    EXPECT_EQ(star[1].ik_rep_spin, 0);
+    EXPECT_EQ(star[1].kpoint.full_index, 1);
+}
+
+TEST(ExxEnergyKPolicyTest, BuildsOrderedQkPairMapForReducedKEnergySum)
+{
+    K_Vectors::ExxFullQPoint q0 = make_exx_kpoint(0, 0, 0, 0);
+    K_Vectors::ExxFullQPoint q1 = make_exx_kpoint(1, 0, 0, 0);
+    K_Vectors::ExxFullQPoint q2 = make_exx_kpoint(2, 1, 1, 0);
+    K_Vectors::ExxFullQPoint q3 = make_exx_kpoint(3, 1, 1, 0);
+    q3.active = false;
+    const std::vector<const K_Vectors::ExxFullQPoint*> q_points = {&q0, &q1, &q2, &q3};
+
+    const K_Vectors::ExxFullKPoint kpoint = make_exx_kpoint(1, 0, 0, 0);
+    const std::vector<hamilt::exx_energy_k_policy::ExxQkPair> qk_map
+        = hamilt::exx_energy_k_policy::build_qk_pair_map(kpoint, q_points);
+
+    ASSERT_EQ(qk_map.size(), 3);
+    EXPECT_EQ(qk_map[0].qpoint->full_index, 0);
+    EXPECT_EQ(qk_map[0].multiplier, 1);
+    EXPECT_EQ(qk_map[1].qpoint->full_index, 1);
+    EXPECT_EQ(qk_map[1].multiplier, 1);
+    EXPECT_EQ(qk_map[2].qpoint->full_index, 2);
+    EXPECT_EQ(qk_map[2].multiplier, 1);
+}
+
+TEST(ExxEnergyKPolicyTest, UsesRepresentativeCacheScopeForFullKStar)
+{
+    K_Vectors kv;
+    kv.exx_full_k_map = {make_exx_kpoint(0, 0, 0, 0),
+                         make_exx_kpoint(1, 0, 0, 0),
+                         make_exx_kpoint(2, 0, 0, 0)};
+
+    const hamilt::ExxLocalEnergyKPoint representative{0, 0, kv.exx_full_k_map[0]};
+    const std::vector<hamilt::ExxLocalEnergyKPoint> star
+        = hamilt::exx_energy_k_policy::choose_star_member_k_points(kv, representative);
+
+    ASSERT_EQ(star.size(), 3);
+    const int cache_scope = hamilt::exx_energy_k_policy::representative_cache_scope(representative);
+    EXPECT_EQ(cache_scope, 0);
+    for (const auto& member: star)
+    {
+        EXPECT_EQ(hamilt::exx_energy_k_policy::representative_cache_scope(member), cache_scope);
+    }
+}
+
+TEST(ExxEnergyKPolicyTest, ZeroFullPointWeightSkipsOccupationScaling)
+{
+    EXPECT_DOUBLE_EQ(hamilt::exx_energy_k_policy::scaled_full_point_occupation(0.75, 0.0, 0.0), 0.0);
+    EXPECT_DOUBLE_EQ(hamilt::exx_energy_k_policy::scaled_full_point_occupation(0.0, 0.0, 0.25), 0.0);
+    EXPECT_NEAR(hamilt::exx_energy_k_policy::scaled_full_point_occupation(0.3, 0.6, 0.2), 0.1, 1e-15);
+}
+
+TEST(ExxEnergyKPolicyTest, DirectPotentialCacheBoundUsesOnlyCurrentQTile)
+{
+    EXPECT_EQ(hamilt::exx_energy_k_policy::direct_potential_cache_entry_limit(8, 4), 32);
+    EXPECT_EQ(hamilt::exx_energy_k_policy::direct_potential_cache_entry_limit(1, 7), 7);
+    EXPECT_EQ(hamilt::exx_energy_k_policy::direct_potential_cache_entry_limit(0, 7), 0);
+}
+
+TEST(ExxQStateSizeTest, CheckedProductRejectsSizeOverflow)
+{
+    std::size_t result = 0;
+    EXPECT_TRUE(hamilt::checked_exx_size_product(128, 1024, result));
+    EXPECT_EQ(result, 131072);
+    EXPECT_FALSE(hamilt::checked_exx_size_product(std::numeric_limits<std::size_t>::max(), 2, result));
+    EXPECT_TRUE(hamilt::checked_exx_size_product(0, std::numeric_limits<std::size_t>::max(), result));
+    EXPECT_EQ(result, 0);
+}
+
+TEST(ExxEnergyKPolicyTest, DetectsReducedFullKMesh)
+{
+    K_Vectors full_kv;
+    full_kv.set_nkstot(4);
+    full_kv.set_nkstot_full(4);
+    EXPECT_FALSE(hamilt::exx_energy_k_policy::uses_reduced_k_mesh(full_kv));
+
+    K_Vectors reduced_kv;
+    reduced_kv.set_nkstot(2);
+    reduced_kv.set_nkstot_full(4);
+    EXPECT_TRUE(hamilt::exx_energy_k_policy::uses_reduced_k_mesh(reduced_kv));
+}
+
+TEST(RadialProjectionTest, BuildBackwardMapTest)
+{
+    const std::vector<std::vector<int>> it2iproj = {
+        {0, 1},
+        {2, 3, 4, 5},
+        {6, 7, 8}
+    };
+    const std::vector<int> iproj2l = {0, 1, 0, 1, 2, 3, 0, 1, 2};
+    /**
+     * a backward map will index irow to (it, iproj, m). For the above example,
+     * it is actually the first atom type has two projectors, the first projector
+     * has l = 0, the second has l = 1. The former will have only one channel, 
+     * the second will have 3. The second atom type has 4 projectors...
+     * 
+     * Therefore, it is expected there are 1+3+1+3+5+7+1+3+5 = 29 rows in total.
+     */
+    std::vector<int> itref(4, 0); // four 0, sixteen 1, nine 2
+    itref.insert(itref.end(), 16, 1);
+    itref.insert(itref.end(), 9, 2);
+    std::vector<int> iprojref(1, 0);
+    iprojref.insert(iprojref.end(), 3, 1);
+    iprojref.insert(iprojref.end(), 1, 0);
+    iprojref.insert(iprojref.end(), 3, 1);
+    iprojref.insert(iprojref.end(), 5, 2);
+    iprojref.insert(iprojref.end(), 7, 3);
+    iprojref.insert(iprojref.end(), 1, 0);
+    iprojref.insert(iprojref.end(), 3, 1);
+    iprojref.insert(iprojref.end(), 5, 2);
+    std::vector<int> mref(1, 0);
+    mref.insert(mref.end(), {-1, 0, 1});
+    mref.insert(mref.end(), {0});
+    mref.insert(mref.end(), {-1, 0, 1});
+    mref.insert(mref.end(), {-2, -1, 0, 1, 2});
+    mref.insert(mref.end(), {-3, -2, -1, 0, 1, 2, 3});
+    mref.insert(mref.end(), {0});
+    mref.insert(mref.end(), {-1, 0, 1});
+    mref.insert(mref.end(), {-2, -1, 0, 1, 2});
+
+    std::vector<int> irow2it, irow2iproj, irow2m;
+    RadialProjection::RadialProjector::_build_backward_map(it2iproj, iproj2l, irow2it, irow2iproj, irow2m);
+    for(int i = 0; i < 29; ++i)
+    {
+        EXPECT_EQ(irow2it[i], itref[i]);
+        EXPECT_EQ(irow2iproj[i], iprojref[i]);
+        EXPECT_EQ(irow2m[i], mref[i]);
+    }
+}
+
+TEST(RadialProjectionTest, BuildForwardMapTest)
+{
+    // forward means from (it, ia, iproj, m) to irow
+    const std::vector<std::vector<int>> it2ia = {
+        {0, 1},
+        {0, 1, 3},
+        {12}
+    };
+    const std::vector<std::vector<int>> it2iproj = {
+        {0, 1},
+        {2, 3, 4, 5},
+        {6, 7, 8}
+    };
+    const std::vector<int> iproj2l = {0, 1, 0, 1, 2, 3, 0, 1, 2};
+    std::map<std::tuple<int, int, int, int>, int> forward_map;
+    RadialProjection::RadialProjector::_build_forward_map(it2ia, it2iproj, iproj2l, forward_map);
+    // this is a terribly large map, for type 0, there are 2 atoms, each atom has two projectors
+    // with angular momentum as 0 and 1, respectively. For type 1, there are 3 atoms, each has
+    // 4 projectors with angular momentum from 0 to 3...
+    const int nrow = 2*4 + 3*16 + 1*9;
+    EXPECT_EQ(forward_map.size(), nrow);
+    //                                  it  ia iproj m
+    // it = 0
+    // ia = 0
+    // iproj = 0: l = 0
+    EXPECT_EQ(forward_map[std::make_tuple(0, 0, 0, 0)], 0);
+    // iproj = 1: l = 1: m = -1, 0, 1
+    EXPECT_EQ(forward_map[std::make_tuple(0, 0, 1, -1)], 1);
+    EXPECT_EQ(forward_map[std::make_tuple(0, 0, 1, 0)], 2);
+    EXPECT_EQ(forward_map[std::make_tuple(0, 0, 1, 1)], 3);
+    // ia = 1
+    // iproj = 0: l = 0
+    EXPECT_EQ(forward_map[std::make_tuple(0, 1, 0, 0)], 4);
+    // iproj = 1: l = 1: m = -1, 0, 1
+    EXPECT_EQ(forward_map[std::make_tuple(0, 1, 1, -1)], 5);
+    EXPECT_EQ(forward_map[std::make_tuple(0, 1, 1, 0)], 6);
+    EXPECT_EQ(forward_map[std::make_tuple(0, 1, 1, 1)], 7);
+    // it = 1
+    // ia = 0
+    // iproj = 0: l = 0
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 0, 0)], 8);
+    // iproj = 1: l = 1: m = -1, 0, 1
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 1, -1)], 9);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 1, 0)], 10);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 1, 1)], 11);
+    // iproj = 2: l = 2: m = -2, -1, 0, 1, 2
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 2, -2)], 12);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 2, -1)], 13);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 2, 0)], 14);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 2, 1)], 15);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 2, 2)], 16);
+    // iproj = 3: l = 3: m = -3, -2, -1, 0, 1, 2, 3
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 3, -3)], 17);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 3, -2)], 18);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 3, -1)], 19);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 3, 0)], 20);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 3, 1)], 21);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 3, 2)], 22);
+    EXPECT_EQ(forward_map[std::make_tuple(1, 0, 3, 3)], 23);
+    // ia = 1...
+}
+
+TEST(RadialProjectionTest, MaskfunctionGenerationTest)
+{
+    std::vector<double> mask;
+    RadialProjection::_mask_func(mask);
+    EXPECT_EQ(mask.size(), 201);
+    EXPECT_EQ(mask[0], 1.0); // the rescaled value of the mask function, at 0, is 1
+    EXPECT_NEAR(mask[200], 0.98138215E-05, 1e-10); // real space cut, at rc, is 0
+}
+
+TEST(RadialProjectionTest, BuildSbtTabCorrectnessTest)
+{
+    RadialProjection::RadialProjector rp;
+
+    // use mask function as the example
+    std::vector<double> mask;
+    RadialProjection::_mask_func(mask);
+    // suppose the r from 0 to 2.0 (inclusive) with 0.01 step
+    std::vector<double> r(mask.size());
+    std::iota(r.begin(), r.end(), 0);
+    std::for_each(r.begin(), r.end(), [](double& x){x = x * 0.01;});
+
+    // fill into the container
+    std::vector<std::vector<double>> radials(1, mask);
+
+    // suppose the angular momentum of function to transform is 0
+    // but this is true because the mask function is really spherically
+    // symmetric.
+    std::vector<int> l(1, 0);
+
+    // build the interpolation table
+    rp._build_sbt_tab(r, radials, l, 201, 0.01); // build an interpolation table
+    
+    // only one q point: (0, 0, 0), is Gamma
+    std::vector<ModuleBase::Vector3<double>> q(1);
+    q[0] = ModuleBase::Vector3<double>(0.0, 0.0, 0.0);
+
+    // so the output should have the same size as q
+    std::vector<std::complex<double>> out(q.size());
+
+    // transform, the last argument is 'r' for <G+k|p>.
+    // for q = 0, the integration is actually performed on the function
+    // itself, so it is actually the integration of the function, on the
+    // grid from 0 to rc (2.0) with stepsize 0.01.
+    rp.sbtft(q, out, 'r', 1.0, 1.0);
+    // print, each 5 numbers in a row
+    
+    /**
+     * The following Python code is used to generate the reference data
+     * from scipy.integrate import simps
+     * import numpy as np
+     * 
+     * r = np.arange(0, 2.01, 0.01)
+     * mask = np.array(mask)
+     * omega = 1
+     * # Y00 is 1/sqrt(4*pi)
+     * val = simps(mask*r**2, x=r) * np.sqrt(4*np.pi)
+     * print(val/np.sqrt(omega))
+     */
+    std::complex<double> ref(0.6143605159327622, 0.0);
+    EXPECT_NEAR(out[0].real(), ref.real(), DOUBLETHRESHOLD);
+}
+
+TEST(RadialProjectionTest, BuildSbtTabStabilityTest)
+{
+    // still use mask function but scale with different Gaussian function
+    std::vector<double> mask;
+    RadialProjection::_mask_func(mask);
+    // suppose the r from 0 to 2.0 (inclusive) with 0.01 step
+    std::vector<double> r(mask.size());
+    std::iota(r.begin(), r.end(), 0);
+    std::for_each(r.begin(), r.end(), [](double& x){x = x * 0.01;});
+
+    std::vector<double> aug1(mask.size());
+    std::vector<double> aug2(mask.size());
+    std::vector<double> aug3(mask.size());
+    const double sigma1 = 0.1;
+    const double sigma2 = 1.0;
+    const double sigma3 = 10.0;
+    std::transform(r.begin(), r.end(), aug1.begin(), [sigma1](double x){return std::exp(-x*x/(2*sigma1*sigma1));});
+    std::transform(r.begin(), r.end(), aug2.begin(), [sigma2](double x){return std::exp(-x*x/(2*sigma2*sigma2));});
+    std::transform(r.begin(), r.end(), aug3.begin(), [sigma3](double x){return std::exp(-x*x/(2*sigma3*sigma3));});
+
+    std::vector<double> mask1(mask.size());
+    std::vector<double> mask2(mask.size());
+    std::vector<double> mask3(mask.size());
+    std::transform(mask.begin(), mask.end(), aug1.begin(), mask1.begin(), std::multiplies<double>());
+    std::transform(mask.begin(), mask.end(), aug2.begin(), mask2.begin(), std::multiplies<double>());
+    std::transform(mask.begin(), mask.end(), aug3.begin(), mask3.begin(), std::multiplies<double>());
+
+    // then prepare the q vectors, in total 50, each with 3 components among which each is random
+    // number ranging from 0 to 2, use the random seed as 1
+    const int npw = 50;
+    std::vector<ModuleBase::Vector3<double>> q(npw);
+    std::mt19937 gen(1);
+    std::uniform_real_distribution<double> dis(0.0, 2.0);
+    std::for_each(q.begin(), q.end(), [&gen, &dis](ModuleBase::Vector3<double>& x){
+        x[0] = dis(gen);
+        x[1] = dis(gen);
+        x[2] = dis(gen);
+    });
+
+    // fill into the container
+    std::vector<std::vector<double>> radials(4); // do not remember mask0 = mask
+    radials[0] = mask;
+    radials[1] = mask1;
+    radials[2] = mask2;
+    radials[3] = mask3;
+
+    // angular momentum set as 0, 1, 2, 3
+    std::vector<int> l(4);
+    std::iota(l.begin(), l.end(), 0);
+
+    RadialProjection::RadialProjector rp;
+    rp._build_sbt_tab(r, radials, l, 401, 0.01); // build an interpolation table
+
+    // then perform the transform
+    std::vector<std::complex<double>> out;
+    rp.sbtft(q, out, 'r', 1.0, 1.0);
+
+    // there are 50 q points, and radials have l as 0, 1, 2, 3, which means the
+    // number of lm components in total is 1 + 3 + 5 + 7 = 16
+    // therefore there should be 50 * 16 = 800 complex numbers in the output
+    EXPECT_EQ(out.size(), npw*16);
+    // check if they are listed in expected sequence, say the first should be
+    // Fourier transform of the first function, mask, l = 0, m = 0
+    RadialProjection::RadialProjector rp1;
+    rp1._build_sbt_tab(r, 
+                       std::vector<std::vector<double>>(1, mask), 
+                       std::vector<int>(1, 0), 401, 0.01);
+    std::vector<std::complex<double>> out1;
+    rp1.sbtft(q, out1, 'r', 1.0, 1.0);
+    for(int iq = 0; iq < 50; ++iq) // 50 q-points
+    {
+        EXPECT_NEAR(out[iq].real(), out1[iq].real(), DOUBLETHRESHOLD);
+        EXPECT_NEAR(out[iq].imag(), out1[iq].imag(), DOUBLETHRESHOLD);
+    }
+    RadialProjection::RadialProjector rp2;
+    rp2._build_sbt_tab(r, 
+                       std::vector<std::vector<double>>(1, mask1), 
+                       std::vector<int>(1, 1), 401, 0.01);
+    std::vector<std::complex<double>> out2;
+    rp2.sbtft(q, out2, 'r', 1.0, 1.0);
+    for(int iq = 0; iq < 50*(2*1+1); ++iq) // 50 q-points
+    {
+        EXPECT_NEAR(out[iq+50].real(), out2[iq].real(), DOUBLETHRESHOLD);
+        EXPECT_NEAR(out[iq+50].imag(), out2[iq].imag(), DOUBLETHRESHOLD);
+    }
+    RadialProjection::RadialProjector rp3;
+    rp3._build_sbt_tab(r, 
+                       std::vector<std::vector<double>>(1, mask2), 
+                       std::vector<int>(1, 2), 401, 0.01);
+    std::vector<std::complex<double>> out3;
+    rp3.sbtft(q, out3, 'r', 1.0, 1.0);
+    for(int iq = 0; iq < 50*(2*2+1); ++iq) // 50 q-points
+    {
+        EXPECT_NEAR(out[iq+50+50*(2*1+1)].real(), out3[iq].real(), DOUBLETHRESHOLD);
+        EXPECT_NEAR(out[iq+50+50*(2*1+1)].imag(), out3[iq].imag(), DOUBLETHRESHOLD);
+    }
+    RadialProjection::RadialProjector rp4;
+    rp4._build_sbt_tab(r, 
+                       std::vector<std::vector<double>>(1, mask3), 
+                       std::vector<int>(1, 3), 401, 0.01);
+    std::vector<std::complex<double>> out4;
+    rp4.sbtft(q, out4, 'r', 1.0, 1.0);
+    for(int iq = 0; iq < 50*(2*3+1); ++iq) // 50 q-points
+    {
+        EXPECT_NEAR(out[iq+50+50*(2*1+1)+50*(2*2+1)].real(), out4[iq].real(), DOUBLETHRESHOLD);
+        EXPECT_NEAR(out[iq+50+50*(2*1+1)+50*(2*2+1)].imag(), out4[iq].imag(), DOUBLETHRESHOLD);
+    }
+}
+
+int main()
+{
+    testing::InitGoogleTest();
+    return RUN_ALL_TESTS();
+}

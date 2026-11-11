@@ -1,0 +1,119 @@
+{
+  "cases": {
+    "abacus-hse06": {
+      "GaAs": {
+        "reason": "Extended final-executable calculation not run in the initial release audit.",
+        "status": "not_baselined",
+        "structure_sha256": "b2d5295209a46abe7883aecb4f29fbbc5efcf08c9ba19e8d958659c768ea1610"
+      },
+      "InSb": {
+        "abs_tolerance_ev": 1e-06,
+        "classification": "insulator",
+        "executable_sha256": "9ad2d03bbb4f6fa8a56384a654f744fd23bd563872555b105b44f7efe544fb2e",
+        "gap_ev": 0.244276540450355,
+        "pseudopotential_sha256": {
+          "In": "de14d1ba51dba2ff7db0ef8c933749ad0520b4318996e1f3880710c54aa41fc6",
+          "Sb": "b4337adb7f4b57558854601f2d2103f0d3a254706ef5396aa5507bc2c9117285"
+        },
+        "settings_sha256": "ebeabefed8163e5124acfa29404561d5b56cd76f663bc2c0476c338273806eaf",
+        "status": "success",
+        "structure_sha256": "9d346d3aca014c948421ddac2ae4fdd372626ff4caca66d555342860b38fd1fd"
+      },
+      "MgO": {
+        "reason": "Extended final-executable calculation not run in the initial release audit.",
+        "status": "not_baselined",
+        "structure_sha256": "52c627a797b6aa79c36d238b05a2df6af8009ac775cdd6a6573742756afd3636"
+      },
+      "Si": {
+        "abs_tolerance_ev": 1e-06,
+        "classification": "insulator",
+        "executable_sha256": "9ad2d03bbb4f6fa8a56384a654f744fd23bd563872555b105b44f7efe544fb2e",
+        "gap_ev": 1.16982250361136,
+        "pseudopotential_sha256": {
+          "Si": "39822757f53f36e3bf3bfb779356152a8d3f21199c7db9dd5a931e5d18c45282"
+        },
+        "settings_sha256": "ebeabefed8163e5124acfa29404561d5b56cd76f663bc2c0476c338273806eaf",
+        "status": "success",
+        "structure_sha256": "cf68c10666a2987a92af783f8d6d85caee217b4f7caaf674a47f0c943f178a4a"
+      }
+    },
+    "abacus-pbe0": {
+      "GaAs": {
+        "reason": "Direct-PBE0 extended-system calculation has not been run.",
+        "status": "not_baselined",
+        "structure_sha256": "b2d5295209a46abe7883aecb4f29fbbc5efcf08c9ba19e8d958659c768ea1610"
+      },
+      "InSb": {
+        "abs_tolerance_ev": 1e-06,
+        "classification": "insulator",
+        "executable_sha256": "9ad2d03bbb4f6fa8a56384a654f744fd23bd563872555b105b44f7efe544fb2e",
+        "gap_ev": 0.861037411013009,
+        "pseudopotential_sha256": {
+          "In": "de14d1ba51dba2ff7db0ef8c933749ad0520b4318996e1f3880710c54aa41fc6",
+          "Sb": "b4337adb7f4b57558854601f2d2103f0d3a254706ef5396aa5507bc2c9117285"
+        },
+        "settings_sha256": "0d1bddb4406393717f19b85f265aad0179583d6e0e692bfbae8c37f8a1b9058a",
+        "status": "success",
+        "structure_sha256": "9d346d3aca014c948421ddac2ae4fdd372626ff4caca66d555342860b38fd1fd"
+      },
+      "MgO": {
+        "reason": "Direct-PBE0 extended-system calculation has not been run.",
+        "status": "not_baselined",
+        "structure_sha256": "52c627a797b6aa79c36d238b05a2df6af8009ac775cdd6a6573742756afd3636"
+      },
+      "Si": {
+        "abs_tolerance_ev": 1e-06,
+        "classification": "insulator",
+        "executable_sha256": "9ad2d03bbb4f6fa8a56384a654f744fd23bd563872555b105b44f7efe544fb2e",
+        "gap_ev": 1.77451324207585,
+        "pseudopotential_sha256": {
+          "Si": "39822757f53f36e3bf3bfb779356152a8d3f21199c7db9dd5a931e5d18c45282"
+        },
+        "settings_sha256": "0d1bddb4406393717f19b85f265aad0179583d6e0e692bfbae8c37f8a1b9058a",
+        "status": "success",
+        "structure_sha256": "cf68c10666a2987a92af783f8d6d85caee217b4f7caaf674a47f0c943f178a4a"
+      }
+    },
+    "cider-pbe0": {
+      "GaAs": {
+        "reason": "Extended final-executable calculation not run in the initial release audit.",
+        "status": "not_baselined",
+        "structure_sha256": "b2d5295209a46abe7883aecb4f29fbbc5efcf08c9ba19e8d958659c768ea1610"
+      },
+      "InSb": {
+        "abs_tolerance_ev": 1e-06,
+        "cider_model_sha256": "0bdadb33599a4f5d26baa743b1a5849a1fb63e0ce6b0fdf7ad9479feb2e28734",
+        "classification": "insulator",
+        "executable_sha256": "9ad2d03bbb4f6fa8a56384a654f744fd23bd563872555b105b44f7efe544fb2e",
+        "gap_ev": 0.247522014098593,
+        "pseudopotential_sha256": {
+          "In": "de14d1ba51dba2ff7db0ef8c933749ad0520b4318996e1f3880710c54aa41fc6",
+          "Sb": "b4337adb7f4b57558854601f2d2103f0d3a254706ef5396aa5507bc2c9117285"
+        },
+        "settings_sha256": "ad1bebdcc47115570ce69952470da90ae75c84c00d042d4f9220933897713a5e",
+        "status": "success",
+        "structure_sha256": "9d346d3aca014c948421ddac2ae4fdd372626ff4caca66d555342860b38fd1fd"
+      },
+      "MgO": {
+        "reason": "Extended final-executable calculation not run in the initial release audit.",
+        "status": "not_baselined",
+        "structure_sha256": "52c627a797b6aa79c36d238b05a2df6af8009ac775cdd6a6573742756afd3636"
+      },
+      "Si": {
+        "abs_tolerance_ev": 1e-05,
+        "cider_model_sha256": "0bdadb33599a4f5d26baa743b1a5849a1fb63e0ce6b0fdf7ad9479feb2e28734",
+        "classification": "insulator",
+        "executable_sha256": "9ad2d03bbb4f6fa8a56384a654f744fd23bd563872555b105b44f7efe544fb2e",
+        "gap_ev": 1.31191570957535,
+        "pseudopotential_sha256": {
+          "Si": "39822757f53f36e3bf3bfb779356152a8d3f21199c7db9dd5a931e5d18c45282"
+        },
+        "settings_sha256": "ad1bebdcc47115570ce69952470da90ae75c84c00d042d4f9220933897713a5e",
+        "status": "success",
+        "structure_sha256": "cf68c10666a2987a92af783f8d6d85caee217b4f7caaf674a47f0c943f178a4a"
+      }
+    }
+  },
+  "notes": "Required InSb and Si baselines are recorded only from completed converged runs using exactly 0.001 eV Gaussian smearing and executable SHA-256 9ad2d03bbb4f6fa8a56384a654f744fd23bd563872555b105b44f7efe544fb2e. Direct HSE06 and PBE0 use preset v1.1. CIDER-PBE0 uses calibrated cider_xmix=0.15 at preset v1.2 and remains distinct from direct PBE0 with its standard 25% exact-exchange fraction. Extended GaAs and MgO cases remain explicitly unbaselined without inferred values.",
+  "schema_version": "1.0"
+}

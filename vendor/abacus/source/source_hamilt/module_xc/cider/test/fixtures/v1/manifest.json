@@ -1,0 +1,4717 @@
+{
+  "array_order": "C",
+  "arrays": {
+    "nl_gga_spin2_valence_pseudo_core.exc_baseline_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_baseline_g output",
+      "dtype": "<f8",
+      "offset": 15284,
+      "path": "arrays.bin",
+      "sha256": "e1ba7598835a25f8b92d4298f3b0f403edde6d9d240de62bd6ec75ccdbb951a3",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.exc_feature_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_feature_g output",
+      "dtype": "<f8",
+      "offset": 15668,
+      "path": "arrays.bin",
+      "sha256": "9032cdd9f3593789253b87a7cd02563f3acd75ec444d8f777272c7cc4529e037",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.exc_total_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_total_g output",
+      "dtype": "<f8",
+      "offset": 16052,
+      "path": "arrays.bin",
+      "sha256": "8fb749eeab51ae7267ecd12417d590b42486eefd0d76acb10b0daffc992fe2be",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.integrated_results": {
+      "bytes": 48,
+      "description": "Volume-integrated ABACUS bridge energy and potential contractions",
+      "dtype": "<f8",
+      "offset": 16436,
+      "path": "arrays.bin",
+      "sha256": "f9fa3f9380ac5836e20e574dc060ef85d4ea03a8cac3abd248f4097a8a36222e",
+      "shape": [
+        6
+      ],
+      "stage": "integrated_results",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.mapped_derivative_normalized_unscaled": {
+      "bytes": 640,
+      "description": "MappedXC derivative with respect to normalized features",
+      "dtype": "<f8",
+      "offset": 12852,
+      "path": "arrays.bin",
+      "sha256": "639576f3fb2043f4ab30c4684b9590432ff291f3066d0f29130d1169974292df",
+      "shape": [
+        2,
+        5,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.mapped_derivative_raw_unscaled": {
+      "bytes": 640,
+      "description": "MappedXC derivative reversed through feature normalizers",
+      "dtype": "<f8",
+      "offset": 13492,
+      "path": "arrays.bin",
+      "sha256": "98773e40d6cfdb60e2983d820c31bb7d655cde410d6899269a70980ee020aeab",
+      "shape": [
+        2,
+        5,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.mapped_exc_unscaled": {
+      "bytes": 64,
+      "description": "MappedXC output before bridge runtime exchange scaling",
+      "dtype": "<f8",
+      "offset": 12788,
+      "path": "arrays.bin",
+      "sha256": "a86c9415023222a42e049bb2493c9320c6c3a58e1489b8ceb34820ca1f4c550f",
+      "shape": [
+        8
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.model_coefficient_samples": {
+      "bytes": 504,
+      "description": "Nine deterministic flat samples from every decoded coefficient array",
+      "dtype": "<f8",
+      "offset": 8316,
+      "path": "arrays.bin",
+      "sha256": "37c06c7269335f06a0b0fea9b4a436f0361276306e6caa3a3ae7ffd9da2a3522",
+      "shape": [
+        7,
+        9
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.model_ind_set_dims": {
+      "bytes": 28,
+      "description": "Active descriptor count per spline term",
+      "dtype": "<i4",
+      "offset": 7700,
+      "path": "arrays.bin",
+      "sha256": "88dc7d9bcd69c84157fc03b4e357af1f9f7e8e2ed31bd4f128214db78733b20d",
+      "shape": [
+        7
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.model_ind_sets": {
+      "bytes": 84,
+      "description": "Decoded spline descriptor indices; -1 pads inactive columns",
+      "dtype": "<i4",
+      "offset": 7728,
+      "path": "arrays.bin",
+      "sha256": "f52c3ec56ec64610dae39203b75f7b9901ace9295131e26219728539b68213e0",
+      "shape": [
+        7,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.model_scale": {
+      "bytes": 56,
+      "description": "Decoded spline term scales",
+      "dtype": "<f8",
+      "offset": 7644,
+      "path": "arrays.bin",
+      "sha256": "0cca37767f0e12ac31033a87e080fe36f6849e4ed13048bf76455d5b99a58d3f",
+      "shape": [
+        7
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.model_spline_grids": {
+      "bytes": 504,
+      "description": "Decoded spline lower/upper/order triples; zero pads inactive columns",
+      "dtype": "<f8",
+      "offset": 7812,
+      "path": "arrays.bin",
+      "sha256": "c49c0236a3f31068b8a671741805a8cc8f59357a7f75ee2890b24f998f6687cc",
+      "shape": [
+        7,
+        3,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.nldf_convolution_features": {
+      "bytes": 384,
+      "description": "Version-J convolved NLDF features",
+      "dtype": "<f8",
+      "offset": 14388,
+      "path": "arrays.bin",
+      "sha256": "8bfac64a3a50ae9dfb870614339067f7f22fd2c73c53695ed8180363395b5661",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "nldf_convolution_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.nldf_convolution_function": {
+      "bytes": 128,
+      "description": "Version-J real-space function sent to convolution",
+      "dtype": "<f8",
+      "offset": 14260,
+      "path": "arrays.bin",
+      "sha256": "80ddf8e15644160342b58543c07fc597950245d6be9d8a228d2dcae6676dde5e",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "nldf_convolution_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.nldf_convolution_function_derivatives": {
+      "bytes": 256,
+      "description": "Convolution-function derivatives with respect to rho/same-spin sigma/optional tau",
+      "dtype": "<f8",
+      "offset": 15028,
+      "path": "arrays.bin",
+      "sha256": "f0305381e25d8676bef0f88e3b5031014e9c3311988420f8e30922336d402bd4",
+      "shape": [
+        2,
+        2,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.nldf_interpolation_argument_derivatives": {
+      "bytes": 256,
+      "description": "Interpolation-argument derivatives with respect to rho/same-spin sigma/optional tau",
+      "dtype": "<f8",
+      "offset": 14772,
+      "path": "arrays.bin",
+      "sha256": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+      "shape": [
+        2,
+        2,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.nldf_interpolation_arguments": {
+      "bytes": 128,
+      "description": "Version-J source interpolation arguments",
+      "dtype": "<f8",
+      "offset": 14132,
+      "path": "arrays.bin",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "nldf_interpolation_arguments",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.normalized_features": {
+      "bytes": 640,
+      "description": "Feature-normalizer forward result",
+      "dtype": "<f8",
+      "offset": 10356,
+      "path": "arrays.bin",
+      "sha256": "8eaa12823834685e05bc87fe94481391800d900e99b284da1208db15641bd0b0",
+      "shape": [
+        2,
+        5,
+        8
+      ],
+      "stage": "normalized_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.raw_features": {
+      "bytes": 640,
+      "description": "Combined semilocal and optional NLDF raw features",
+      "dtype": "<f8",
+      "offset": 9716,
+      "path": "arrays.bin",
+      "sha256": "cc89f7a20099488efde4c7943c6b16ac4af45c6067beb70fd73fb4f73a0c5177",
+      "shape": [
+        2,
+        5,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.rho_baseline_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout rho_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 8820,
+      "path": "arrays.bin",
+      "sha256": "80ddf8e15644160342b58543c07fc597950245d6be9d8a228d2dcae6676dde5e",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.rho_feature_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout rho_feature_sg input",
+      "dtype": "<f8",
+      "offset": 9140,
+      "path": "arrays.bin",
+      "sha256": "80ddf8e15644160342b58543c07fc597950245d6be9d8a228d2dcae6676dde5e",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.semilocal_raw_features": {
+      "bytes": 256,
+      "description": "SemilocalPlan2 raw np/npa features",
+      "dtype": "<f8",
+      "offset": 9460,
+      "path": "arrays.bin",
+      "sha256": "9c2f6ebbf799f8b36608c442f1d676100ae213b751139a64835c7e8da94d6b68",
+      "shape": [
+        2,
+        2,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.sigma_baseline_xg": {
+      "bytes": 192,
+      "description": "Deterministic ABACUS-layout sigma_baseline_xg input",
+      "dtype": "<f8",
+      "offset": 8948,
+      "path": "arrays.bin",
+      "sha256": "9358420239f412cf14f8af57b44cef2fa8728b066879f152d1a67836b31d70ef",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.sigma_feature_xg": {
+      "bytes": 192,
+      "description": "Deterministic ABACUS-layout sigma_feature_xg input",
+      "dtype": "<f8",
+      "offset": 9268,
+      "path": "arrays.bin",
+      "sha256": "9358420239f412cf14f8af57b44cef2fa8728b066879f152d1a67836b31d70ef",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.spline_derivatives": {
+      "bytes": 512,
+      "description": "Spline residual derivatives with respect to transformed descriptors",
+      "dtype": "<f8",
+      "offset": 11636,
+      "path": "arrays.bin",
+      "sha256": "7c0ffabb95281f1dd0340c5c5cd9c8e29149e420c810cc54860ddb1cb86e9ac4",
+      "shape": [
+        16,
+        4
+      ],
+      "stage": "spline_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.spline_forward": {
+      "bytes": 128,
+      "description": "SplineSetEvaluator residual before baselines",
+      "dtype": "<f8",
+      "offset": 11508,
+      "path": "arrays.bin",
+      "sha256": "540bc1002ed174178c65559907987c1e9d1161c7f7ae57aabacab25c41bebb92",
+      "shape": [
+        16
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.spline_reverse_raw": {
+      "bytes": 640,
+      "description": "Spline derivative reversed through feature transforms",
+      "dtype": "<f8",
+      "offset": 12148,
+      "path": "arrays.bin",
+      "sha256": "b7ccd48507ae9fe78216f30fb5b0236304e48a539ab2d7dbb9e0707aea0c2c10",
+      "shape": [
+        2,
+        5,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.transformed_descriptors": {
+      "bytes": 512,
+      "description": "UMap/VMap/ZMap transformed descriptors",
+      "dtype": "<f8",
+      "offset": 10996,
+      "path": "arrays.bin",
+      "sha256": "4356f2be1128cc7977cc009b9d6cb9c96e924c4f73a89eeb61e13f784085a8c2",
+      "shape": [
+        16,
+        4
+      ],
+      "stage": "transformed_descriptors",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.vrho_baseline_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 15348,
+      "path": "arrays.bin",
+      "sha256": "34ed7e1c576e92c4aa3b63ef130934fe9a8beab85206f7ca915855327270302a",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.vrho_feature_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_feature_sg output",
+      "dtype": "<f8",
+      "offset": 15732,
+      "path": "arrays.bin",
+      "sha256": "fe73fd8689323556890f17caaea008d6650c0760a847adcce75fea91c18790f9",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.vrho_total_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_total_sg output",
+      "dtype": "<f8",
+      "offset": 16116,
+      "path": "arrays.bin",
+      "sha256": "a2672011c74bff1b771eb36b9908b5cd7179dbd79821553622eb647db5285603",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.vsigma_baseline_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_baseline_xg output",
+      "dtype": "<f8",
+      "offset": 15476,
+      "path": "arrays.bin",
+      "sha256": "21aa5cd2dafd6c9a57c6aba7a88c265002e8e38c650e75d9a85149982c4d4411",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.vsigma_feature_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_feature_xg output",
+      "dtype": "<f8",
+      "offset": 15860,
+      "path": "arrays.bin",
+      "sha256": "60e1cae3b73f9dd125a55a2ce80e25eb3f703cefdfcc969fdbad55d2e34b1c3b",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_gga_spin2_valence_pseudo_core.vsigma_total_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_total_xg output",
+      "dtype": "<f8",
+      "offset": 16244,
+      "path": "arrays.bin",
+      "sha256": "fd43fc4fe1ad0c7e293afe88065050a9459d89e644a09731f4a0e560b90db7af",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.exc_baseline_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_baseline_g output",
+      "dtype": "<f8",
+      "offset": 22300,
+      "path": "arrays.bin",
+      "sha256": "34a1b763fbb4c175bde63033ae67f940cadae12402d530ef143fd6f030d3aab4",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.exc_feature_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_feature_g output",
+      "dtype": "<f8",
+      "offset": 22556,
+      "path": "arrays.bin",
+      "sha256": "66686b36fb55d5e492469248c98e8018353585622abbe1622892827dab900da7",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.exc_total_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_total_g output",
+      "dtype": "<f8",
+      "offset": 22812,
+      "path": "arrays.bin",
+      "sha256": "1b5e40358b13919cafa138a95453392c87f4aed8a38a2822b81083808c0f9ca1",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.integrated_results": {
+      "bytes": 48,
+      "description": "Volume-integrated ABACUS bridge energy and potential contractions",
+      "dtype": "<f8",
+      "offset": 23068,
+      "path": "arrays.bin",
+      "sha256": "ca50ff7a21fb836fabab80450179c90cb68b15dbf44ba32fe327af6c2f770f3e",
+      "shape": [
+        6
+      ],
+      "stage": "integrated_results",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.mapped_derivative_normalized_unscaled": {
+      "bytes": 384,
+      "description": "MappedXC derivative with respect to normalized features",
+      "dtype": "<f8",
+      "offset": 20828,
+      "path": "arrays.bin",
+      "sha256": "7d9c727f1408980c79b0f22313d201e500d7a15b420945547bfb33dd5bb75159",
+      "shape": [
+        1,
+        6,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.mapped_derivative_raw_unscaled": {
+      "bytes": 384,
+      "description": "MappedXC derivative reversed through feature normalizers",
+      "dtype": "<f8",
+      "offset": 21212,
+      "path": "arrays.bin",
+      "sha256": "41df3511193018f6653104ec6265ead22b7c0523c7b787f990d1753f93e4409e",
+      "shape": [
+        1,
+        6,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.mapped_exc_unscaled": {
+      "bytes": 64,
+      "description": "MappedXC output before bridge runtime exchange scaling",
+      "dtype": "<f8",
+      "offset": 20764,
+      "path": "arrays.bin",
+      "sha256": "28026a0f5c3702babe689099839fe6cad794bac4b1c5bc62f0d09ec93a969404",
+      "shape": [
+        8
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.model_coefficient_samples": {
+      "bytes": 792,
+      "description": "Nine deterministic flat samples from every decoded coefficient array",
+      "dtype": "<f8",
+      "offset": 17540,
+      "path": "arrays.bin",
+      "sha256": "de82c5a6759fa4788d3536a64e6bbcf69760e854a766cb1f5212710c1d3f4c56",
+      "shape": [
+        11,
+        9
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.model_ind_set_dims": {
+      "bytes": 44,
+      "description": "Active descriptor count per spline term",
+      "dtype": "<i4",
+      "offset": 16572,
+      "path": "arrays.bin",
+      "sha256": "4fe77d8e520bd1b138c4c645a3b93fcb6b881438040d0911a78a36b19b8f4fca",
+      "shape": [
+        11
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.model_ind_sets": {
+      "bytes": 132,
+      "description": "Decoded spline descriptor indices; -1 pads inactive columns",
+      "dtype": "<i4",
+      "offset": 16616,
+      "path": "arrays.bin",
+      "sha256": "a8f2bf966e00a6d054d8246093ad843869d6aa1af28ea6ca648590e725d6d2ba",
+      "shape": [
+        11,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.model_scale": {
+      "bytes": 88,
+      "description": "Decoded spline term scales",
+      "dtype": "<f8",
+      "offset": 16484,
+      "path": "arrays.bin",
+      "sha256": "d18fdaac7f4ca3905529dc50338f47d5ac830fb9fbc6414f66d0133b2ddee296",
+      "shape": [
+        11
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.model_spline_grids": {
+      "bytes": 792,
+      "description": "Decoded spline lower/upper/order triples; zero pads inactive columns",
+      "dtype": "<f8",
+      "offset": 16748,
+      "path": "arrays.bin",
+      "sha256": "da3c702b705ab9d56d2072193dffe1f18ea7e063f6a6090486ff8a9abf750696",
+      "shape": [
+        11,
+        3,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.nldf_convolution_features": {
+      "bytes": 192,
+      "description": "Version-J convolved NLDF features",
+      "dtype": "<f8",
+      "offset": 21724,
+      "path": "arrays.bin",
+      "sha256": "96dc92ecf0aed409919f875435b8a970f823d822001fa6070819f77a89d9261c",
+      "shape": [
+        1,
+        3,
+        8
+      ],
+      "stage": "nldf_convolution_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.nldf_convolution_function": {
+      "bytes": 64,
+      "description": "Version-J real-space function sent to convolution",
+      "dtype": "<f8",
+      "offset": 21660,
+      "path": "arrays.bin",
+      "sha256": "7883cafd549064e0112e847607bfbfcf4e91e1447cf85f3f7e718016dccbb5c5",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "nldf_convolution_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.nldf_convolution_function_derivatives": {
+      "bytes": 192,
+      "description": "Convolution-function derivatives with respect to rho/same-spin sigma/optional tau",
+      "dtype": "<f8",
+      "offset": 22108,
+      "path": "arrays.bin",
+      "sha256": "2c4af6206c0ec036f8f1ff3d397adf1dd999ff31d263064b395707c00daae000",
+      "shape": [
+        3,
+        1,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.nldf_interpolation_argument_derivatives": {
+      "bytes": 192,
+      "description": "Interpolation-argument derivatives with respect to rho/same-spin sigma/optional tau",
+      "dtype": "<f8",
+      "offset": 21916,
+      "path": "arrays.bin",
+      "sha256": "5d89f056865052bcb89c910d2d62872e029fb273c3db03f8968a52a41593c1b5",
+      "shape": [
+        3,
+        1,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.nldf_interpolation_arguments": {
+      "bytes": 64,
+      "description": "Version-J source interpolation arguments",
+      "dtype": "<f8",
+      "offset": 21596,
+      "path": "arrays.bin",
+      "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "nldf_interpolation_arguments",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.normalized_features": {
+      "bytes": 384,
+      "description": "Feature-normalizer forward result",
+      "dtype": "<f8",
+      "offset": 19292,
+      "path": "arrays.bin",
+      "sha256": "20d02d8104fcc97c272730390c4a312ed6bc4c7deeda4dd5319bbb8e2d8253ad",
+      "shape": [
+        1,
+        6,
+        8
+      ],
+      "stage": "normalized_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.raw_features": {
+      "bytes": 384,
+      "description": "Combined semilocal and optional NLDF raw features",
+      "dtype": "<f8",
+      "offset": 18908,
+      "path": "arrays.bin",
+      "sha256": "4b9438481206fd463e62118fa31442be0e764c46745bcecdaef12e3750fe1520",
+      "shape": [
+        1,
+        6,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.rho_baseline_sg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout rho_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 18332,
+      "path": "arrays.bin",
+      "sha256": "7883cafd549064e0112e847607bfbfcf4e91e1447cf85f3f7e718016dccbb5c5",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.rho_feature_sg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout rho_feature_sg input",
+      "dtype": "<f8",
+      "offset": 18524,
+      "path": "arrays.bin",
+      "sha256": "7883cafd549064e0112e847607bfbfcf4e91e1447cf85f3f7e718016dccbb5c5",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.semilocal_raw_features": {
+      "bytes": 192,
+      "description": "SemilocalPlan2 raw np/npa features",
+      "dtype": "<f8",
+      "offset": 18716,
+      "path": "arrays.bin",
+      "sha256": "30bd9694cda080f393d455b9f08b8ae38b5f17fc05c8c292502febb3afb0ec3c",
+      "shape": [
+        1,
+        3,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.sigma_baseline_xg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout sigma_baseline_xg input",
+      "dtype": "<f8",
+      "offset": 18396,
+      "path": "arrays.bin",
+      "sha256": "557c93b913a5b56f95f1535d05ea89aedf0c5c8d9bd5e91b9768a426a0bf40e6",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.sigma_feature_xg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout sigma_feature_xg input",
+      "dtype": "<f8",
+      "offset": 18588,
+      "path": "arrays.bin",
+      "sha256": "557c93b913a5b56f95f1535d05ea89aedf0c5c8d9bd5e91b9768a426a0bf40e6",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.spline_derivatives": {
+      "bytes": 320,
+      "description": "Spline residual derivatives with respect to transformed descriptors",
+      "dtype": "<f8",
+      "offset": 20060,
+      "path": "arrays.bin",
+      "sha256": "06fa360a8158668c1fd1de8f7de739bdb2c17e77765c4b2b8567a39664936765",
+      "shape": [
+        8,
+        5
+      ],
+      "stage": "spline_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.spline_forward": {
+      "bytes": 64,
+      "description": "SplineSetEvaluator residual before baselines",
+      "dtype": "<f8",
+      "offset": 19996,
+      "path": "arrays.bin",
+      "sha256": "99113cf55cb302a0579305c200224c03dcada6d41c764a0565e508cee7a4f6a4",
+      "shape": [
+        8
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.spline_reverse_raw": {
+      "bytes": 384,
+      "description": "Spline derivative reversed through feature transforms",
+      "dtype": "<f8",
+      "offset": 20380,
+      "path": "arrays.bin",
+      "sha256": "2c0a48b476323d3541d3b46f7ecc56d70d3586cce810dffd511ed143f01d3929",
+      "shape": [
+        1,
+        6,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.tau_baseline_sg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout tau_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 18460,
+      "path": "arrays.bin",
+      "sha256": "7dbb4a279ce85e28ebed3170736e305a3b2270853ac2894ab87f31f6f3141f59",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.tau_feature_sg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout tau_feature_sg input",
+      "dtype": "<f8",
+      "offset": 18652,
+      "path": "arrays.bin",
+      "sha256": "7dbb4a279ce85e28ebed3170736e305a3b2270853ac2894ab87f31f6f3141f59",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.transformed_descriptors": {
+      "bytes": 320,
+      "description": "UMap/VMap/ZMap transformed descriptors",
+      "dtype": "<f8",
+      "offset": 19676,
+      "path": "arrays.bin",
+      "sha256": "cf1e76fa441d6578b7113a31ba520812ddd93a38fa0361af886564b6ea481a7e",
+      "shape": [
+        8,
+        5
+      ],
+      "stage": "transformed_descriptors",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vrho_baseline_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vrho_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 22364,
+      "path": "arrays.bin",
+      "sha256": "f3abb55f6144e6340fb3a55b17ae321b3fb4c782b1d2e29ebb049b0ea62e4eaa",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vrho_feature_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vrho_feature_sg output",
+      "dtype": "<f8",
+      "offset": 22620,
+      "path": "arrays.bin",
+      "sha256": "833319735c453026841d7a0d80073ae33958e55adf9662fac3ff999b03aae8f5",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vrho_total_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vrho_total_sg output",
+      "dtype": "<f8",
+      "offset": 22876,
+      "path": "arrays.bin",
+      "sha256": "fa3259384c3ac699e81edd721165ab9f648b30c33ebaff5a8dfe5b7cf1671728",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vsigma_baseline_xg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vsigma_baseline_xg output",
+      "dtype": "<f8",
+      "offset": 22428,
+      "path": "arrays.bin",
+      "sha256": "c46bbfeab67e6b40e9c7df99273e5302e8d3f7dcf1d9d461da3cb31dc23e1298",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vsigma_feature_xg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vsigma_feature_xg output",
+      "dtype": "<f8",
+      "offset": 22684,
+      "path": "arrays.bin",
+      "sha256": "d6867eb31c45378d29658a28bd23db0a076117a0d28f96622311a096b6912127",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vsigma_total_xg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vsigma_total_xg output",
+      "dtype": "<f8",
+      "offset": 22940,
+      "path": "arrays.bin",
+      "sha256": "8228d105ee9a0393a502ac88b6e1415e7365fdebe1fb9fa41726f2cb85408cff",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vtau_baseline_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vtau_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 22492,
+      "path": "arrays.bin",
+      "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vtau_feature_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vtau_feature_sg output",
+      "dtype": "<f8",
+      "offset": 22748,
+      "path": "arrays.bin",
+      "sha256": "d64bcdaf43907eeb84e9190fa02fe1e0fa77914933dabaf6f3a2c0d48181c0ac",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "nl_mgga_spin1_valence_pseudo_core.vtau_total_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vtau_total_sg output",
+      "dtype": "<f8",
+      "offset": 23004,
+      "path": "arrays.bin",
+      "sha256": "d64bcdaf43907eeb84e9190fa02fe1e0fa77914933dabaf6f3a2c0d48181c0ac",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.exc_baseline_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_baseline_g output",
+      "dtype": "<f8",
+      "offset": 1392,
+      "path": "arrays.bin",
+      "sha256": "34a1b763fbb4c175bde63033ae67f940cadae12402d530ef143fd6f030d3aab4",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "sl_gga_spin1_valence.exc_feature_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_feature_g output",
+      "dtype": "<f8",
+      "offset": 1584,
+      "path": "arrays.bin",
+      "sha256": "b905754080dcd3fa98cdabfc01a9dd9f0952840ddc203e3d5ba6763a2ceb253d",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.exc_total_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_total_g output",
+      "dtype": "<f8",
+      "offset": 1776,
+      "path": "arrays.bin",
+      "sha256": "70df9e78e4523d95b9b621f07838cba017071671d8504aae3eacf888aa298139",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.integrated_results": {
+      "bytes": 48,
+      "description": "Volume-integrated ABACUS bridge energy and potential contractions",
+      "dtype": "<f8",
+      "offset": 1968,
+      "path": "arrays.bin",
+      "sha256": "d6a4dab7a560f37973ab39578fccdc02a38788e4ce822c97ecc59c2cea3fad5a",
+      "shape": [
+        6
+      ],
+      "stage": "integrated_results",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.mapped_derivative_normalized_unscaled": {
+      "bytes": 128,
+      "description": "MappedXC derivative with respect to normalized features",
+      "dtype": "<f8",
+      "offset": 1136,
+      "path": "arrays.bin",
+      "sha256": "891758c61fe592df15b05c4c9b3eec22937965c66f7818e49ab190c60025ae01",
+      "shape": [
+        1,
+        2,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.mapped_derivative_raw_unscaled": {
+      "bytes": 128,
+      "description": "MappedXC derivative reversed through feature normalizers",
+      "dtype": "<f8",
+      "offset": 1264,
+      "path": "arrays.bin",
+      "sha256": "891758c61fe592df15b05c4c9b3eec22937965c66f7818e49ab190c60025ae01",
+      "shape": [
+        1,
+        2,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.mapped_exc_unscaled": {
+      "bytes": 64,
+      "description": "MappedXC output before bridge runtime exchange scaling",
+      "dtype": "<f8",
+      "offset": 1072,
+      "path": "arrays.bin",
+      "sha256": "c51809ee8074bf6ae9bb27f699b3b88a325d39314d63e29099a0b56848872a8d",
+      "shape": [
+        8
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.model_coefficient_samples": {
+      "bytes": 72,
+      "description": "Nine deterministic flat samples from every decoded coefficient array",
+      "dtype": "<f8",
+      "offset": 40,
+      "path": "arrays.bin",
+      "sha256": "9bc20eec009339393487716374e888ba1fa690cf4c24190cab604a6921277cb0",
+      "shape": [
+        1,
+        9
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.model_ind_set_dims": {
+      "bytes": 4,
+      "description": "Active descriptor count per spline term",
+      "dtype": "<i4",
+      "offset": 8,
+      "path": "arrays.bin",
+      "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450",
+      "shape": [
+        1
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.model_ind_sets": {
+      "bytes": 4,
+      "description": "Decoded spline descriptor indices; -1 pads inactive columns",
+      "dtype": "<i4",
+      "offset": 12,
+      "path": "arrays.bin",
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "shape": [
+        1,
+        1
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.model_scale": {
+      "bytes": 8,
+      "description": "Decoded spline term scales",
+      "dtype": "<f8",
+      "offset": 0,
+      "path": "arrays.bin",
+      "sha256": "bf0efa8cf2a3cf246cdbc583db26c58ba5691267f1e99cfffbef03dadac6db73",
+      "shape": [
+        1
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.model_spline_grids": {
+      "bytes": 24,
+      "description": "Decoded spline lower/upper/order triples; zero pads inactive columns",
+      "dtype": "<f8",
+      "offset": 16,
+      "path": "arrays.bin",
+      "sha256": "4686efc89d181816a999559bdb72f8be86e04fb39592c56e9a611e72d1fc2366",
+      "shape": [
+        1,
+        1,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.normalized_features": {
+      "bytes": 128,
+      "description": "Feature-normalizer forward result",
+      "dtype": "<f8",
+      "offset": 624,
+      "path": "arrays.bin",
+      "sha256": "33cf59edc0b13fb936a5a7c079c9132c0a026060e94d664e570bfcbc9db60f7d",
+      "shape": [
+        1,
+        2,
+        8
+      ],
+      "stage": "normalized_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.raw_features": {
+      "bytes": 128,
+      "description": "Combined semilocal and optional NLDF raw features",
+      "dtype": "<f8",
+      "offset": 496,
+      "path": "arrays.bin",
+      "sha256": "33cf59edc0b13fb936a5a7c079c9132c0a026060e94d664e570bfcbc9db60f7d",
+      "shape": [
+        1,
+        2,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.rho_baseline_sg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout rho_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 112,
+      "path": "arrays.bin",
+      "sha256": "7883cafd549064e0112e847607bfbfcf4e91e1447cf85f3f7e718016dccbb5c5",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.rho_feature_sg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout rho_feature_sg input",
+      "dtype": "<f8",
+      "offset": 240,
+      "path": "arrays.bin",
+      "sha256": "05bc09323c5e9407e686b990a7f5debc078af44974c6bb1fad710f1df3faef5e",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.semilocal_raw_features": {
+      "bytes": 128,
+      "description": "SemilocalPlan2 raw np/npa features",
+      "dtype": "<f8",
+      "offset": 368,
+      "path": "arrays.bin",
+      "sha256": "33cf59edc0b13fb936a5a7c079c9132c0a026060e94d664e570bfcbc9db60f7d",
+      "shape": [
+        1,
+        2,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.sigma_baseline_xg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout sigma_baseline_xg input",
+      "dtype": "<f8",
+      "offset": 176,
+      "path": "arrays.bin",
+      "sha256": "557c93b913a5b56f95f1535d05ea89aedf0c5c8d9bd5e91b9768a426a0bf40e6",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.sigma_feature_xg": {
+      "bytes": 64,
+      "description": "Deterministic ABACUS-layout sigma_feature_xg input",
+      "dtype": "<f8",
+      "offset": 304,
+      "path": "arrays.bin",
+      "sha256": "39ee367ecdc1e08a6ee84d6b624a459ec767a1799070e7f273c5a707ac86ac72",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.spline_derivatives": {
+      "bytes": 64,
+      "description": "Spline residual derivatives with respect to transformed descriptors",
+      "dtype": "<f8",
+      "offset": 880,
+      "path": "arrays.bin",
+      "sha256": "e0218556ecaf3cd122e93f364789c7a7252c5beb5ce1a9f478e6923c5210a6dd",
+      "shape": [
+        8,
+        1
+      ],
+      "stage": "spline_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.spline_forward": {
+      "bytes": 64,
+      "description": "SplineSetEvaluator residual before baselines",
+      "dtype": "<f8",
+      "offset": 816,
+      "path": "arrays.bin",
+      "sha256": "378ff64527339f26b25123260a731801f44b6e762e8d1a7b383d0c50a337cd63",
+      "shape": [
+        8
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.spline_reverse_raw": {
+      "bytes": 128,
+      "description": "Spline derivative reversed through feature transforms",
+      "dtype": "<f8",
+      "offset": 944,
+      "path": "arrays.bin",
+      "sha256": "28ce713c7bdcf5997c4e6e1c733369fa975314707b4986f429da1bf4231a9a07",
+      "shape": [
+        1,
+        2,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_gga_spin1_valence.transformed_descriptors": {
+      "bytes": 64,
+      "description": "UMap/VMap/ZMap transformed descriptors",
+      "dtype": "<f8",
+      "offset": 752,
+      "path": "arrays.bin",
+      "sha256": "981e3f11b3de7bba54fe7da90c1d10f2d8a66281c20d5bb7f8fe84d7beb871ab",
+      "shape": [
+        8,
+        1
+      ],
+      "stage": "transformed_descriptors",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.vrho_baseline_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vrho_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 1456,
+      "path": "arrays.bin",
+      "sha256": "f3abb55f6144e6340fb3a55b17ae321b3fb4c782b1d2e29ebb049b0ea62e4eaa",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "sl_gga_spin1_valence.vrho_feature_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vrho_feature_sg output",
+      "dtype": "<f8",
+      "offset": 1648,
+      "path": "arrays.bin",
+      "sha256": "0de0ca47f8a42659a3079a9d5bf722d173f9add8acb9d22059bb7dc507972cac",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.vrho_total_sg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vrho_total_sg output",
+      "dtype": "<f8",
+      "offset": 1840,
+      "path": "arrays.bin",
+      "sha256": "1cd80744a175236f6e16e70210a71ad7b12bab0fcac76ff763abd24fa3aaed70",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.vsigma_baseline_xg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vsigma_baseline_xg output",
+      "dtype": "<f8",
+      "offset": 1520,
+      "path": "arrays.bin",
+      "sha256": "c46bbfeab67e6b40e9c7df99273e5302e8d3f7dcf1d9d461da3cb31dc23e1298",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "sl_gga_spin1_valence.vsigma_feature_xg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vsigma_feature_xg output",
+      "dtype": "<f8",
+      "offset": 1712,
+      "path": "arrays.bin",
+      "sha256": "c381bb88a50100843bec9be212eb9ca43e429854abb82f1b00f802bc4d36c76e",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_gga_spin1_valence.vsigma_total_xg": {
+      "bytes": 64,
+      "description": "Role-separated bridge vsigma_total_xg output",
+      "dtype": "<f8",
+      "offset": 1904,
+      "path": "arrays.bin",
+      "sha256": "3549f1df05a541604afc8821bdffc1c66a522ba5504184f55f681445f1c37eaa",
+      "shape": [
+        1,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.exc_baseline_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_baseline_g output",
+      "dtype": "<f8",
+      "offset": 6060,
+      "path": "arrays.bin",
+      "sha256": "e1ba7598835a25f8b92d4298f3b0f403edde6d9d240de62bd6ec75ccdbb951a3",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "sl_mgga_spin2_valence.exc_feature_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_feature_g output",
+      "dtype": "<f8",
+      "offset": 6572,
+      "path": "arrays.bin",
+      "sha256": "dda361951089009a7f49c85a3dbd84e575daa2a43598ded2ca7ee8daf52fde54",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.exc_total_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_total_g output",
+      "dtype": "<f8",
+      "offset": 7084,
+      "path": "arrays.bin",
+      "sha256": "d6e465a3d807383a180e0f82f745436e048c917c5469add40b9571a04dbbee86",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.integrated_results": {
+      "bytes": 48,
+      "description": "Volume-integrated ABACUS bridge energy and potential contractions",
+      "dtype": "<f8",
+      "offset": 7596,
+      "path": "arrays.bin",
+      "sha256": "f6543cd87860f8af1e392ca5573fa7e8af445fb710e35d5aef729e7436d45e1d",
+      "shape": [
+        6
+      ],
+      "stage": "integrated_results",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.mapped_derivative_normalized_unscaled": {
+      "bytes": 384,
+      "description": "MappedXC derivative with respect to normalized features",
+      "dtype": "<f8",
+      "offset": 5292,
+      "path": "arrays.bin",
+      "sha256": "1f783d6a8a4b0d6eb3b202ec3d9995f384e50c8bdc3a1d103a71e0e3836c09f7",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.mapped_derivative_raw_unscaled": {
+      "bytes": 384,
+      "description": "MappedXC derivative reversed through feature normalizers",
+      "dtype": "<f8",
+      "offset": 5676,
+      "path": "arrays.bin",
+      "sha256": "1f783d6a8a4b0d6eb3b202ec3d9995f384e50c8bdc3a1d103a71e0e3836c09f7",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.mapped_exc_unscaled": {
+      "bytes": 64,
+      "description": "MappedXC output before bridge runtime exchange scaling",
+      "dtype": "<f8",
+      "offset": 5228,
+      "path": "arrays.bin",
+      "sha256": "eaf4a240a48c3a8e768365aa18da588a760a75a88de00fe8ea54dba24509e9be",
+      "shape": [
+        8
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.model_coefficient_samples": {
+      "bytes": 72,
+      "description": "Nine deterministic flat samples from every decoded coefficient array",
+      "dtype": "<f8",
+      "offset": 2084,
+      "path": "arrays.bin",
+      "sha256": "88fd839f985451936c7d135a1787885c4bf6dea0a06c49569f99c3b7157b8a8b",
+      "shape": [
+        1,
+        9
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.model_ind_set_dims": {
+      "bytes": 4,
+      "description": "Active descriptor count per spline term",
+      "dtype": "<i4",
+      "offset": 2024,
+      "path": "arrays.bin",
+      "sha256": "26b25d457597a7b0463f9620f666dd10aa2c4373a505967c7c8d70922a2d6ece",
+      "shape": [
+        1
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.model_ind_sets": {
+      "bytes": 8,
+      "description": "Decoded spline descriptor indices; -1 pads inactive columns",
+      "dtype": "<i4",
+      "offset": 2028,
+      "path": "arrays.bin",
+      "sha256": "01acecb507abfe1a354aa8064f4af5d3f1acd019e37db3c11c97523b71c76e9d",
+      "shape": [
+        1,
+        2
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.model_scale": {
+      "bytes": 8,
+      "description": "Decoded spline term scales",
+      "dtype": "<f8",
+      "offset": 2016,
+      "path": "arrays.bin",
+      "sha256": "54749b3eff41541f99026e50361db11c2c9d88875c48eefc44293eff72836579",
+      "shape": [
+        1
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.model_spline_grids": {
+      "bytes": 48,
+      "description": "Decoded spline lower/upper/order triples; zero pads inactive columns",
+      "dtype": "<f8",
+      "offset": 2036,
+      "path": "arrays.bin",
+      "sha256": "dd1462183af574001f55122361f4facb94dc422ca059bb9c5f80f8b61c2f2cb3",
+      "shape": [
+        1,
+        2,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.normalized_features": {
+      "bytes": 384,
+      "description": "Feature-normalizer forward result",
+      "dtype": "<f8",
+      "offset": 3820,
+      "path": "arrays.bin",
+      "sha256": "d8a2bc5bbaf39747ae7ffca58a16a16883f23f3e9ed75842752a6bcc2a0fdc74",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "normalized_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.raw_features": {
+      "bytes": 384,
+      "description": "Combined semilocal and optional NLDF raw features",
+      "dtype": "<f8",
+      "offset": 3436,
+      "path": "arrays.bin",
+      "sha256": "d8a2bc5bbaf39747ae7ffca58a16a16883f23f3e9ed75842752a6bcc2a0fdc74",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.rho_baseline_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout rho_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 2156,
+      "path": "arrays.bin",
+      "sha256": "80ddf8e15644160342b58543c07fc597950245d6be9d8a228d2dcae6676dde5e",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.rho_feature_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout rho_feature_sg input",
+      "dtype": "<f8",
+      "offset": 2604,
+      "path": "arrays.bin",
+      "sha256": "0fc35365ab9b2bdf293c00f94a001874690723b498d669654c336ae7b2d9b2b3",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.semilocal_raw_features": {
+      "bytes": 384,
+      "description": "SemilocalPlan2 raw np/npa features",
+      "dtype": "<f8",
+      "offset": 3052,
+      "path": "arrays.bin",
+      "sha256": "d8a2bc5bbaf39747ae7ffca58a16a16883f23f3e9ed75842752a6bcc2a0fdc74",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.sigma_baseline_xg": {
+      "bytes": 192,
+      "description": "Deterministic ABACUS-layout sigma_baseline_xg input",
+      "dtype": "<f8",
+      "offset": 2284,
+      "path": "arrays.bin",
+      "sha256": "9358420239f412cf14f8af57b44cef2fa8728b066879f152d1a67836b31d70ef",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.sigma_feature_xg": {
+      "bytes": 192,
+      "description": "Deterministic ABACUS-layout sigma_feature_xg input",
+      "dtype": "<f8",
+      "offset": 2732,
+      "path": "arrays.bin",
+      "sha256": "0eab2ae4e675b7878aed2e75c85e4802cc9de6d9c3c38da1518ee00b2d3ed21d",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.spline_derivatives": {
+      "bytes": 256,
+      "description": "Spline residual derivatives with respect to transformed descriptors",
+      "dtype": "<f8",
+      "offset": 4588,
+      "path": "arrays.bin",
+      "sha256": "a9abd64851c5ae118da46bf8565de56dc692db600f89d6e5a6fdca08fc0d700e",
+      "shape": [
+        16,
+        2
+      ],
+      "stage": "spline_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.spline_forward": {
+      "bytes": 128,
+      "description": "SplineSetEvaluator residual before baselines",
+      "dtype": "<f8",
+      "offset": 4460,
+      "path": "arrays.bin",
+      "sha256": "2de2b7c392239d22f420c6b1f25cd49d7ab941c236c12ad2f04ada2209f712ac",
+      "shape": [
+        16
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.spline_reverse_raw": {
+      "bytes": 384,
+      "description": "Spline derivative reversed through feature transforms",
+      "dtype": "<f8",
+      "offset": 4844,
+      "path": "arrays.bin",
+      "sha256": "06587038030b59e3841856599ba7a24b52363ef32cd8de1cf7794a66c51e6712",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.tau_baseline_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout tau_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 2476,
+      "path": "arrays.bin",
+      "sha256": "0887a193017a28ba50e0999be9dc036d4a8e8f5aa56d2097cc2204a1d0ace034",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.tau_feature_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout tau_feature_sg input",
+      "dtype": "<f8",
+      "offset": 2924,
+      "path": "arrays.bin",
+      "sha256": "d267c18b5e0cb1417f20eb3eb13df7c9945f6a2966818dfa8cb1e571261c29e9",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "sl_mgga_spin2_valence.transformed_descriptors": {
+      "bytes": 256,
+      "description": "UMap/VMap/ZMap transformed descriptors",
+      "dtype": "<f8",
+      "offset": 4204,
+      "path": "arrays.bin",
+      "sha256": "abff87db7345400d8a131469e5d8937c47cc92e198adaa4f0597fdb7808bfc4b",
+      "shape": [
+        16,
+        2
+      ],
+      "stage": "transformed_descriptors",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.vrho_baseline_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 6124,
+      "path": "arrays.bin",
+      "sha256": "34ed7e1c576e92c4aa3b63ef130934fe9a8beab85206f7ca915855327270302a",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "sl_mgga_spin2_valence.vrho_feature_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_feature_sg output",
+      "dtype": "<f8",
+      "offset": 6636,
+      "path": "arrays.bin",
+      "sha256": "4508bf86979f595552df442cbda62de0c109c5bfc62b6f28db9bc125ce7ecb49",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.vrho_total_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_total_sg output",
+      "dtype": "<f8",
+      "offset": 7148,
+      "path": "arrays.bin",
+      "sha256": "dc110d60aa3c56767327978fb8c647076afe2171764113c8ee47b0bf66bf77e0",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.vsigma_baseline_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_baseline_xg output",
+      "dtype": "<f8",
+      "offset": 6252,
+      "path": "arrays.bin",
+      "sha256": "21aa5cd2dafd6c9a57c6aba7a88c265002e8e38c650e75d9a85149982c4d4411",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "sl_mgga_spin2_valence.vsigma_feature_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_feature_xg output",
+      "dtype": "<f8",
+      "offset": 6764,
+      "path": "arrays.bin",
+      "sha256": "96cd4b0af142748b4424cc348a7acd0283b6a5913582263f7ab9717ed38c502c",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.vsigma_total_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_total_xg output",
+      "dtype": "<f8",
+      "offset": 7276,
+      "path": "arrays.bin",
+      "sha256": "4e7a93242c45a5dcaa309d40d683dc7ee2551660c9c598c5933f5c912411f48a",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.vtau_baseline_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vtau_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 6444,
+      "path": "arrays.bin",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "sl_mgga_spin2_valence.vtau_feature_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vtau_feature_sg output",
+      "dtype": "<f8",
+      "offset": 6956,
+      "path": "arrays.bin",
+      "sha256": "363d53fc963620a2ab42dabc829d96d58ede927000049b18ae8eb7abd129932d",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "sl_mgga_spin2_valence.vtau_total_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vtau_total_sg output",
+      "dtype": "<f8",
+      "offset": 7468,
+      "path": "arrays.bin",
+      "sha256": "363d53fc963620a2ab42dabc829d96d58ede927000049b18ae8eb7abd129932d",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.exc_baseline_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_baseline_g output",
+      "dtype": "<f8",
+      "offset": 32964,
+      "path": "arrays.bin",
+      "sha256": "e1ba7598835a25f8b92d4298f3b0f403edde6d9d240de62bd6ec75ccdbb951a3",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.exc_feature_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_feature_g output",
+      "dtype": "<f8",
+      "offset": 33476,
+      "path": "arrays.bin",
+      "sha256": "c8ee81b6bd9da6dff5b9802484b36204e55effb378eadfc41a47a21f373c8d26",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.exc_total_g": {
+      "bytes": 64,
+      "description": "Role-separated bridge exc_total_g output",
+      "dtype": "<f8",
+      "offset": 33988,
+      "path": "arrays.bin",
+      "sha256": "cf736c25e2109cc72a61eda12cde6379389194f56c677004f9885d62a5c3595c",
+      "shape": [
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.integrated_results": {
+      "bytes": 48,
+      "description": "Volume-integrated ABACUS bridge energy and potential contractions",
+      "dtype": "<f8",
+      "offset": 34500,
+      "path": "arrays.bin",
+      "sha256": "9f2dfc5931ea2098ba7facb019756bca2082e4a344fd594c5284e8a3b8fd53b0",
+      "shape": [
+        6
+      ],
+      "stage": "integrated_results",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.mapped_derivative_normalized_unscaled": {
+      "bytes": 768,
+      "description": "MappedXC derivative with respect to normalized features",
+      "dtype": "<f8",
+      "offset": 30020,
+      "path": "arrays.bin",
+      "sha256": "b1eae98b3b52c91cc7fc243e612f7b285e0e8b6d9b73d719d0a2189271a76f57",
+      "shape": [
+        2,
+        6,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.mapped_derivative_raw_unscaled": {
+      "bytes": 768,
+      "description": "MappedXC derivative reversed through feature normalizers",
+      "dtype": "<f8",
+      "offset": 30788,
+      "path": "arrays.bin",
+      "sha256": "39d2acd78bb9e51720545a2b6274d24bce64f9d282ab6ce19ae6e031face7135",
+      "shape": [
+        2,
+        6,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.mapped_exc_unscaled": {
+      "bytes": 64,
+      "description": "MappedXC output before bridge runtime exchange scaling",
+      "dtype": "<f8",
+      "offset": 29956,
+      "path": "arrays.bin",
+      "sha256": "d34cef5c606590978234c2e177594cc3793ce1638024859bdb95dda7d86c1182",
+      "shape": [
+        8
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.model_coefficient_samples": {
+      "bytes": 792,
+      "description": "Nine deterministic flat samples from every decoded coefficient array",
+      "dtype": "<f8",
+      "offset": 24172,
+      "path": "arrays.bin",
+      "sha256": "2299ba830e67afd35f2011280806e2493331deb8a052ba41cc166ffd64e2cb68",
+      "shape": [
+        11,
+        9
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.model_ind_set_dims": {
+      "bytes": 44,
+      "description": "Active descriptor count per spline term",
+      "dtype": "<i4",
+      "offset": 23204,
+      "path": "arrays.bin",
+      "sha256": "4fe77d8e520bd1b138c4c645a3b93fcb6b881438040d0911a78a36b19b8f4fca",
+      "shape": [
+        11
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.model_ind_sets": {
+      "bytes": 132,
+      "description": "Decoded spline descriptor indices; -1 pads inactive columns",
+      "dtype": "<i4",
+      "offset": 23248,
+      "path": "arrays.bin",
+      "sha256": "a8f2bf966e00a6d054d8246093ad843869d6aa1af28ea6ca648590e725d6d2ba",
+      "shape": [
+        11,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.model_scale": {
+      "bytes": 88,
+      "description": "Decoded spline term scales",
+      "dtype": "<f8",
+      "offset": 23116,
+      "path": "arrays.bin",
+      "sha256": "1ae39ec21598ba494b1045d26270c254d54981ddc7702ab91928362273299045",
+      "shape": [
+        11
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.model_spline_grids": {
+      "bytes": 792,
+      "description": "Decoded spline lower/upper/order triples; zero pads inactive columns",
+      "dtype": "<f8",
+      "offset": 23380,
+      "path": "arrays.bin",
+      "sha256": "760b173fe23f865fbfd7f65d623cb54c8e7ce3fd1a692dcd65e69f8a8cab868a",
+      "shape": [
+        11,
+        3,
+        3
+      ],
+      "stage": "decoded_model_arrays",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.nldf_convolution_features": {
+      "bytes": 384,
+      "description": "Version-J convolved NLDF features",
+      "dtype": "<f8",
+      "offset": 31812,
+      "path": "arrays.bin",
+      "sha256": "a45186d5eae44e0f288f35ec46e4484f98e85e75803600e1aeeeb8fb561bafc5",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "nldf_convolution_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.nldf_convolution_function": {
+      "bytes": 128,
+      "description": "Version-J real-space function sent to convolution",
+      "dtype": "<f8",
+      "offset": 31684,
+      "path": "arrays.bin",
+      "sha256": "0fc35365ab9b2bdf293c00f94a001874690723b498d669654c336ae7b2d9b2b3",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "nldf_convolution_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.nldf_convolution_function_derivatives": {
+      "bytes": 384,
+      "description": "Convolution-function derivatives with respect to rho/same-spin sigma/optional tau",
+      "dtype": "<f8",
+      "offset": 32580,
+      "path": "arrays.bin",
+      "sha256": "d46a1536a0bd170c0f812744ac07195db70d5ff79d7e5832f558a0ae4f4988dd",
+      "shape": [
+        3,
+        2,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.nldf_interpolation_argument_derivatives": {
+      "bytes": 384,
+      "description": "Interpolation-argument derivatives with respect to rho/same-spin sigma/optional tau",
+      "dtype": "<f8",
+      "offset": 32196,
+      "path": "arrays.bin",
+      "sha256": "e694d2a3e7f91a745d46cf1b8f12d96ecf73cd1b9e3ef21304e53653e7e6faa2",
+      "shape": [
+        3,
+        2,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.nldf_interpolation_arguments": {
+      "bytes": 128,
+      "description": "Version-J source interpolation arguments",
+      "dtype": "<f8",
+      "offset": 31556,
+      "path": "arrays.bin",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "nldf_interpolation_arguments",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.normalized_features": {
+      "bytes": 768,
+      "description": "Feature-normalizer forward result",
+      "dtype": "<f8",
+      "offset": 27012,
+      "path": "arrays.bin",
+      "sha256": "4aa74b95634aa847ae5c6a99a37982fcd03a2ba387837bdbbd7a01eee81bac30",
+      "shape": [
+        2,
+        6,
+        8
+      ],
+      "stage": "normalized_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.raw_features": {
+      "bytes": 768,
+      "description": "Combined semilocal and optional NLDF raw features",
+      "dtype": "<f8",
+      "offset": 26244,
+      "path": "arrays.bin",
+      "sha256": "4ae8f234ec755b4c4222331a450126f905b66d9aead51b0a97d14a0a580a80fd",
+      "shape": [
+        2,
+        6,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.rho_baseline_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout rho_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 24964,
+      "path": "arrays.bin",
+      "sha256": "80ddf8e15644160342b58543c07fc597950245d6be9d8a228d2dcae6676dde5e",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.rho_feature_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout rho_feature_sg input",
+      "dtype": "<f8",
+      "offset": 25412,
+      "path": "arrays.bin",
+      "sha256": "0fc35365ab9b2bdf293c00f94a001874690723b498d669654c336ae7b2d9b2b3",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.semilocal_raw_features": {
+      "bytes": 384,
+      "description": "SemilocalPlan2 raw np/npa features",
+      "dtype": "<f8",
+      "offset": 25860,
+      "path": "arrays.bin",
+      "sha256": "d8a2bc5bbaf39747ae7ffca58a16a16883f23f3e9ed75842752a6bcc2a0fdc74",
+      "shape": [
+        2,
+        3,
+        8
+      ],
+      "stage": "semilocal_raw_features",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.sigma_baseline_xg": {
+      "bytes": 192,
+      "description": "Deterministic ABACUS-layout sigma_baseline_xg input",
+      "dtype": "<f8",
+      "offset": 25092,
+      "path": "arrays.bin",
+      "sha256": "9358420239f412cf14f8af57b44cef2fa8728b066879f152d1a67836b31d70ef",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.sigma_feature_xg": {
+      "bytes": 192,
+      "description": "Deterministic ABACUS-layout sigma_feature_xg input",
+      "dtype": "<f8",
+      "offset": 25540,
+      "path": "arrays.bin",
+      "sha256": "0eab2ae4e675b7878aed2e75c85e4802cc9de6d9c3c38da1518ee00b2d3ed21d",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.spline_derivatives": {
+      "bytes": 640,
+      "description": "Spline residual derivatives with respect to transformed descriptors",
+      "dtype": "<f8",
+      "offset": 28548,
+      "path": "arrays.bin",
+      "sha256": "cb967e5d98c16b99d8650c8b64aee432a140891353eee28371cf4ea205e98665",
+      "shape": [
+        16,
+        5
+      ],
+      "stage": "spline_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.spline_forward": {
+      "bytes": 128,
+      "description": "SplineSetEvaluator residual before baselines",
+      "dtype": "<f8",
+      "offset": 28420,
+      "path": "arrays.bin",
+      "sha256": "be95ab8dc5e90d0073f440470eddfcf37773522cdf2ea70a77f9ee5378b59b4f",
+      "shape": [
+        16
+      ],
+      "stage": "spline_forward",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.spline_reverse_raw": {
+      "bytes": 768,
+      "description": "Spline derivative reversed through feature transforms",
+      "dtype": "<f8",
+      "offset": 29188,
+      "path": "arrays.bin",
+      "sha256": "5651949e8645b9652866ca1b948d1e3b2fea25fdd69c3274b54deb28ec46ec7a",
+      "shape": [
+        2,
+        6,
+        8
+      ],
+      "stage": "reverse_feature_derivatives",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.tau_baseline_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout tau_baseline_sg input",
+      "dtype": "<f8",
+      "offset": 25284,
+      "path": "arrays.bin",
+      "sha256": "0887a193017a28ba50e0999be9dc036d4a8e8f5aa56d2097cc2204a1d0ace034",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.tau_feature_sg": {
+      "bytes": 128,
+      "description": "Deterministic ABACUS-layout tau_feature_sg input",
+      "dtype": "<f8",
+      "offset": 25732,
+      "path": "arrays.bin",
+      "sha256": "d267c18b5e0cb1417f20eb3eb13df7c9945f6a2966818dfa8cb1e571261c29e9",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 1e-12,
+        "rtol": 1e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.transformed_descriptors": {
+      "bytes": 640,
+      "description": "UMap/VMap/ZMap transformed descriptors",
+      "dtype": "<f8",
+      "offset": 27780,
+      "path": "arrays.bin",
+      "sha256": "9bef9410b22f00ebc4b281b9f715033c43451fd713b1ae20d29b101ca25076ec",
+      "shape": [
+        16,
+        5
+      ],
+      "stage": "transformed_descriptors",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vrho_baseline_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 33028,
+      "path": "arrays.bin",
+      "sha256": "34ed7e1c576e92c4aa3b63ef130934fe9a8beab85206f7ca915855327270302a",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vrho_feature_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_feature_sg output",
+      "dtype": "<f8",
+      "offset": 33540,
+      "path": "arrays.bin",
+      "sha256": "1b661f01cdd2c4e4dc3345969466d68a01850a0b6b1d67d72b4dedd78ec3ecd4",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vrho_total_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vrho_total_sg output",
+      "dtype": "<f8",
+      "offset": 34052,
+      "path": "arrays.bin",
+      "sha256": "841cd58d55232eeb3add98511b53525680e06c15d41325bc02584a3aae39e0d2",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vsigma_baseline_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_baseline_xg output",
+      "dtype": "<f8",
+      "offset": 33156,
+      "path": "arrays.bin",
+      "sha256": "21aa5cd2dafd6c9a57c6aba7a88c265002e8e38c650e75d9a85149982c4d4411",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vsigma_feature_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_feature_xg output",
+      "dtype": "<f8",
+      "offset": 33668,
+      "path": "arrays.bin",
+      "sha256": "e68e140b64c7cf1426bd6342b913e426a47b4ee89f30ec3388b9e948ad8a42ab",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vsigma_total_xg": {
+      "bytes": 192,
+      "description": "Role-separated bridge vsigma_total_xg output",
+      "dtype": "<f8",
+      "offset": 34180,
+      "path": "arrays.bin",
+      "sha256": "c379d122aa0e5019b3de097a92c3ad7c2cb3d0fe5001da23b960c6beb0cfa2af",
+      "shape": [
+        3,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vtau_baseline_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vtau_baseline_sg output",
+      "dtype": "<f8",
+      "offset": 33348,
+      "path": "arrays.bin",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-12,
+        "rtol": 2e-11
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vtau_feature_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vtau_feature_sg output",
+      "dtype": "<f8",
+      "offset": 33860,
+      "path": "arrays.bin",
+      "sha256": "c3686ad5806e3445e8350f2ea9ca5036e6ac02823b565c30d8f5a2112ddcb065",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    },
+    "trained_nl_mgga_spin2_valence.vtau_total_sg": {
+      "bytes": 128,
+      "description": "Role-separated bridge vtau_total_sg output",
+      "dtype": "<f8",
+      "offset": 34372,
+      "path": "arrays.bin",
+      "sha256": "c3686ad5806e3445e8350f2ea9ca5036e6ac02823b565c30d8f5a2112ddcb065",
+      "shape": [
+        2,
+        8
+      ],
+      "stage": "dual_density_role_outputs",
+      "tolerance": {
+        "atol": 2e-11,
+        "rtol": 2e-10
+      }
+    }
+  },
+  "byte_order": "little",
+  "cases": [
+    {
+      "array_ids": [
+        "sl_gga_spin1_valence.model_scale",
+        "sl_gga_spin1_valence.model_ind_set_dims",
+        "sl_gga_spin1_valence.model_ind_sets",
+        "sl_gga_spin1_valence.model_spline_grids",
+        "sl_gga_spin1_valence.model_coefficient_samples",
+        "sl_gga_spin1_valence.rho_baseline_sg",
+        "sl_gga_spin1_valence.sigma_baseline_xg",
+        "sl_gga_spin1_valence.rho_feature_sg",
+        "sl_gga_spin1_valence.sigma_feature_xg",
+        "sl_gga_spin1_valence.semilocal_raw_features",
+        "sl_gga_spin1_valence.raw_features",
+        "sl_gga_spin1_valence.normalized_features",
+        "sl_gga_spin1_valence.transformed_descriptors",
+        "sl_gga_spin1_valence.spline_forward",
+        "sl_gga_spin1_valence.spline_derivatives",
+        "sl_gga_spin1_valence.spline_reverse_raw",
+        "sl_gga_spin1_valence.mapped_exc_unscaled",
+        "sl_gga_spin1_valence.mapped_derivative_normalized_unscaled",
+        "sl_gga_spin1_valence.mapped_derivative_raw_unscaled",
+        "sl_gga_spin1_valence.exc_baseline_g",
+        "sl_gga_spin1_valence.vrho_baseline_sg",
+        "sl_gga_spin1_valence.vsigma_baseline_xg",
+        "sl_gga_spin1_valence.exc_feature_g",
+        "sl_gga_spin1_valence.vrho_feature_sg",
+        "sl_gga_spin1_valence.vsigma_feature_xg",
+        "sl_gga_spin1_valence.exc_total_g",
+        "sl_gga_spin1_valence.vrho_total_sg",
+        "sl_gga_spin1_valence.vsigma_total_xg",
+        "sl_gga_spin1_valence.integrated_results"
+      ],
+      "coverage": [
+        "gga",
+        "non_nldf",
+        "spin_unpolarized",
+        "valence"
+      ],
+      "grid": {
+        "cell_cv": [
+          [
+            4.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            4.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "grid_weight": 8.0,
+        "layout": "spin-major C order",
+        "shape": [
+          2,
+          2,
+          2
+        ],
+        "volume": 64.0
+      },
+      "id": "sl_gga_spin1_valence",
+      "integrated_result_labels": [
+        "grid_weight",
+        "exc_baseline_volume_integral",
+        "exc_feature_volume_integral",
+        "exc_total_volume_integral",
+        "baseline_potential_density_contraction",
+        "feature_potential_density_contraction"
+      ],
+      "loader_metadata": {
+        "ckernel": "GGA_C_PBE",
+        "exc_convention": "energy_density",
+        "feature_density_policy_expected": "valence",
+        "feature_density_policy_source": "default_valence",
+        "has_nldf": false,
+        "has_sdmx": false,
+        "has_sl": true,
+        "is_mgga": false,
+        "ml_exchange_scale": 1.0,
+        "ml_runtime_scale": 0.25,
+        "nfeat": 2,
+        "nfeat_nldf": 0,
+        "nfeat_sdmx": 0,
+        "nfeat_sl": 2,
+        "runtime_policy": "density_bridge",
+        "xkernel": "GGA_X_PBE"
+      },
+      "model_structure": {
+        "additive_baseline": "ciderpress.dft.baselines.gga_x_chachiyo",
+        "coefficient_arrays": [
+          {
+            "byte_count": 416,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              6,
+              12,
+              19,
+              25,
+              31,
+              38,
+              44,
+              51
+            ],
+            "sha256": "201e3d7fde044e8bbbfba692352868f370171b80456764079ec65244a311687a",
+            "shape": [
+              52
+            ],
+            "term": 0
+          }
+        ],
+        "evaluator_class": "ciderpress.dft.xc_evaluator.SplineSetEvaluator",
+        "feature_maps": [
+          {
+            "_bounds": [
+              0,
+              1
+            ],
+            "class": "ciderpress.dft.transform_data.UMap",
+            "effective_bounds": [
+              0,
+              1
+            ],
+            "gamma": 0.24308265985843178,
+            "i": 1
+          }
+        ],
+        "kernel_class": "ciderpress.dft.xc_evaluator.MappedDFTKernel",
+        "kernel_mode": "SEP",
+        "kernel_output_scale": 1.0,
+        "multiplicative_baseline": "ciderpress.dft.baselines.lda_x",
+        "normalizers": [
+          null,
+          null
+        ],
+        "root_class": "ciderpress.dft.xc_evaluator.MappedXC",
+        "semilocal_level": "GGA",
+        "semilocal_mode": "np",
+        "spline_const": 0.0,
+        "spline_nterms": 1
+      },
+      "requested_feature_density_policy": "valence",
+      "source_model": {
+        "bytes": 3249,
+        "path": "functionals/CIDER23X_SL_GGA.yaml",
+        "sha256": "2e518727b836cd806c4f27c5566e9401b8c15db77182e34380728efdea24f0ce"
+      },
+      "stages": [
+        "decoded_model_arrays",
+        "dual_density_role_outputs",
+        "integrated_results",
+        "loader_metadata",
+        "normalized_features",
+        "reverse_feature_derivatives",
+        "semilocal_raw_features",
+        "spline_derivatives",
+        "spline_forward",
+        "transformed_descriptors"
+      ]
+    },
+    {
+      "array_ids": [
+        "sl_mgga_spin2_valence.model_scale",
+        "sl_mgga_spin2_valence.model_ind_set_dims",
+        "sl_mgga_spin2_valence.model_ind_sets",
+        "sl_mgga_spin2_valence.model_spline_grids",
+        "sl_mgga_spin2_valence.model_coefficient_samples",
+        "sl_mgga_spin2_valence.rho_baseline_sg",
+        "sl_mgga_spin2_valence.sigma_baseline_xg",
+        "sl_mgga_spin2_valence.tau_baseline_sg",
+        "sl_mgga_spin2_valence.rho_feature_sg",
+        "sl_mgga_spin2_valence.sigma_feature_xg",
+        "sl_mgga_spin2_valence.tau_feature_sg",
+        "sl_mgga_spin2_valence.semilocal_raw_features",
+        "sl_mgga_spin2_valence.raw_features",
+        "sl_mgga_spin2_valence.normalized_features",
+        "sl_mgga_spin2_valence.transformed_descriptors",
+        "sl_mgga_spin2_valence.spline_forward",
+        "sl_mgga_spin2_valence.spline_derivatives",
+        "sl_mgga_spin2_valence.spline_reverse_raw",
+        "sl_mgga_spin2_valence.mapped_exc_unscaled",
+        "sl_mgga_spin2_valence.mapped_derivative_normalized_unscaled",
+        "sl_mgga_spin2_valence.mapped_derivative_raw_unscaled",
+        "sl_mgga_spin2_valence.exc_baseline_g",
+        "sl_mgga_spin2_valence.vrho_baseline_sg",
+        "sl_mgga_spin2_valence.vsigma_baseline_xg",
+        "sl_mgga_spin2_valence.vtau_baseline_sg",
+        "sl_mgga_spin2_valence.exc_feature_g",
+        "sl_mgga_spin2_valence.vrho_feature_sg",
+        "sl_mgga_spin2_valence.vsigma_feature_xg",
+        "sl_mgga_spin2_valence.vtau_feature_sg",
+        "sl_mgga_spin2_valence.exc_total_g",
+        "sl_mgga_spin2_valence.vrho_total_sg",
+        "sl_mgga_spin2_valence.vsigma_total_xg",
+        "sl_mgga_spin2_valence.vtau_total_sg",
+        "sl_mgga_spin2_valence.integrated_results"
+      ],
+      "coverage": [
+        "mgga",
+        "non_nldf",
+        "spin_polarized",
+        "valence"
+      ],
+      "grid": {
+        "cell_cv": [
+          [
+            4.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            4.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "grid_weight": 8.0,
+        "layout": "spin-major C order",
+        "shape": [
+          2,
+          2,
+          2
+        ],
+        "volume": 64.0
+      },
+      "id": "sl_mgga_spin2_valence",
+      "integrated_result_labels": [
+        "grid_weight",
+        "exc_baseline_volume_integral",
+        "exc_feature_volume_integral",
+        "exc_total_volume_integral",
+        "baseline_potential_density_contraction",
+        "feature_potential_density_contraction"
+      ],
+      "loader_metadata": {
+        "ckernel": "GGA_C_PBE",
+        "exc_convention": "energy_density",
+        "feature_density_policy_expected": "valence",
+        "feature_density_policy_source": "default_valence",
+        "has_nldf": false,
+        "has_sdmx": false,
+        "has_sl": true,
+        "is_mgga": true,
+        "ml_exchange_scale": 1.0,
+        "ml_runtime_scale": 0.25,
+        "nfeat": 3,
+        "nfeat_nldf": 0,
+        "nfeat_sdmx": 0,
+        "nfeat_sl": 3,
+        "runtime_policy": "density_bridge",
+        "xkernel": "GGA_X_PBE"
+      },
+      "model_structure": {
+        "additive_baseline": "ciderpress.dft.baselines.gga_x_chachiyo",
+        "coefficient_arrays": [
+          {
+            "byte_count": 18304,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              285,
+              571,
+              857,
+              1143,
+              1429,
+              1715,
+              2001,
+              2287
+            ],
+            "sha256": "4cc5b4fd269dcc4366bfe1e4f797158d0422d8aae8302508c45a6e3bc900145c",
+            "shape": [
+              52,
+              44
+            ],
+            "term": 0
+          }
+        ],
+        "evaluator_class": "ciderpress.dft.xc_evaluator.SplineSetEvaluator",
+        "feature_maps": [
+          {
+            "_bounds": [
+              0,
+              1
+            ],
+            "class": "ciderpress.dft.transform_data.UMap",
+            "effective_bounds": [
+              0,
+              1
+            ],
+            "gamma": 0.24308265985843178,
+            "i": 1
+          },
+          {
+            "center": 1.0,
+            "class": "ciderpress.dft.transform_data.ZMap",
+            "effective_bounds": [
+              -1.0,
+              1.0
+            ],
+            "gamma": 1,
+            "i": 2,
+            "n": 1,
+            "scale": 2.0
+          }
+        ],
+        "kernel_class": "ciderpress.dft.xc_evaluator.MappedDFTKernel",
+        "kernel_mode": "SEP",
+        "kernel_output_scale": 1.0,
+        "multiplicative_baseline": "ciderpress.dft.baselines.lda_x",
+        "normalizers": [
+          null,
+          null,
+          null
+        ],
+        "root_class": "ciderpress.dft.xc_evaluator.MappedXC",
+        "semilocal_level": "MGGA",
+        "semilocal_mode": "npa",
+        "spline_const": 0.0,
+        "spline_nterms": 1
+      },
+      "requested_feature_density_policy": "valence",
+      "source_model": {
+        "bytes": 30275,
+        "path": "functionals/CIDER23X_SL_MGGA.yaml",
+        "sha256": "fdd60d58ae0f981dcdf64ec24437454bdc334e65b162e379e3630bb99dc82bba"
+      },
+      "stages": [
+        "decoded_model_arrays",
+        "dual_density_role_outputs",
+        "integrated_results",
+        "loader_metadata",
+        "normalized_features",
+        "reverse_feature_derivatives",
+        "semilocal_raw_features",
+        "spline_derivatives",
+        "spline_forward",
+        "transformed_descriptors"
+      ]
+    },
+    {
+      "array_ids": [
+        "nl_gga_spin2_valence_pseudo_core.model_scale",
+        "nl_gga_spin2_valence_pseudo_core.model_ind_set_dims",
+        "nl_gga_spin2_valence_pseudo_core.model_ind_sets",
+        "nl_gga_spin2_valence_pseudo_core.model_spline_grids",
+        "nl_gga_spin2_valence_pseudo_core.model_coefficient_samples",
+        "nl_gga_spin2_valence_pseudo_core.rho_baseline_sg",
+        "nl_gga_spin2_valence_pseudo_core.sigma_baseline_xg",
+        "nl_gga_spin2_valence_pseudo_core.rho_feature_sg",
+        "nl_gga_spin2_valence_pseudo_core.sigma_feature_xg",
+        "nl_gga_spin2_valence_pseudo_core.semilocal_raw_features",
+        "nl_gga_spin2_valence_pseudo_core.raw_features",
+        "nl_gga_spin2_valence_pseudo_core.normalized_features",
+        "nl_gga_spin2_valence_pseudo_core.transformed_descriptors",
+        "nl_gga_spin2_valence_pseudo_core.spline_forward",
+        "nl_gga_spin2_valence_pseudo_core.spline_derivatives",
+        "nl_gga_spin2_valence_pseudo_core.spline_reverse_raw",
+        "nl_gga_spin2_valence_pseudo_core.mapped_exc_unscaled",
+        "nl_gga_spin2_valence_pseudo_core.mapped_derivative_normalized_unscaled",
+        "nl_gga_spin2_valence_pseudo_core.mapped_derivative_raw_unscaled",
+        "nl_gga_spin2_valence_pseudo_core.nldf_interpolation_arguments",
+        "nl_gga_spin2_valence_pseudo_core.nldf_convolution_function",
+        "nl_gga_spin2_valence_pseudo_core.nldf_convolution_features",
+        "nl_gga_spin2_valence_pseudo_core.nldf_interpolation_argument_derivatives",
+        "nl_gga_spin2_valence_pseudo_core.nldf_convolution_function_derivatives",
+        "nl_gga_spin2_valence_pseudo_core.exc_baseline_g",
+        "nl_gga_spin2_valence_pseudo_core.vrho_baseline_sg",
+        "nl_gga_spin2_valence_pseudo_core.vsigma_baseline_xg",
+        "nl_gga_spin2_valence_pseudo_core.exc_feature_g",
+        "nl_gga_spin2_valence_pseudo_core.vrho_feature_sg",
+        "nl_gga_spin2_valence_pseudo_core.vsigma_feature_xg",
+        "nl_gga_spin2_valence_pseudo_core.exc_total_g",
+        "nl_gga_spin2_valence_pseudo_core.vrho_total_sg",
+        "nl_gga_spin2_valence_pseudo_core.vsigma_total_xg",
+        "nl_gga_spin2_valence_pseudo_core.integrated_results"
+      ],
+      "coverage": [
+        "gga",
+        "nldf",
+        "spin_polarized",
+        "valence_pseudo_core"
+      ],
+      "grid": {
+        "cell_cv": [
+          [
+            4.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            4.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "grid_weight": 8.0,
+        "layout": "spin-major C order",
+        "shape": [
+          2,
+          2,
+          2
+        ],
+        "volume": 64.0
+      },
+      "id": "nl_gga_spin2_valence_pseudo_core",
+      "integrated_result_labels": [
+        "grid_weight",
+        "exc_baseline_volume_integral",
+        "exc_feature_volume_integral",
+        "exc_total_volume_integral",
+        "baseline_potential_density_contraction",
+        "feature_potential_density_contraction"
+      ],
+      "loader_metadata": {
+        "ckernel": "GGA_C_PBE",
+        "exc_convention": "energy_density",
+        "feature_density_policy_expected": "valence_pseudo_core",
+        "feature_density_policy_source": "inferred_legacy_cider23x",
+        "has_nldf": true,
+        "has_sdmx": false,
+        "has_sl": true,
+        "is_mgga": false,
+        "ml_exchange_scale": 1.0,
+        "ml_runtime_scale": 0.25,
+        "nfeat": 5,
+        "nfeat_nldf": 3,
+        "nfeat_sdmx": 0,
+        "nfeat_sl": 2,
+        "runtime_policy": "density_bridge",
+        "xkernel": "GGA_X_PBE"
+      },
+      "model_structure": {
+        "additive_baseline": "ciderpress.dft.baselines.gga_x_chachiyo",
+        "coefficient_arrays": [
+          {
+            "byte_count": 216,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              3,
+              6,
+              9,
+              13,
+              16,
+              19,
+              22,
+              26
+            ],
+            "sha256": "38bc3a7464ac5409ed8c1054b72f49d92a9744f1a41a583a5e31e1dcd925ed3d",
+            "shape": [
+              27
+            ],
+            "term": 0
+          },
+          {
+            "byte_count": 17712,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              276,
+              553,
+              829,
+              1106,
+              1383,
+              1659,
+              1936,
+              2213
+            ],
+            "sha256": "d0e9c27b3756f6f0672819c4a3b690c99b8eec2f0547026c347f39b5091634e5",
+            "shape": [
+              27,
+              82
+            ],
+            "term": 1
+          },
+          {
+            "byte_count": 16416,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              256,
+              512,
+              769,
+              1025,
+              1281,
+              1538,
+              1794,
+              2051
+            ],
+            "sha256": "d58ba4743f6e234935b7db6eb8e9a2586ae51e6501e1ad17eb6700b473bcb798",
+            "shape": [
+              27,
+              76
+            ],
+            "term": 2
+          },
+          {
+            "byte_count": 14904,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              232,
+              465,
+              698,
+              931,
+              1163,
+              1396,
+              1629,
+              1862
+            ],
+            "sha256": "98f44836fdaedf66eefee3b2cb1f0e027482f9348c611d856613e9e8207e1623",
+            "shape": [
+              27,
+              69
+            ],
+            "term": 3
+          },
+          {
+            "byte_count": 1346112,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              21032,
+              42065,
+              63098,
+              84131,
+              105164,
+              126197,
+              147230,
+              168263
+            ],
+            "sha256": "751ae682782477839deceec02647040a56c14b40f1aa14e21bc8739fd8804706",
+            "shape": [
+              27,
+              82,
+              76
+            ],
+            "term": 4
+          },
+          {
+            "byte_count": 1222128,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              19095,
+              38191,
+              57286,
+              76382,
+              95478,
+              114573,
+              133669,
+              152765
+            ],
+            "sha256": "07d8f7cee565fc7473984a8ed897a10b3e4761bc39bd146b472913d697d145c0",
+            "shape": [
+              27,
+              82,
+              69
+            ],
+            "term": 5
+          },
+          {
+            "byte_count": 1132704,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              17698,
+              35396,
+              53095,
+              70793,
+              88491,
+              106190,
+              123888,
+              141587
+            ],
+            "sha256": "c9978a824696534ff7e1076c1f5069e2aca47514fb2e2f1c378b107baee97d34",
+            "shape": [
+              27,
+              76,
+              69
+            ],
+            "term": 6
+          }
+        ],
+        "evaluator_class": "ciderpress.dft.xc_evaluator.SplineSetEvaluator",
+        "feature_maps": [
+          {
+            "_bounds": [
+              0,
+              1
+            ],
+            "class": "ciderpress.dft.transform_data.UMap",
+            "effective_bounds": [
+              0,
+              1
+            ],
+            "gamma": 0.24308265985843178,
+            "i": 1
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 2,
+            "scale": 1.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 3,
+            "scale": 1.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 4,
+            "scale": 1.0
+          }
+        ],
+        "kernel_class": "ciderpress.dft.xc_evaluator.MappedDFTKernel",
+        "kernel_mode": "SEP",
+        "kernel_output_scale": 1.0,
+        "multiplicative_baseline": "ciderpress.dft.baselines.lda_x",
+        "nldf_plan": {
+          "alpha0": 0.3266799345762015,
+          "alphas": [
+            0.3266799345762015,
+            0.5880238822371627,
+            1.0584429880268929,
+            1.9051973784484073,
+            3.429355281207133,
+            6.172839506172839,
+            11.11111111111111,
+            20.0
+          ],
+          "class": "ciderpress.dft.plans.NLDFSplinePlan",
+          "lambd": 1.8,
+          "nalpha": 8,
+          "num_vj": 3
+        },
+        "normalizers": [
+          null,
+          null,
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 0.3535533905932738
+          },
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 0.6495190528383291
+          },
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 1.3975424859373686
+          }
+        ],
+        "root_class": "ciderpress.dft.xc_evaluator.MappedXC",
+        "semilocal_level": "GGA",
+        "semilocal_mode": "np",
+        "spline_const": 0.0,
+        "spline_nterms": 7
+      },
+      "requested_feature_density_policy": "valence_pseudo_core",
+      "source_model": {
+        "bytes": 5598989,
+        "path": "functionals/CIDER23X_NL_GGA.yaml",
+        "sha256": "b4e29d9530eaa7c94a3c61cc5e942a0cf7cfd0dd3c4a265dc35395123ae26c86"
+      },
+      "stages": [
+        "decoded_model_arrays",
+        "dual_density_role_outputs",
+        "integrated_results",
+        "loader_metadata",
+        "nldf_convolution_features",
+        "nldf_interpolation_arguments",
+        "normalized_features",
+        "reverse_feature_derivatives",
+        "semilocal_raw_features",
+        "spline_derivatives",
+        "spline_forward",
+        "transformed_descriptors"
+      ]
+    },
+    {
+      "array_ids": [
+        "nl_mgga_spin1_valence_pseudo_core.model_scale",
+        "nl_mgga_spin1_valence_pseudo_core.model_ind_set_dims",
+        "nl_mgga_spin1_valence_pseudo_core.model_ind_sets",
+        "nl_mgga_spin1_valence_pseudo_core.model_spline_grids",
+        "nl_mgga_spin1_valence_pseudo_core.model_coefficient_samples",
+        "nl_mgga_spin1_valence_pseudo_core.rho_baseline_sg",
+        "nl_mgga_spin1_valence_pseudo_core.sigma_baseline_xg",
+        "nl_mgga_spin1_valence_pseudo_core.tau_baseline_sg",
+        "nl_mgga_spin1_valence_pseudo_core.rho_feature_sg",
+        "nl_mgga_spin1_valence_pseudo_core.sigma_feature_xg",
+        "nl_mgga_spin1_valence_pseudo_core.tau_feature_sg",
+        "nl_mgga_spin1_valence_pseudo_core.semilocal_raw_features",
+        "nl_mgga_spin1_valence_pseudo_core.raw_features",
+        "nl_mgga_spin1_valence_pseudo_core.normalized_features",
+        "nl_mgga_spin1_valence_pseudo_core.transformed_descriptors",
+        "nl_mgga_spin1_valence_pseudo_core.spline_forward",
+        "nl_mgga_spin1_valence_pseudo_core.spline_derivatives",
+        "nl_mgga_spin1_valence_pseudo_core.spline_reverse_raw",
+        "nl_mgga_spin1_valence_pseudo_core.mapped_exc_unscaled",
+        "nl_mgga_spin1_valence_pseudo_core.mapped_derivative_normalized_unscaled",
+        "nl_mgga_spin1_valence_pseudo_core.mapped_derivative_raw_unscaled",
+        "nl_mgga_spin1_valence_pseudo_core.nldf_interpolation_arguments",
+        "nl_mgga_spin1_valence_pseudo_core.nldf_convolution_function",
+        "nl_mgga_spin1_valence_pseudo_core.nldf_convolution_features",
+        "nl_mgga_spin1_valence_pseudo_core.nldf_interpolation_argument_derivatives",
+        "nl_mgga_spin1_valence_pseudo_core.nldf_convolution_function_derivatives",
+        "nl_mgga_spin1_valence_pseudo_core.exc_baseline_g",
+        "nl_mgga_spin1_valence_pseudo_core.vrho_baseline_sg",
+        "nl_mgga_spin1_valence_pseudo_core.vsigma_baseline_xg",
+        "nl_mgga_spin1_valence_pseudo_core.vtau_baseline_sg",
+        "nl_mgga_spin1_valence_pseudo_core.exc_feature_g",
+        "nl_mgga_spin1_valence_pseudo_core.vrho_feature_sg",
+        "nl_mgga_spin1_valence_pseudo_core.vsigma_feature_xg",
+        "nl_mgga_spin1_valence_pseudo_core.vtau_feature_sg",
+        "nl_mgga_spin1_valence_pseudo_core.exc_total_g",
+        "nl_mgga_spin1_valence_pseudo_core.vrho_total_sg",
+        "nl_mgga_spin1_valence_pseudo_core.vsigma_total_xg",
+        "nl_mgga_spin1_valence_pseudo_core.vtau_total_sg",
+        "nl_mgga_spin1_valence_pseudo_core.integrated_results"
+      ],
+      "coverage": [
+        "mgga",
+        "nldf",
+        "spin_unpolarized",
+        "valence_pseudo_core"
+      ],
+      "grid": {
+        "cell_cv": [
+          [
+            4.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            4.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "grid_weight": 8.0,
+        "layout": "spin-major C order",
+        "shape": [
+          2,
+          2,
+          2
+        ],
+        "volume": 64.0
+      },
+      "id": "nl_mgga_spin1_valence_pseudo_core",
+      "integrated_result_labels": [
+        "grid_weight",
+        "exc_baseline_volume_integral",
+        "exc_feature_volume_integral",
+        "exc_total_volume_integral",
+        "baseline_potential_density_contraction",
+        "feature_potential_density_contraction"
+      ],
+      "loader_metadata": {
+        "ckernel": "GGA_C_PBE",
+        "exc_convention": "energy_density",
+        "feature_density_policy_expected": "valence_pseudo_core",
+        "feature_density_policy_source": "inferred_legacy_cider23x",
+        "has_nldf": true,
+        "has_sdmx": false,
+        "has_sl": true,
+        "is_mgga": true,
+        "ml_exchange_scale": 1.0,
+        "ml_runtime_scale": 0.25,
+        "nfeat": 6,
+        "nfeat_nldf": 3,
+        "nfeat_sdmx": 0,
+        "nfeat_sl": 3,
+        "runtime_policy": "density_bridge",
+        "xkernel": "GGA_X_PBE"
+      },
+      "model_structure": {
+        "additive_baseline": "ciderpress.dft.baselines.gga_x_pbe",
+        "coefficient_arrays": [
+          {
+            "byte_count": 224,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              3,
+              6,
+              10,
+              13,
+              16,
+              20,
+              23,
+              27
+            ],
+            "sha256": "23d95a67fcb377844adc0cbb4e12da14c7a456bcb6ebd8d435aba018dab2507a",
+            "shape": [
+              28
+            ],
+            "term": 0
+          },
+          {
+            "byte_count": 5376,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              83,
+              167,
+              251,
+              335,
+              419,
+              503,
+              587,
+              671
+            ],
+            "sha256": "65b3bba09867f5cb35ada71602443715ffabbd715be70b68b7dc1827b47d7f18",
+            "shape": [
+              28,
+              24
+            ],
+            "term": 1
+          },
+          {
+            "byte_count": 16128,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              251,
+              503,
+              755,
+              1007,
+              1259,
+              1511,
+              1763,
+              2015
+            ],
+            "sha256": "28c0a2f22e212a64f38f4a7815f990088a4b8adf75ee8cdcf98922e135645585",
+            "shape": [
+              28,
+              72
+            ],
+            "term": 2
+          },
+          {
+            "byte_count": 16128,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              251,
+              503,
+              755,
+              1007,
+              1259,
+              1511,
+              1763,
+              2015
+            ],
+            "sha256": "1f42ee79f473e5f3cca1f2a9816085c049874b69662ffb80adcc07a254906967",
+            "shape": [
+              28,
+              72
+            ],
+            "term": 3
+          },
+          {
+            "byte_count": 15456,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              241,
+              482,
+              724,
+              965,
+              1206,
+              1448,
+              1689,
+              1931
+            ],
+            "sha256": "cb9cc7292c9b9b00ec502fb798d2deb4a7c2661e3debc539093c23d1503cfd5e",
+            "shape": [
+              28,
+              69
+            ],
+            "term": 4
+          },
+          {
+            "byte_count": 387072,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              6047,
+              12095,
+              18143,
+              24191,
+              30239,
+              36287,
+              42335,
+              48383
+            ],
+            "sha256": "a08accc080b714e7365d91fc375cd0e81a8c142917bf82a4265b6b40f9a693cf",
+            "shape": [
+              28,
+              24,
+              72
+            ],
+            "term": 5
+          },
+          {
+            "byte_count": 387072,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              6047,
+              12095,
+              18143,
+              24191,
+              30239,
+              36287,
+              42335,
+              48383
+            ],
+            "sha256": "795ad8fb16aa52c331c92730155a10c7f9f8c6d1a8a445584148ff3f6968740e",
+            "shape": [
+              28,
+              24,
+              72
+            ],
+            "term": 6
+          },
+          {
+            "byte_count": 370944,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              5795,
+              11591,
+              17387,
+              23183,
+              28979,
+              34775,
+              40571,
+              46367
+            ],
+            "sha256": "b77cd433093049f368b17236adae24957688820f1c7bdd0be37cc55920ca7f32",
+            "shape": [
+              28,
+              24,
+              69
+            ],
+            "term": 7
+          },
+          {
+            "byte_count": 1161216,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              18143,
+              36287,
+              54431,
+              72575,
+              90719,
+              108863,
+              127007,
+              145151
+            ],
+            "sha256": "f2db13dedca035e9813826f3f6977e4f84909b907dbbdb1e46e1fa135f422c08",
+            "shape": [
+              28,
+              72,
+              72
+            ],
+            "term": 8
+          },
+          {
+            "byte_count": 1112832,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              17387,
+              34775,
+              52163,
+              69551,
+              86939,
+              104327,
+              121715,
+              139103
+            ],
+            "sha256": "b1e679ce63c9ccd611f22129f7c406e783d1b31c5e51ab924f761aa55458a77c",
+            "shape": [
+              28,
+              72,
+              69
+            ],
+            "term": 9
+          },
+          {
+            "byte_count": 1112832,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              17387,
+              34775,
+              52163,
+              69551,
+              86939,
+              104327,
+              121715,
+              139103
+            ],
+            "sha256": "a234af57d9d742726e2f18dfdbb672918230fe9c7ac35de798fb131387986b7f",
+            "shape": [
+              28,
+              72,
+              69
+            ],
+            "term": 10
+          }
+        ],
+        "evaluator_class": "ciderpress.dft.xc_evaluator.SplineSetEvaluator",
+        "feature_maps": [
+          {
+            "_bounds": [
+              0,
+              1
+            ],
+            "class": "ciderpress.dft.transform_data.UMap",
+            "effective_bounds": [
+              0,
+              1
+            ],
+            "gamma": 0.24308265985843178,
+            "i": 1
+          },
+          {
+            "center": 1.0,
+            "class": "ciderpress.dft.transform_data.ZMap",
+            "effective_bounds": [
+              -1.0,
+              1.0
+            ],
+            "gamma": 1,
+            "i": 2,
+            "n": 1,
+            "scale": 2.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 3,
+            "scale": 1.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 4,
+            "scale": 1.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 5,
+            "scale": 1.0
+          }
+        ],
+        "kernel_class": "ciderpress.dft.xc_evaluator.MappedDFTKernel",
+        "kernel_mode": "SEP",
+        "kernel_output_scale": 1.0,
+        "multiplicative_baseline": "ciderpress.dft.baselines.lda_x",
+        "nldf_plan": {
+          "alpha0": 0.3266799345762015,
+          "alphas": [
+            0.3266799345762015,
+            0.5880238822371627,
+            1.0584429880268929,
+            1.9051973784484073,
+            3.429355281207133,
+            6.172839506172839,
+            11.11111111111111,
+            20.0
+          ],
+          "class": "ciderpress.dft.plans.NLDFSplinePlan",
+          "lambd": 1.8,
+          "nalpha": 8,
+          "num_vj": 3
+        },
+        "normalizers": [
+          null,
+          null,
+          null,
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 0.6495190528383291
+          },
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 1.0000000000000004
+          },
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 1.8371173070873839
+          }
+        ],
+        "root_class": "ciderpress.dft.xc_evaluator.MappedXC",
+        "semilocal_level": "MGGA",
+        "semilocal_mode": "npa",
+        "spline_const": 0.0,
+        "spline_nterms": 11
+      },
+      "requested_feature_density_policy": "valence_pseudo_core",
+      "source_model": {
+        "bytes": 6846206,
+        "path": "functionals/CIDER23X_NL_MGGA_DTR.yaml",
+        "sha256": "93312ddde97a8b8e88a9f875df221a44f65a1a1b7c955a55d9214bd449e363ea"
+      },
+      "stages": [
+        "decoded_model_arrays",
+        "dual_density_role_outputs",
+        "integrated_results",
+        "loader_metadata",
+        "nldf_convolution_features",
+        "nldf_interpolation_arguments",
+        "normalized_features",
+        "reverse_feature_derivatives",
+        "semilocal_raw_features",
+        "spline_derivatives",
+        "spline_forward",
+        "transformed_descriptors"
+      ]
+    },
+    {
+      "array_ids": [
+        "trained_nl_mgga_spin2_valence.model_scale",
+        "trained_nl_mgga_spin2_valence.model_ind_set_dims",
+        "trained_nl_mgga_spin2_valence.model_ind_sets",
+        "trained_nl_mgga_spin2_valence.model_spline_grids",
+        "trained_nl_mgga_spin2_valence.model_coefficient_samples",
+        "trained_nl_mgga_spin2_valence.rho_baseline_sg",
+        "trained_nl_mgga_spin2_valence.sigma_baseline_xg",
+        "trained_nl_mgga_spin2_valence.tau_baseline_sg",
+        "trained_nl_mgga_spin2_valence.rho_feature_sg",
+        "trained_nl_mgga_spin2_valence.sigma_feature_xg",
+        "trained_nl_mgga_spin2_valence.tau_feature_sg",
+        "trained_nl_mgga_spin2_valence.semilocal_raw_features",
+        "trained_nl_mgga_spin2_valence.raw_features",
+        "trained_nl_mgga_spin2_valence.normalized_features",
+        "trained_nl_mgga_spin2_valence.transformed_descriptors",
+        "trained_nl_mgga_spin2_valence.spline_forward",
+        "trained_nl_mgga_spin2_valence.spline_derivatives",
+        "trained_nl_mgga_spin2_valence.spline_reverse_raw",
+        "trained_nl_mgga_spin2_valence.mapped_exc_unscaled",
+        "trained_nl_mgga_spin2_valence.mapped_derivative_normalized_unscaled",
+        "trained_nl_mgga_spin2_valence.mapped_derivative_raw_unscaled",
+        "trained_nl_mgga_spin2_valence.nldf_interpolation_arguments",
+        "trained_nl_mgga_spin2_valence.nldf_convolution_function",
+        "trained_nl_mgga_spin2_valence.nldf_convolution_features",
+        "trained_nl_mgga_spin2_valence.nldf_interpolation_argument_derivatives",
+        "trained_nl_mgga_spin2_valence.nldf_convolution_function_derivatives",
+        "trained_nl_mgga_spin2_valence.exc_baseline_g",
+        "trained_nl_mgga_spin2_valence.vrho_baseline_sg",
+        "trained_nl_mgga_spin2_valence.vsigma_baseline_xg",
+        "trained_nl_mgga_spin2_valence.vtau_baseline_sg",
+        "trained_nl_mgga_spin2_valence.exc_feature_g",
+        "trained_nl_mgga_spin2_valence.vrho_feature_sg",
+        "trained_nl_mgga_spin2_valence.vsigma_feature_xg",
+        "trained_nl_mgga_spin2_valence.vtau_feature_sg",
+        "trained_nl_mgga_spin2_valence.exc_total_g",
+        "trained_nl_mgga_spin2_valence.vrho_total_sg",
+        "trained_nl_mgga_spin2_valence.vsigma_total_xg",
+        "trained_nl_mgga_spin2_valence.vtau_total_sg",
+        "trained_nl_mgga_spin2_valence.integrated_results"
+      ],
+      "coverage": [
+        "mgga",
+        "nldf",
+        "spin_polarized",
+        "valence",
+        "numpy_2_core_spelling",
+        "explicit_density_metadata",
+        "trained_model"
+      ],
+      "grid": {
+        "cell_cv": [
+          [
+            4.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            4.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0
+          ]
+        ],
+        "grid_weight": 8.0,
+        "layout": "spin-major C order",
+        "shape": [
+          2,
+          2,
+          2
+        ],
+        "volume": 64.0
+      },
+      "id": "trained_nl_mgga_spin2_valence",
+      "integrated_result_labels": [
+        "grid_weight",
+        "exc_baseline_volume_integral",
+        "exc_feature_volume_integral",
+        "exc_total_volume_integral",
+        "baseline_potential_density_contraction",
+        "feature_potential_density_contraction"
+      ],
+      "loader_metadata": {
+        "ckernel": "GGA_C_PBE",
+        "exc_convention": "energy_density",
+        "feature_density_policy_expected": "valence",
+        "feature_density_policy_source": "abacus_training",
+        "has_nldf": true,
+        "has_sdmx": false,
+        "has_sl": true,
+        "is_mgga": true,
+        "ml_exchange_scale": 1.0,
+        "ml_runtime_scale": 0.25,
+        "nfeat": 6,
+        "nfeat_nldf": 3,
+        "nfeat_sdmx": 0,
+        "nfeat_sl": 3,
+        "runtime_policy": "density_bridge",
+        "xkernel": "GGA_X_PBE"
+      },
+      "model_structure": {
+        "additive_baseline": "ciderpress.dft.baselines.gga_x_pbe",
+        "coefficient_arrays": [
+          {
+            "byte_count": 152,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              2,
+              4,
+              6,
+              9,
+              11,
+              13,
+              15,
+              18
+            ],
+            "sha256": "d08dd0ed390634883affa1ae570a4885a29a7f790faf97eb2ddbb3c5873ea3f1",
+            "shape": [
+              19
+            ],
+            "term": 0
+          },
+          {
+            "byte_count": 4864,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              75,
+              151,
+              227,
+              303,
+              379,
+              455,
+              531,
+              607
+            ],
+            "sha256": "19e4537c097c886caeebb67b0b9aa9f1d4afd288359b3ed46deea9a9b0245372",
+            "shape": [
+              19,
+              32
+            ],
+            "term": 1
+          },
+          {
+            "byte_count": 2888,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              45,
+              90,
+              135,
+              180,
+              225,
+              270,
+              315,
+              360
+            ],
+            "sha256": "40c61d725ed4acc3f7ead53653aef8f47e2778e6d0bd9e40053bb504750d3117",
+            "shape": [
+              19,
+              19
+            ],
+            "term": 2
+          },
+          {
+            "byte_count": 2888,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              45,
+              90,
+              135,
+              180,
+              225,
+              270,
+              315,
+              360
+            ],
+            "sha256": "89436c0d286d03fd0e7a1246614b7371f37d46cc595436506e5b3664bdb53c82",
+            "shape": [
+              19,
+              19
+            ],
+            "term": 3
+          },
+          {
+            "byte_count": 2888,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              45,
+              90,
+              135,
+              180,
+              225,
+              270,
+              315,
+              360
+            ],
+            "sha256": "3c4482e148d21295b2eba0e91b295a8e6b4c1ebc05c985f5aa01903c8ced21f2",
+            "shape": [
+              19,
+              19
+            ],
+            "term": 4
+          },
+          {
+            "byte_count": 92416,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              1443,
+              2887,
+              4331,
+              5775,
+              7219,
+              8663,
+              10107,
+              11551
+            ],
+            "sha256": "7d12f87dde47ae012a9f9d99ea052573051fee56caa7cce3c6e5f19b28d6f943",
+            "shape": [
+              19,
+              32,
+              19
+            ],
+            "term": 5
+          },
+          {
+            "byte_count": 92416,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              1443,
+              2887,
+              4331,
+              5775,
+              7219,
+              8663,
+              10107,
+              11551
+            ],
+            "sha256": "67acf5fe8c2a77caf58b5ceb3678e52d089af544754c8d7a407f9c8e91f370b8",
+            "shape": [
+              19,
+              32,
+              19
+            ],
+            "term": 6
+          },
+          {
+            "byte_count": 92416,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              1443,
+              2887,
+              4331,
+              5775,
+              7219,
+              8663,
+              10107,
+              11551
+            ],
+            "sha256": "8f39be095cb689ce114684a526faa094dad5925778af638c527d5f0b8e04d791",
+            "shape": [
+              19,
+              32,
+              19
+            ],
+            "term": 7
+          },
+          {
+            "byte_count": 54872,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              857,
+              1714,
+              2571,
+              3429,
+              4286,
+              5143,
+              6000,
+              6858
+            ],
+            "sha256": "30e5af6ae8446edc8f4bb0037148e793d33bbd6b395ecb11eec53fddc78d79e9",
+            "shape": [
+              19,
+              19,
+              19
+            ],
+            "term": 8
+          },
+          {
+            "byte_count": 54872,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              857,
+              1714,
+              2571,
+              3429,
+              4286,
+              5143,
+              6000,
+              6858
+            ],
+            "sha256": "ae295bd2cdd5de1d01e6e8be9bd332f8cc5461c3402df86bd52f86c1c6401ad5",
+            "shape": [
+              19,
+              19,
+              19
+            ],
+            "term": 9
+          },
+          {
+            "byte_count": 54872,
+            "dtype": "<f8",
+            "sample_flat_indices": [
+              0,
+              857,
+              1714,
+              2571,
+              3429,
+              4286,
+              5143,
+              6000,
+              6858
+            ],
+            "sha256": "8171799f7b2e7353c91110e745374ccb06eabc1fa4671824239a5e881502afd9",
+            "shape": [
+              19,
+              19,
+              19
+            ],
+            "term": 10
+          }
+        ],
+        "evaluator_class": "ciderpress.dft.xc_evaluator.SplineSetEvaluator",
+        "feature_maps": [
+          {
+            "_bounds": [
+              0,
+              1
+            ],
+            "class": "ciderpress.dft.transform_data.UMap",
+            "effective_bounds": [
+              0,
+              1
+            ],
+            "gamma": 0.24308265985843178,
+            "i": 1
+          },
+          {
+            "_bounds": [
+              -1.0,
+              1.0
+            ],
+            "center": 1.0,
+            "class": "ciderpress.dft.transform_data.ZMap",
+            "effective_bounds": [
+              -1.0,
+              1.0
+            ],
+            "gamma": 1,
+            "i": 2,
+            "n": 1,
+            "scale": 2.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 3,
+            "scale": 1.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 4,
+            "scale": 1.0
+          },
+          {
+            "_bounds": [
+              -0.5,
+              0.5
+            ],
+            "center": 0.5,
+            "class": "ciderpress.dft.transform_data.VMap",
+            "effective_bounds": [
+              -0.5,
+              0.5
+            ],
+            "gamma": 0.5,
+            "i": 5,
+            "scale": 1.0
+          }
+        ],
+        "kernel_class": "ciderpress.dft.xc_evaluator.MappedDFTKernel",
+        "kernel_mode": "SEP",
+        "kernel_output_scale": 1.0,
+        "multiplicative_baseline": "ciderpress.dft.baselines.lda_x",
+        "nldf_plan": {
+          "alpha0": 0.3266799345762015,
+          "alphas": [
+            0.3266799345762015,
+            0.5880238822371627,
+            1.0584429880268929,
+            1.9051973784484073,
+            3.429355281207133,
+            6.172839506172839,
+            11.11111111111111,
+            20.0
+          ],
+          "class": "ciderpress.dft.plans.NLDFSplinePlan",
+          "lambd": 1.8,
+          "nalpha": 8,
+          "num_vj": 3
+        },
+        "normalizers": [
+          null,
+          null,
+          null,
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 0.6495190528383291
+          },
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 1.0000000000000004
+          },
+          {
+            "class": "ciderpress.dft.feat_normalizer.ConstantNormalizer",
+            "const": 1.8371173070873839
+          }
+        ],
+        "root_class": "ciderpress.dft.xc_evaluator.MappedXC",
+        "semilocal_level": "MGGA",
+        "semilocal_mode": "npa",
+        "spline_const": 0.0,
+        "spline_nterms": 11
+      },
+      "requested_feature_density_policy": "valence",
+      "source_model": {
+        "bytes": 691746,
+        "path": "abacus_training_docs/artifacts/combined_diverse_bandedge_nldf_mgga_20260726/full/nldf_mgga_cand00_n96_noise0p01.yaml",
+        "sha256": "0bdadb33599a4f5d26baa743b1a5849a1fb63e0ce6b0fdf7ad9479feb2e28734"
+      },
+      "stages": [
+        "decoded_model_arrays",
+        "dual_density_role_outputs",
+        "integrated_results",
+        "loader_metadata",
+        "nldf_convolution_features",
+        "nldf_interpolation_arguments",
+        "normalized_features",
+        "reverse_feature_derivatives",
+        "semilocal_raw_features",
+        "spline_derivatives",
+        "spline_forward",
+        "transformed_descriptors"
+      ]
+    }
+  ],
+  "default_tolerances": {
+    "atol": 1e-12,
+    "rtol": 1e-11
+  },
+  "generation_command": "LD_LIBRARY_PATH=/home/bonan/appdir/CiderPress/ciderpress/lib OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 /home/bonan/appdir/CiderPress/.venv/bin/python3 source/source_hamilt/module_xc/cider/test/fixtures/v1/generate_oracle.py --parent /home/bonan/appdir/CiderPress",
+  "generation_parameters": {
+    "cell_length": 4.0,
+    "encut": 20.0,
+    "grid_shape": [
+      2,
+      2,
+      2
+    ],
+    "nalpha": 8,
+    "xmix": 0.25
+  },
+  "payload_bytes": 34548,
+  "provenance": {
+    "ciderpress_git_commit": "6b2945ef9aea1494396e15b6f61389821d0e8549",
+    "ciderpress_source_sha256": {
+      "ciderpress/dft/baselines.py": "4db50302eb0fe7a58ae875408fd70518b7674bbdd91b65abb8999f5fd8a4104e",
+      "ciderpress/dft/feat_normalizer.py": "5db333f494589d11ff9e7c7d24dd179503c4413fdc2b790beb92b790ffc15001",
+      "ciderpress/dft/plans.py": "93112f5c4711df818e8453ba1c9cad77333938d649a7843e4f892f3f4662105e",
+      "ciderpress/dft/transform_data.py": "f2224365a230331bfa6ef0646133e9670f959668d8bcabf96c823b7cf2931ae7",
+      "ciderpress/dft/xc_evaluator.py": "0a711d16162a63f11d9c2fe586839bb883ed1dbfacb6470c0e0a47cfd5c4842a",
+      "ciderpress/lib/bridge/cider_bridge_py.py": "9371daada28451242f8ad2b40f141b5fb4d180bdf9b3390db83e5c854f79e225",
+      "ciderpress/lib/bridge/nldf_fft_standalone.py": "d5e41ffd39242227cea031c923fd1dce150b0440d6c937fe5e504ee16bb8ffff"
+    },
+    "generator_sha256": "05a499a61455152d64c325fadb027f02b796d695a692911ead2f283585987c3b",
+    "numpy": "2.2.6",
+    "platform": "Linux-6.8.0-65-generic-x86_64-with-glibc2.35",
+    "python": "3.10.12",
+    "python_implementation": "CPython"
+  },
+  "reproducibility_command": "LD_LIBRARY_PATH=/home/bonan/appdir/CiderPress/ciderpress/lib OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 /home/bonan/appdir/CiderPress/.venv/bin/python3 source/source_hamilt/module_xc/cider/test/fixtures/v1/generate_oracle.py --parent /home/bonan/appdir/CiderPress --check",
+  "schema": "abacus-cider-python-reference-oracle-v1",
+  "schema_version": 1,
+  "serialization": "raw binary payloads described by JSON; never pickle",
+  "validation_command": "python3 source/source_hamilt/module_xc/cider/test/fixtures/v1/validate_oracle.py"
+}

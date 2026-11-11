@@ -1,0 +1,22 @@
+{
+  "GaAs": {
+    "atom_count": 8,
+    "prototype": "zincblende",
+    "sha256": "7dd6f94ec2137fe776873ec7205ce89c8c46cd0b6854654ae1796f0431071243"
+  },
+  "InSb": {
+    "atom_count": 8,
+    "prototype": "zincblende",
+    "sha256": "560aa1e3e283ae9ae497d5c1894964e7171001bafaf2655ef29c48ee5e7f69be"
+  },
+  "MgO": {
+    "atom_count": 8,
+    "prototype": "rocksalt",
+    "sha256": "39f7a4eb512ea004161d791ed4faa213d79d5acbf61db5189a10bec9ac2f0a69"
+  },
+  "Si": {
+    "atom_count": 8,
+    "prototype": "diamond",
+    "sha256": "b6664fd454795f9acc2983e22052ab9d9f35d95c86915f777cc0a71665b20cd0"
+  }
+}

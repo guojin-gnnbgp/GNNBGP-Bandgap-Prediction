@@ -1,0 +1,116 @@
+list(APPEND objects
+    elecstate.cpp
+    init_scf.cpp
+    elecstate_energy_terms.cpp
+    elecstate_energy.cpp
+    elecstate_exx.cpp
+    elecstate_print.cpp
+    elecstate_tools.cpp
+    elecstate_pw.cpp
+    elecstate_pw_sdft.cpp
+    elecstate_pw_cal_tau.cpp
+    module_pot/gatefield.cpp
+    module_pot/efield.cpp
+    module_pot/H_Hartree_pw.cpp
+    module_pot/pot_xc.cpp
+    module_pot/pot_local.cpp
+    module_pot/potential_new.cpp
+    module_pot/potential_types.cpp
+    module_pot/pot_ml_exx.cpp
+    module_pot/pot_ml_exx_label.cpp
+    module_pot/pot_sep.cpp
+    module_pot/pot_xc_fdm.cpp
+    module_pot/pot_cosikr.cpp
+    module_charge/chgmixing.cpp
+    module_charge/gint_precision_controller.cpp
+    module_charge/charge.cpp
+    module_charge/charge_init.cpp
+    module_charge/charge_mpi.cpp
+    module_charge/charge_extra.cpp
+    module_charge/charge_mixing.cpp
+    module_charge/charge_mixing_dmr.cpp
+    module_charge/charge_mixing_residual.cpp
+    module_charge/charge_mixing_preconditioner.cpp
+    module_charge/charge_mixing_rho.cpp
+    module_charge/charge_mixing_uspp.cpp
+    module_charge/symmetry_rho.cpp
+    module_charge/symmetry_rhog.cpp
+    fp_energy.cpp
+    magnetism.cpp
+    occupy.cpp
+    cal_ux.cpp
+    read_orb.cpp
+    cal_nelec_nband.cpp
+    read_pseudo.cpp
+    cal_wfc.cpp
+    setup_estate_pw.cpp
+    update_pot.cpp
+)
+
+if(ENABLE_LCAO)
+  list(APPEND objects
+      elecstate_lcao.cpp
+      module_pot/H_TDDFT_pw.cpp
+      module_dm/init_dm.cpp
+      module_dm/density_matrix.cpp
+      module_dm/density_matrix_io.cpp
+      module_dm/cal_dm_psi.cpp
+      module_dm/cal_edm_tddft.cpp
+  )
+endif()
+
+if(ENABLE_CIDER AND ENABLE_LIBXC)
+  list(APPEND objects
+      module_pot/pot_cider_xc.cpp
+  )
+
+  add_library(
+      cider_pot_native
+      STATIC
+      module_pot/pot_cider_xc_runtime.cpp
+      module_pot/pot_cider_xc_runtime_factory.cpp
+      module_pot/pot_cider_xc_native.cpp
+  )
+  target_include_directories(cider_pot_native PUBLIC ${CMAKE_SOURCE_DIR}/source)
+  target_compile_features(cider_pot_native PUBLIC cxx_std_11)
+  target_link_libraries(cider_pot_native PUBLIC cider_native)
+  if(ENABLE_CIDER_EXTERNAL)
+    target_sources(cider_pot_native PRIVATE
+      module_pot/pot_cider_xc_external.cpp
+    )
+    target_include_directories(cider_pot_native PRIVATE
+      ${CIDERBRIDGE_INCLUDE_DIR}
+      ${Python3_INCLUDE_DIRS}
+      ${Python3_NumPy_INCLUDE_DIRS}
+    )
+    target_link_libraries(cider_pot_native PUBLIC
+      ${CIDERBRIDGE_LIBRARY}
+      Python3::Python
+    )
+  endif()
+endif()
+
+add_library(
+    elecstate
+    OBJECT
+    ${objects}
+)
+
+if(ENABLE_CIDER AND ENABLE_LIBXC)
+  target_link_libraries(elecstate PRIVATE cider_pot_native)
+endif()
+
+if(ENABLE_COVERAGE)
+  add_coverage(elecstate)
+endif()
+
+if(BUILD_TESTING)
+  if(ENABLE_MPI)
+    add_subdirectory(test)
+    add_subdirectory(test_mpi)
+  endif()
+endif()
+
+if(ENABLE_LCAO)
+  add_subdirectory(module_dm)
+endif()

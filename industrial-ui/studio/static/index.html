@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="color-scheme" content="light"/>
+<title>GNNBGP Studio — 工业级材料计算工作台</title>
+<link rel="stylesheet" href="/static/style.css"/>
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+
+<defs>
+  <linearGradient id="bgp-paper" x1="0" y1="0" x2=".86" y2="1">
+    <stop offset="0" stop-color="#ffffff"/><stop offset=".58" stop-color="#f7fbff"/><stop offset="1" stop-color="#deebf7"/>
+  </linearGradient>
+  <linearGradient id="bgp-fold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fcffff"/><stop offset="1" stop-color="#a8cbe6"/>
+  </linearGradient>
+  <linearGradient id="bgp-folder" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffeaa0"/><stop offset=".53" stop-color="#ffcf4b"/><stop offset="1" stop-color="#efa92d"/>
+  </linearGradient>
+  <linearGradient id="bgp-folder-back" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffefb0"/><stop offset="1" stop-color="#e7a53e"/>
+  </linearGradient>
+  <linearGradient id="bgp-green" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#80e49f"/><stop offset=".52" stop-color="#2cbd70"/><stop offset="1" stop-color="#15905c"/>
+  </linearGradient>
+  <linearGradient id="bgp-red" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ff9793"/><stop offset=".5" stop-color="#eb514e"/><stop offset="1" stop-color="#b92f37"/>
+  </linearGradient>
+  <linearGradient id="bgp-blue" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#94d6ff"/><stop offset=".5" stop-color="#3b96e1"/><stop offset="1" stop-color="#2266b6"/>
+  </linearGradient>
+  <linearGradient id="bgp-teal" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#a1ece9"/><stop offset=".5" stop-color="#2dbebc"/><stop offset="1" stop-color="#198695"/>
+  </linearGradient>
+  <linearGradient id="bgp-gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffefa7"/><stop offset=".5" stop-color="#f7bc4c"/><stop offset="1" stop-color="#d18921"/>
+  </linearGradient>
+  <linearGradient id="bgp-steel" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#edf6ff"/><stop offset=".5" stop-color="#9db6cf"/><stop offset="1" stop-color="#5c7797"/>
+  </linearGradient>
+  <radialGradient id="bgp-orb">
+    <stop offset="0" stop-color="#fff"/><stop offset=".2" stop-color="#9fe9fc"/><stop offset="1" stop-color="#2686cf"/>
+  </radialGradient>
+</defs>
+
+  <symbol id="i-file-up" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#2c83c8" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="3.2" font-weight="bold" letter-spacing=".05">FILE</text><circle cx="19" cy="18.1" r="4.05" fill="url(#bgp-blue)" stroke="#fff" stroke-width=".7"/>
+        <path d="M19 20.5v-4.6m-2 1.9 2-1.9 2 1.9" stroke="#fff" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-file-plus" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#2c83c8" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">CIF</text><circle cx="19.1" cy="18.2" r="3.8" fill="url(#bgp-green)" stroke="#fff" stroke-width=".7"/>
+        <path d="M19.1 16.2v4m-2-2h4" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-file-text" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#438bbd" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">TXT</text></symbol>
+  <symbol id="i-file-json" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#d68c26" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="3.28" font-weight="bold" letter-spacing=".05">JSON</text></symbol>
+  <symbol id="i-files" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(-2 1) scale(.86)"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#699cbd" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">IN</text></g><g transform="translate(2 -1) scale(.88)"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#3688c9" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">OUT</text></g></symbol>
+  <symbol id="i-folder-open" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7.1V5.8C2 4.8 2.8 4 3.8 4h6l2.1 2H20c1 0 1.8.8 1.8 1.8v10.8c0 1.2-.9 2.3-2.1 2.3H4.1C2.9 20.9 2 20 2 18.8z" fill="url(#bgp-folder-back)" stroke="#b47c29" stroke-width=".7"/>
+      <path d="M3.1 6.3h16.8" stroke="#fff" stroke-width=".7" opacity=".6"/><path d="M4.7 9.4h15.6c1.3 0 2.1 1.1 1.7 2.3l-2.8 7.9c-.3.8-1 1.3-1.9 1.3H3.4c-1 0-1.6-.9-1.3-1.9l2.5-8.2c.2-.9 1.1-1.4 2.1-1.4z" fill="url(#bgp-folder)" stroke="#c58a23" stroke-width=".85"/>
+      <path d="M5.1 10.5h15.4" stroke="#fff9d1" stroke-width=".9" opacity=".8"/>
+      <path d="M3.5 19.6h14.3" stroke="#be8129" stroke-width=".6" opacity=".6"/></symbol>
+  <symbol id="i-folder-tree" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16M3 11h5M3 19h5" fill="none" stroke="#7c91a4" stroke-width="1.3" stroke-linecap="round"/><g transform="translate(7 2) scale(.62)"><path d="M2 7.1V5.8C2 4.8 2.8 4 3.8 4h6l2.1 2H20c1 0 1.8.8 1.8 1.8v10.8c0 1.2-.9 2.3-2.1 2.3H4.1C2.9 20.9 2 20 2 18.8z" fill="url(#bgp-folder-back)" stroke="#b47c29" stroke-width=".7"/>
+      <path d="M3.1 6.3h16.8" stroke="#fff" stroke-width=".7" opacity=".6"/><path d="M2 9h20v10c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2z" fill="url(#bgp-folder)" stroke="#c59138" stroke-width=".8"/>
+          <path d="M3.5 11H20" stroke="#fff8d4" stroke-width=".85" opacity=".8"/></g><g transform="translate(7 10) scale(.62)"><path d="M2 7.1V5.8C2 4.8 2.8 4 3.8 4h6l2.1 2H20c1 0 1.8.8 1.8 1.8v10.8c0 1.2-.9 2.3-2.1 2.3H4.1C2.9 20.9 2 20 2 18.8z" fill="url(#bgp-folder-back)" stroke="#b47c29" stroke-width=".7"/>
+      <path d="M3.1 6.3h16.8" stroke="#fff" stroke-width=".7" opacity=".6"/><path d="M4.7 9.4h15.6c1.3 0 2.1 1.1 1.7 2.3l-2.8 7.9c-.3.8-1 1.3-1.9 1.3H3.4c-1 0-1.6-.9-1.3-1.9l2.5-8.2c.2-.9 1.1-1.4 2.1-1.4z" fill="url(#bgp-folder)" stroke="#c58a23" stroke-width=".85"/>
+      <path d="M5.1 10.5h15.4" stroke="#fff9d1" stroke-width=".9" opacity=".8"/>
+      <path d="M3.5 19.6h14.3" stroke="#be8129" stroke-width=".6" opacity=".6"/></g></symbol>
+  <symbol id="i-library" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(-1 -1) scale(.66)"><path d="M2 7.1V5.8C2 4.8 2.8 4 3.8 4h6l2.1 2H20c1 0 1.8.8 1.8 1.8v10.8c0 1.2-.9 2.3-2.1 2.3H4.1C2.9 20.9 2 20 2 18.8z" fill="url(#bgp-folder-back)" stroke="#b47c29" stroke-width=".7"/>
+      <path d="M3.1 6.3h16.8" stroke="#fff" stroke-width=".7" opacity=".6"/><path d="M2 9h20v10c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2z" fill="url(#bgp-folder)" stroke="#c59138" stroke-width=".8"/>
+          <path d="M3.5 11H20" stroke="#fff8d4" stroke-width=".85" opacity=".8"/></g><g transform="translate(6 3) scale(.69)"><path d="M2 7.1V5.8C2 4.8 2.8 4 3.8 4h6l2.1 2H20c1 0 1.8.8 1.8 1.8v10.8c0 1.2-.9 2.3-2.1 2.3H4.1C2.9 20.9 2 20 2 18.8z" fill="url(#bgp-folder-back)" stroke="#b47c29" stroke-width=".7"/>
+      <path d="M3.1 6.3h16.8" stroke="#fff" stroke-width=".7" opacity=".6"/><path d="M2 9h20v10c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2z" fill="url(#bgp-folder)" stroke="#c59138" stroke-width=".8"/>
+          <path d="M3.5 11H20" stroke="#fff8d4" stroke-width=".85" opacity=".8"/></g><path d="M3 22h18" stroke="#b37d2c" stroke-width=".7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 4.5c0-1.4 1.5-2.2 2.7-1.45l12.3 7.6c1.2.74 1.2 2.07 0 2.8L8.2 21.1c-1.2.74-2.7-.06-2.7-1.45z" fill="url(#bgp-green)" stroke="#148756" stroke-width="1.05" stroke-linejoin="round"/>
+        <path d="m8 6.2 10.4 6-10.4 6z" fill="#92edb0" opacity=".4"/>
+        <path d="m9.5 7.9 6.7 4" fill="none" stroke="#e2ffe8" stroke-width="1.2" stroke-linecap="round" opacity=".86"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16.2" height="16.3" rx="3.3" fill="url(#bgp-red)" stroke="#af3942" stroke-width="1.05"/>
+        <path d="M6.4 7.1c0-1 .8-1.6 1.8-1.6h8.1" fill="none" stroke="#ffe1db" stroke-width="1.35" opacity=".67" stroke-linecap="round"/></symbol>
+  <symbol id="i-rotate-cw" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.7 10.1A8.7 8.7 0 1 0 20 16.4" fill="none" stroke="#2279c4" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M18.5 4.1v6.2h-6.3" fill="none" stroke="#2f98db" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="m12.4 15.5-2.1-3.5 4-3.1" fill="none" stroke="#46aa81" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-refresh-cw" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19.9 9.3a8.1 8.1 0 0 0-13.3-3.2L4 8.7" fill="none" stroke="#2378bc" stroke-width="2.05" stroke-linecap="round"/>
+        <path d="M4.1 4.3v4.5h4.5" fill="none" stroke="#3f9ce3" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M4.1 14.8a8.1 8.1 0 0 0 13.3 3.1l2.5-2.5" fill="none" stroke="#248aaf" stroke-width="2" stroke-linecap="round"/>
+        <path d="M19.9 19.6v-4.5h-4.5" fill="none" stroke="#41b5c9" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-report" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#ce5553" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">PDF</text><path d="M9 11.2v2.1m2.2-3.9v3.9m2.2-2.7v2.7" stroke="#5891bd" stroke-width="1.15" stroke-linecap="round"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m10.2 2.4-.65 2.1c-.7.24-1.27.54-1.85.93l-2.1-.7-2.1 3.7 1.65 1.43c-.1.66-.1 1.33 0 2L3.5 13.3l2.1 3.8 2.1-.7c.57.4 1.15.68 1.85.91l.65 2.25h4l.65-2.25c.67-.23 1.29-.54 1.85-.91l2.1.7 2.1-3.8-1.65-1.43c.1-.67.1-1.34 0-2l1.65-1.44-2.1-3.69-2.1.7a9.5 9.5 0 0 0-1.85-.94l-.65-2.1z" fill="url(#bgp-steel)" stroke="#547692" stroke-width=".8" stroke-linejoin="round" transform="translate(0 .9)"/>
+      <circle cx="12.2" cy="11.9" r="4.25" fill="#eaf5fd" stroke="#6587a6" stroke-width=".85"/>
+      <circle cx="12.2" cy="11.9" r="2.4" fill="url(#bgp-blue)" stroke="#f0f8ff" stroke-width=".5"/>
+      <path d="M11 10.7a2 2 0 0 1 2.5-.3" stroke="#fff" stroke-width=".7" opacity=".7"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18" stroke="#87a2b9" stroke-width="2" stroke-linecap="round"/>
+        <rect x="13.5" y="3.5" width="4.6" height="5" rx="1.4" fill="url(#bgp-blue)" stroke="#2e76b8" stroke-width=".75"/>
+        <rect x="5.9" y="9.5" width="4.6" height="5" rx="1.4" fill="url(#bgp-teal)" stroke="#168a97" stroke-width=".75"/>
+        <rect x="15.3" y="15.5" width="4.6" height="5" rx="1.4" fill="url(#bgp-blue)" stroke="#2e76b8" stroke-width=".75"/></symbol>
+  <symbol id="i-atom" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10.2" ry="3.6" transform="rotate(49 12 12)" fill="none" stroke="#528aca" stroke-width="1.65"/>
+        <ellipse cx="12" cy="12" rx="10.2" ry="3.6" transform="rotate(-49 12 12)" fill="none" stroke="#29a7b7" stroke-width="1.65"/>
+        <ellipse cx="12" cy="12" rx="10.2" ry="3.6" fill="none" stroke="#88b9d7" stroke-width="1.4"/>
+        <circle cx="12" cy="12" r="3" fill="url(#bgp-orb)" stroke="#2c84bb" stroke-width=".6"/>
+        <circle cx="20.8" cy="12" r="1.65" fill="#f6c14a" stroke="#e9a52a" stroke-width=".35"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2.2 9 4.7v10.4l-9 4.7-9-4.7V6.9z" fill="#edf6ff" stroke="#598bad" stroke-width=".85" stroke-linejoin="round"/>
+        <path d="m12 12.1 9-5.2v10.4l-9 4.7z" fill="url(#bgp-blue)" opacity=".94"/>
+        <path d="M12 12.1 3 6.9v10.4l9 4.7z" fill="#a5d3ee"/>
+        <path d="m3 6.9 9-4.7 9 4.7-9 5.2z" fill="#d8f0ff"/>
+        <path d="m12 12.1 9-5.2M12 12.1 3 6.9M12 12.1V22" stroke="#4d82af" stroke-width=".85" fill="none"/></symbol>
+  <symbol id="i-list-todo" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.7" y="3.1" width="18.6" height="17.7" rx="2.2" fill="#f8fbff" stroke="#9fb5c8" stroke-width=".8"/>
+        <rect x="5.1" y="5.8" width="4.8" height="4.7" rx=".8" fill="#e7f8f0" stroke="#399c72" stroke-width=".65"/>
+        <path d="m5.8 8 1.2 1.1 2.3-2.5" fill="none" stroke="#25945b" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 8h6.6M12 13.2h6.6M12 17.4h6.6" stroke="#648db1" stroke-width="1.05" stroke-linecap="round"/>
+        <rect x="5.1" y="11.2" width="4.8" height="4.6" rx=".8" fill="#e7f8f0" stroke="#399c72" stroke-width=".65"/>
+        <path d="m5.8 13.4 1.2 1.1 2.3-2.5" fill="none" stroke="#25945b" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chart-column" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.3 3.5v16.8h17.5" fill="none" stroke="#627c95" stroke-width="1.4" stroke-linecap="round"/>
+        <rect x="5.8" y="12.1" width="3.4" height="7.4" rx=".55" fill="url(#bgp-teal)"/>
+        <rect x="10.8" y="8.1" width="3.4" height="11.4" rx=".55" fill="url(#bgp-blue)"/>
+        <rect x="15.8" y="4.7" width="3.4" height="14.8" rx=".55" fill="url(#bgp-gold)"/>
+        <path d="M6.3 12.8v5.8M11.3 8.7v8.5M16.3 5.4v11.8" stroke="#fff" stroke-width=".55" opacity=".6"/></symbol>
+  <symbol id="i-chart-line" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 3.1v17.4h17.5" stroke="#617d95" stroke-width="1.35" fill="none"/>
+        <path d="m5.4 16.9 4.8-6.9 4.3 2.1 5.2-7.5" stroke="#258abe" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="5.4" cy="16.9" r="1.5" fill="#55c4bd"/><circle cx="10.2" cy="10" r="1.5" fill="#52afe5"/>
+        <circle cx="14.5" cy="12.1" r="1.5" fill="#52afe5"/><circle cx="19.7" cy="4.6" r="1.5" fill="#f4be52"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.2" y="3.3" width="19.7" height="17.7" rx="2" fill="#263f58" stroke="#7c98b1" stroke-width=".65"/>
+        <path d="M2.6 5.2c0-1 .6-1.5 1.5-1.5h15.8c.9 0 1.5.5 1.5 1.5v2H2.6z" fill="#50738f"/>
+        <circle cx="5.1" cy="5.5" r=".68" fill="#ef7576"/><circle cx="7.4" cy="5.5" r=".68" fill="#ffca65"/><circle cx="9.7" cy="5.5" r=".68" fill="#61d697"/>
+        <path d="m6 11 3 2.3-3 2.3M11.5 16.2h5.2" stroke="#8de2b6" stroke-width="1.55" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.4 3.5a1.9 1.9 0 0 1 3.2 0l8.4 14.5a1.9 1.9 0 0 1-1.6 2.9H3.6A1.9 1.9 0 0 1 2 18z" fill="url(#bgp-gold)" stroke="#bc8128" stroke-width="1"/>
+        <path d="m11.8 7-6.7 11.7" stroke="#fff5c6" stroke-width="1.5" opacity=".48"/>
+        <path d="M12 9v5.5" stroke="#7f5525" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="17.4" r="1" fill="#785027"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.1" y="2.7" width="17.8" height="18.8" rx="2" fill="url(#bgp-paper)" stroke="#8facbf" stroke-width=".8"/>
+        <path d="M9.3 7h8.3M9.3 12h8.3M9.3 17h8.3" stroke="#5c90b6" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="6.3" cy="7" r="1.2" fill="#53add6"/><circle cx="6.3" cy="12" r="1.2" fill="#53add6"/><circle cx="6.3" cy="17" r="1.2" fill="#53add6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.4v11.4M7.7 11 12 15.2l4.3-4.2" stroke="#2c8ed1" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.2 17.1v3.3h15.6v-3.3" fill="none" stroke="#7999b2" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7 20.3h10" stroke="#4cb0e0" stroke-width="1"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4.3m-4.3 4 4.3-4.3 4.3 4.3" fill="none" stroke="#2d8dd1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4.2 16.8v3.5h15.6v-3.5" fill="none" stroke="#7999b2" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.1" cy="10.1" r="7.2" fill="#d5f3ff" fill-opacity=".55" stroke="#438ec0" stroke-width="2.3"/>
+        <path d="m15.4 15.4 5.8 5.8" fill="none" stroke="#557792" stroke-width="3" stroke-linecap="round"/>
+        <path d="M6 9.2a4.1 4.1 0 0 1 4-3.6" stroke="#fff" stroke-width="1.4" opacity=".85" fill="none"/></symbol>
+  <symbol id="i-focus" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5" fill="none" stroke="#448dbb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12" cy="12" r="4.3" fill="#d9efff" fill-opacity=".7" stroke="#63a5d6" stroke-width="1.2"/><circle cx="12" cy="12" r="1.65" fill="url(#bgp-blue)"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.8h14l-1.2 12c-.1 1.3-1.2 2-2.3 2H8.7c-1.1 0-2.1-.8-2.3-2z" fill="url(#bgp-steel)" stroke="#7890a9" stroke-width=".8"/>
+        <path d="M4.5 5.1h15v2.6h-15z" fill="url(#bgp-red)" stroke="#b94444" stroke-width=".7"/>
+        <path d="M9 5V3.2h6V5" stroke="#bd4c4d" stroke-width="1.1" fill="none"/>
+        <path d="M9.8 10v8M14.1 10v8" stroke="#8198b0" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.6 16.7 15.9 4.4l4.1 4.1L7.7 20.8l-5 1z" fill="url(#bgp-gold)" stroke="#c38c35" stroke-width=".85"/>
+        <path d="m15.9 4.4 2-2a1.7 1.7 0 0 1 2.4 0l1.3 1.3a1.7 1.7 0 0 1 0 2.4l-1.6 2.4z" fill="url(#bgp-red)" stroke="#b65a49" stroke-width=".65"/>
+        <path d="m3.6 16.7 4.1 4.1-5 1z" fill="#556d84"/>
+        <path d="M5.2 17.1 17.4 4.9" stroke="#fff1bd" stroke-width=".65" fill="none"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="3.2" width="12.5" height="15.2" rx="1.6" fill="#d4e5f4" stroke="#7da2bf" stroke-width=".8"/>
+        <rect x="7.4" y="7.7" width="14" height="13.8" rx="1.5" fill="url(#bgp-paper)" stroke="#548cb3" stroke-width=".9"/>
+        <path d="M10 12h8.2M10 15h8.2M10 18h5" stroke="#68a3ce" stroke-width="1" stroke-linecap="round"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.1" fill="url(#bgp-green)" stroke="#248c5e" stroke-width=".95"/>
+        <path d="m7.8 12.1 2.8 2.7 5.5-6.2" stroke="#fff" stroke-width="2.15" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7.8 5.7a7.8 7.8 0 0 1 6.5-1.2" stroke="#f4fff2" stroke-width="1.25" opacity=".66" fill="none"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3" fill="url(#bgp-blue)" stroke="#347bb6" stroke-width=".9"/>
+        <circle cx="12" cy="7.7" r="1.2" fill="#fff"/><path d="M12 11.1v5.7" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3" fill="url(#bgp-blue)" stroke="#347bb6" stroke-width=".9"/>
+        <path d="M9.7 9.4a2.55 2.55 0 1 1 4.2 2.2c-1.2.9-1.8 1.3-1.8 2.8" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+        <circle cx="12" cy="17.3" r="1.05" fill="#fff"/></symbol>
+  <symbol id="i-shield-check" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 1.7 8.4 3.8v6.3c0 5-3.4 8.8-8.4 10.5-5-1.7-8.4-5.5-8.4-10.5V5.5z" fill="url(#bgp-teal)" stroke="#198b97" stroke-width="1"/>
+        <path d="m7.7 11.9 3 3.1 5.7-6.2" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9.8V7.1a5 5 0 0 1 10 0v2.7" fill="none" stroke="#758ca3" stroke-width="2.35" stroke-linecap="round"/>
+        <rect x="4.3" y="9.6" width="15.4" height="11.8" rx="2" fill="url(#bgp-gold)" stroke="#bd8d34" stroke-width=".8"/>
+        <circle cx="12" cy="14.8" r="1.2" fill="#7a582f"/><path d="M12 15.8v2" stroke="#7a582f" stroke-width="1.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.1 5.4h17.8v13c0 2-4 3.5-8.9 3.5s-8.9-1.5-8.9-3.5z" fill="url(#bgp-blue)" stroke="#467da7" stroke-width=".7"/>
+        <ellipse cx="12" cy="5.4" rx="8.9" ry="3.4" fill="#a5def8" stroke="#448dbb" stroke-width=".75"/>
+        <path d="M3.1 11.8c0 2 4 3.4 8.9 3.4s8.9-1.4 8.9-3.4M3.1 17c0 2 4 3.4 8.9 3.4s8.9-1.4 8.9-3.4" fill="none" stroke="#d1ecff" stroke-width=".95"/>
+        <path d="M6 8.9v9.1" stroke="#fff" opacity=".3" stroke-width=".9"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 4.9 7 7.1-7 7.1" fill="none" stroke="#3a8fb9" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m4.9 8 7.1 7 7.1-7" fill="none" stroke="#3a8fb9" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="#f7e9e8" stroke="#e6cac9" stroke-width=".65"/>
+      <path d="M8 8l8 8M16 8l-8 8" stroke="#b24b4a" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3.6 13.6 9.8-9.8a2.1 2.1 0 0 1 2.9 0l5 5a2 2 0 0 1 0 2.9l-8.7 9H8z" fill="url(#bgp-red)" stroke="#af6268" stroke-width=".85"/>
+      <path d="m3.6 13.6 8.7 7.1H8L3 16.2z" fill="url(#bgp-steel)" stroke="#8499b2" stroke-width=".7"/>
+      <path d="m9 8.8 7.3 7.1" stroke="#fff" stroke-width="1.2" opacity=".83"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="3" width="18.5" height="18" rx="1.5" fill="url(#bgp-paper)" stroke="#5e91b1" stroke-width=".85"/>
+      <path d="M2.8 3h18.5v5H2.8z" fill="url(#bgp-blue)"/>
+      <path d="M8.8 3v18M15 3v18M2.8 13.5h18.5" stroke="#7ca4c0" stroke-width=".85" fill="none"/>
+      <path d="M3.8 9h16" stroke="#d0e1ee" stroke-width=".9"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.8 4.1h18.4L14 12v6.5l-4.2 3V12z" fill="url(#bgp-blue)" stroke="#3b7eb5" stroke-width=".85" stroke-linejoin="round"/>
+      <path d="M5.5 5.2h13" stroke="#d9f5ff" opacity=".8" stroke-width=".85"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11.8 5.2C8.8 3.6 5.6 3.1 2.6 4.5v14.8c3.3-1.4 6.6-1 9.2 1.2z" fill="#e4f1fd" stroke="#648fb0" stroke-width=".85"/>
+      <path d="M12 5.2c3-1.6 6.2-2.1 9.4-.7v14.8c-3.3-1.4-6.7-1-9.4 1.2z" fill="url(#bgp-paper)" stroke="#648fb0" stroke-width=".85"/>
+      <path d="M5 8h4M5 11h4M15 8h4M15 11h4M12 5.2v15.3" stroke="#659cbb" stroke-width=".8"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="15" height="15" rx="2" fill="#415e77" stroke="#223f5a" stroke-width="1"/>
+      <rect x="7.3" y="7.3" width="9.4" height="9.4" rx="1.3" fill="url(#bgp-teal)" stroke="#6dd8d6" stroke-width=".7"/>
+      <path d="M9 1.5v3M15 1.5v3M9 19.5v3M15 19.5v3M1.5 9h3M1.5 15h3M19.5 9h3M19.5 15h3" stroke="#7293ab" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M10 12h4" stroke="#e1ffff" stroke-width=".9"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.1 12c2.5-4.2 6-6.5 9.9-6.5 3.9 0 7.4 2.3 9.9 6.5-2.5 4.2-6 6.5-9.9 6.5-3.9 0-7.4-2.3-9.9-6.5z" fill="#d7ebf8" stroke="#769bb4" stroke-width=".9"/>
+      <circle cx="12" cy="12" r="4.25" fill="url(#bgp-blue)" stroke="#4d8abe" stroke-width=".6"/>
+      <circle cx="12" cy="12" r="2.1" fill="#294966"/>
+      <circle cx="10.65" cy="10.6" r="1.1" fill="#fff"/></symbol>
+
+<symbol id="i-file-cif" viewBox="0 0 24 24" fill="none" stroke="none"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#3488c9" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">CIF</text></symbol>
+<symbol id="i-file-poscar" viewBox="0 0 24 24" fill="none" stroke="none"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#2b9b95" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">POS</text></symbol>
+<symbol id="i-file-vasp" viewBox="0 0 24 24" fill="none" stroke="none"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#5b80b6" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="3.28" font-weight="bold" letter-spacing=".05">VASP</text></symbol>
+<symbol id="i-file-xyz" viewBox="0 0 24 24" fill="none" stroke="none"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#9d7abb" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">XYZ</text></symbol>
+<symbol id="i-file-csv" viewBox="0 0 24 24" fill="none" stroke="none"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#31a571" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">CSV</text></symbol>
+<symbol id="i-file-log" viewBox="0 0 24 24" fill="none" stroke="none"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#668599" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">LOG</text></symbol>
+<symbol id="i-file-pdf" viewBox="0 0 24 24" fill="none" stroke="none"><path d="M5.6 3.3H14l6.6 6.1V20a2 2 0 0 1-2 2H7.2a2.7 2.7 0 0 1-2.7-2.7V5.2z" fill="#5c7e9f" opacity=".15"/><path d="M5.1 3.2a1.7 1.7 0 0 1 1.7-1.7H14l6 6.2v12a1.8 1.8 0 0 1-1.8 1.8H6.9a1.8 1.8 0 0 1-1.8-1.8z" fill="url(#bgp-paper)" stroke="#5b85a8" stroke-width=".8"/>
+      <path d="M14 1.6v5a1.35 1.35 0 0 0 1.4 1.4H20" fill="url(#bgp-fold)" stroke="#6b95b4" stroke-width=".8" stroke-linejoin="round"/>
+      <path d="M6.9 3.4v15.9" stroke="#fff" stroke-width=".65" opacity=".85"/>
+      <path d="M8.2 10.3h8.6M8.2 12h7.2" stroke="#a2bbcf" stroke-width=".76" stroke-linecap="round" opacity=".88"/><path d="M8.2 11.1h5.8m-5.8 1.2h4" stroke="#719ac0" stroke-width=".76" opacity=".85"/><rect x="7.7" y="14.3" width="10.3" height="5.3" rx="1" fill="#d35b58" stroke="#ffffff" stroke-width=".55"/><path d="M8.1 14.7h9.3" stroke="#fff" stroke-width=".45" opacity=".45"/><text x="12.84" y="18.18" text-anchor="middle" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="4.35" font-weight="bold" letter-spacing=".25">PDF</text></symbol>
+</svg>
+<div id="app">
+  <header class="titlebar">
+    <div class="brand"><span class="brand-icon">G</span><span class="brand-name">GNNBGP Studio</span><span class="brand-separator"></span><span class="title-sub">材料电子结构计算平台</span></div>
+    <div class="right-title"><span class="product-version">v0.6 · WORKBENCH</span><span class="health-dot" id="health-dot"></span><span id="title-health">检测计算环境...</span></div>
+  </header>
+
+  <nav class="menubar" aria-label="主菜单">
+    <div class="menu-group">
+      <button class="menu-trigger" data-menu="file">文件(F)</button>
+      <button class="menu-trigger" data-menu="edit">编辑(E)</button>
+      <button class="menu-trigger" data-menu="view">视图(V)</button>
+      <button class="menu-trigger" data-menu="tools">工具(T)</button>
+      <button class="menu-trigger" data-menu="help">帮助(H)</button>
+    </div>
+    <span class="menu-tail" id="current-source">ENGINE /mnt/d/program/gnnbgp</span>
+  </nav>
+  <div id="menu-overlay" class="menu-overlay hidden">
+    <div class="menu-pane" id="menu-items"></div>
+  </div>
+
+  <section class="toolbar" aria-label="工具栏">
+    <div class="toolbar-group">
+      <button id="tool-import" class="toolbtn" title="导入结构 (Ctrl+O)"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-file-up"></use></svg><span class="tool-label">导入结构</span></button>
+      <button id="tool-example" class="toolbtn" title="导入内置样例"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-folder-open"></use></svg><span class="tool-label">示例结构</span></button>
+    </div>
+    <span class="tool-separator"></span>
+    <div class="toolbar-group">
+      <button id="tool-run" class="toolbtn primary" title="启动真实计算 (Ctrl+Enter)"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-play"></use></svg><span class="tool-label">启动计算</span></button>
+      <button id="tool-stop" class="toolbtn" title="中止当前任务" disabled><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-stop"></use></svg><span class="tool-label">终止</span></button>
+      <button id="tool-retry" class="toolbtn" title="按原有参数重新运行" disabled><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-rotate-cw"></use></svg><span class="tool-label">重复运行</span></button>
+    </div>
+    <span class="tool-separator"></span>
+    <div class="toolbar-group">
+      <button id="tool-refresh" class="toolbtn" title="刷新工作台 (F5)"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-refresh-cw"></use></svg><span class="tool-label">刷新</span></button>
+      <button id="tool-report" class="toolbtn" title="在当前工作区显示计算报告" disabled><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-report"></use></svg><span class="tool-label">计算报告</span></button>
+      <button id="tool-env" class="toolbtn" title="查看计算后端可用性"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-settings"></use></svg><span class="tool-label">环境诊断</span></button>
+    </div>
+    <div class="toolbar-spacer"></div>
+    <div class="toolbar-status"><span class="toolbar-led" id="toolbar-led"></span><span id="toolbar-text">本地服务已启动</span></div>
+  </section>
+
+  <section class="workspace">
+    <div class="pane explorer">
+      <div class="pane-heading"><span class="pane-title"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-folder-tree"></use></svg>工程资源管理器</span><button id="explorer-refresh" class="tinybtn icon-only" aria-label="刷新材料" title="刷新材料"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-refresh-cw"></use></svg></button></div>
+      <div class="explorer-search"><input id="material-filter" type="search" placeholder="筛选材料 / 化学式..."/></div>
+      <div class="folder-group">
+        <button class="folder-heading" id="materials-folder"><span class="folder-symbol">▾</span> <svg class="ui-icon folder-icon" aria-hidden="true" focusable="false"><use href="#i-folder-open"></use></svg>已导入结构 <span id="material-count" class="count">0</span></button>
+        <div id="materials-list" class="tree-list"><div class="tree-hint">尚未导入晶体文件</div></div>
+      </div>
+      <div class="folder-group">
+        <button class="folder-heading" id="samples-folder"><span class="folder-symbol">▾</span> <svg class="ui-icon folder-icon" aria-hidden="true" focusable="false"><use href="#i-library"></use></svg>测试样例</button>
+        <div id="samples-list" class="tree-list"><div class="tree-hint">正在读取 examples/...</div></div>
+      </div>
+      <div class="explorer-bottom">
+        <div class="explorer-info-title">活动工作区</div>
+        <div class="path-text" id="work-root-label">~/BandGap-Studio/workspace</div>
+        <button class="linkbtn" id="show-workspace">工作区详情 <svg class="ui-icon chevron-icon" aria-hidden="true" focusable="false"><use href="#i-chevron-right"></use></svg></button>
+      </div>
+    </div>
+
+    <div class="splitter splitter-v" id="drag-left" title="拖动调整资源管理器宽度"></div>
+
+    <div class="pane main-editor">
+      <div class="editor-tabs" role="tablist">
+        <button class="editor-tab active" data-view="structure" role="tab"><svg class="ui-icon tab-icon" aria-hidden="true" focusable="false"><use href="#i-atom"></use></svg>结构视图</button>
+        <button class="editor-tab" data-view="results" role="tab"><svg class="ui-icon tab-icon" aria-hidden="true" focusable="false"><use href="#i-file-text"></use></svg>计算结果</button>
+        <button class="editor-tab" data-view="report" role="tab"><svg class="ui-icon tab-icon" aria-hidden="true" focusable="false"><use href="#i-report"></use></svg>计算报告</button>
+        <button class="editor-tab" data-view="jobs" role="tab"><svg class="ui-icon tab-icon" aria-hidden="true" focusable="false"><use href="#i-list-todo"></use></svg>任务管理 <span id="job-tab-count" class="tab-count">0</span></button>
+        <button class="editor-tab" data-view="compare" role="tab"><svg class="ui-icon tab-icon" aria-hidden="true" focusable="false"><use href="#i-chart-column"></use></svg>数据比较</button>
+        <button class="editor-tab" data-view="artifacts" role="tab"><svg class="ui-icon tab-icon" aria-hidden="true" focusable="false"><use href="#i-files"></use></svg>输出文件</button>
+      </div>
+      <div class="workspace-header"><span id="breadcrumb">当前工程 / 未选择结构</span><span class="workspace-tag" id="workspace-tag">NO DOCUMENT</span></div>
+
+      <div id="view-structure" class="view active">
+        <div class="mini-toolbar">
+          <span class="sectionlabel"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-cube"></use></svg>结构查看器</span>
+          <span class="view-sub">ORIGINAL UNIT CELL</span>
+          <span class="spacer"></span>
+          <label class="tinycheck"><input type="checkbox" id="viewer-axes" checked/>坐标轴</label>
+          <label class="tinycheck"><input type="checkbox" id="viewer-cell" checked/>晶胞</label>
+          <label class="tinycheck"><input type="checkbox" id="viewer-labels"/>元素标记</label>
+          <button class="tinybtn" id="view-reset" title="重置视角"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-focus"></use></svg><span class="tool-label">重置视角</span></button>
+        </div>
+        <div class="viewer-area">
+          <canvas id="crystal-canvas" aria-label="交互式晶胞三维投影视图"></canvas>
+          <div class="viewer-label"><strong>STRUCTURE VIEW</strong><span>Mouse drag / Rotate · Wheel / Zoom</span></div>
+          <div id="viewer-empty" class="viewer-empty">从左侧选择测试样例，或点击「导入结构」<br/><small>支持 CIF、POSCAR、CONTCAR、VASP 和 XYZ</small></div>
+          <div id="viewer-overlay" class="viewer-overlay">未载入结构</div>
+        </div>
+        <div class="section-divider"><span>原子位置列表</span><span class="fineprint">Cartesian / Å · 不进行弛豫或坐标变换</span></div>
+        <div class="atoms-container">
+          <table class="data-table" id="atoms-table">
+            <thead><tr><th class="narrow">#</th><th>元素</th><th> X (Å)</th><th> Y (Å)</th><th> Z (Å)</th></tr></thead>
+            <tbody id="atoms-body"><tr><td colspan="5" class="empty-cell">暂无原子数据</td></tr></tbody>
+          </table>
+        </div>
+        <div class="dataset-footer" id="atom-footer">等待载入材料</div>
+      </div>
+
+      <div id="view-results" class="view">
+        <div class="mini-toolbar"><span class="sectionlabel"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-file-text"></use></svg>当前计算结果</span><span class="spacer"></span><button id="result-raw" class="tinybtn" disabled><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-file-json"></use></svg><span class="tool-label">查看原始 JSON</span></button><button id="result-export" class="tinybtn" disabled><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-download"></use></svg><span class="tool-label">导出结果 CSV</span></button></div>
+        <div id="result-empty" class="context-empty">尚无结果记录。选择材料，启动计算，或从「任务管理」中打开已有任务。</div>
+        <div id="result-content" class="result-content hidden">
+          <div class="result-summary">
+            <div class="gap-panel"><span>FUNDAMENTAL BAND GAP</span><strong id="result-gap">—</strong><em>eV</em></div>
+            <div class="summary-fields">
+              <div><label>计算状态</label><b id="result-state">—</b></div>
+              <div><label>电子态分类</label><b id="result-class">—</b></div>
+              <div><label>带隙类型</label><b id="result-type">—</b></div>
+              <div><label>类型概率</label><b id="result-prob">—</b></div>
+              <div><label>SCF 收敛</label><b id="result-converged">—</b></div>
+              <div><label>耗时</label><b id="result-runtime">—</b></div>
+            </div>
+          </div>
+          <div class="inspector-title"><svg class="ui-icon inspect-icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg>计算方法与来源</div>
+          <table class="kv-table"><tbody id="result-meta"></tbody></table>
+          <div class="warning-block hidden" id="result-warning"></div>
+          <div class="inspector-title"><svg class="ui-icon inspect-icon" aria-hidden="true" focusable="false"><use href="#i-database"></use></svg>完整计算记录</div>
+          <div class="detail-tabs"><button class="detail-tab active" data-detail="settings"><svg class="ui-icon detail-icon" aria-hidden="true" focusable="false"><use href="#i-sliders"></use></svg>Settings</button><button class="detail-tab" data-detail="provenance"><svg class="ui-icon detail-icon" aria-hidden="true" focusable="false"><use href="#i-shield-check"></use></svg>Provenance</button><button class="detail-tab" data-detail="diagnostics"><svg class="ui-icon detail-icon" aria-hidden="true" focusable="false"><use href="#i-search"></use></svg>Diagnostics</button><button class="detail-tab" data-detail="occupation_summary"><svg class="ui-icon detail-icon" aria-hidden="true" focusable="false"><use href="#i-table"></use></svg>Occupations</button></div>
+          <pre id="result-details" class="data-pre"></pre>
+        </div>
+      </div>
+
+      <div id="view-report" class="view">
+        <div class="mini-toolbar"><span class="sectionlabel"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-report"></use></svg>计算报告 · 工作区内预览</span><span class="spacer"></span>
+          <button id="report-save" class="tinybtn" disabled title="保存报告为文本文件"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-download"></use></svg><span class="tool-label">导出报告 TXT</span></button>
+          <button id="report-print" class="tinybtn" disabled title="使用系统打印或另存为 PDF"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-report"></use></svg><span class="tool-label">打印 / 保存 PDF</span></button>
+        </div>
+        <div id="report-empty" class="context-empty">请选择一项计算任务。报告将在当前标签内显示，不打开新网页。</div>
+        <div id="report-sheet-wrap" class="report-sheet-wrap hidden">
+          <article id="report-sheet" class="report-paper" aria-label="计算报告">
+            <header class="report-head">
+              <div class="report-logo">GNNBGP <span>STUDIO</span></div>
+              <h2>材料带隙计算报告</h2>
+              <p>Scientific Calculation Record · Source: bandgap-predictor</p>
+            </header>
+            <table class="report-table"><tbody id="report-basic"></tbody></table>
+            <h3>一、计算结果</h3>
+            <table class="report-table"><tbody id="report-prediction"></tbody></table>
+            <h3>二、计算方法及参数</h3>
+            <table class="report-table"><tbody id="report-settings"></tbody></table>
+            <h3>三、来源、诊断与警告</h3>
+            <table class="report-table"><tbody id="report-provenance"></tbody></table>
+            <div id="report-warnings" class="report-warnings"></div>
+            <p class="report-footnote">说明：本报告直接采用选中任务的真实 result.json 和任务记录。缺失字段以“未提供”标示；类型概率不等于带隙回归值的置信度。</p>
+          </article>
+        </div>
+      </div>
+
+      <div id="view-jobs" class="view">
+        <div class="mini-toolbar"><span class="sectionlabel"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-list-todo"></use></svg>历史任务和运行队列</span><span class="spacer"></span><select id="jobs-filter" class="compact-select"><option value="all">全部状态</option><option value="queued">排队</option><option value="running">运行</option><option value="success">成功</option><option value="failed">失败</option><option value="interrupted">中断</option></select><input type="search" id="jobs-search" class="compact-search" placeholder="筛选材料 / 后端 / ID"/></div>
+        <div class="table-scroller">
+          <table class="data-table jobs-table"><thead><tr><th>任务编号</th><th>晶体</th><th>计算方法</th><th>状态</th><th>带隙 (eV)</th><th>带隙类型</th><th>耗时</th><th>提交时间 (UTC)</th></tr></thead>
+          <tbody id="jobs-body"><tr><td colspan="8" class="empty-cell">当前没有计算任务</td></tr></tbody></table>
+        </div>
+        <div class="dataset-footer"><span id="jobs-summary">共 0 条记录</span><span>双击任务，查看详细结果</span></div>
+      </div>
+
+      <div id="view-compare" class="view">
+        <div class="mini-toolbar"><span class="sectionlabel"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-chart-column"></use></svg>历史计算对比</span><span class="spacer"></span><button id="compare-export" class="tinybtn"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-download"></use></svg><span class="tool-label">导出比较 CSV</span></button></div>
+        <div class="comparison-notice"><svg class="ui-icon notice-icon" aria-hidden="true" focusable="false"><use href="#i-info"></use></svg>说明：图中数据来自不同方法的原始 <code>result.json</code>。GNN、HSE06、PBE0、CIDER 结果不能被直接当作同一种测量平均。</div>
+        <div class="compare-container"><div id="compare-chart" class="chart-list"><div class="context-empty">暂无可比较的成功计算记录</div></div></div>
+      </div>
+
+      <div id="view-artifacts" class="view">
+        <div class="mini-toolbar"><span class="sectionlabel"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-folder-open"></use></svg>计算产物文件浏览器</span><span class="spacer"></span><button id="artifacts-refresh" class="tinybtn"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-refresh-cw"></use></svg><span class="tool-label">刷新文件</span></button></div>
+        <div class="pathbar" id="artifacts-dir">尚未选择任务</div>
+        <div class="table-scroller">
+          <table class="data-table"><thead><tr><th>相对路径</th><th>大小</th><th>操作</th></tr></thead><tbody id="artifacts-body"><tr><td colspan="3" class="empty-cell">运行任务后可查看其全部输出文件</td></tr></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="splitter splitter-v" id="drag-right" title="拖动调整属性面板宽度"></div>
+
+    <aside class="pane inspector">
+      <div class="pane-heading"><span class="pane-title"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-sliders"></use></svg>属性 / 计算设置</span> <span class="pane-heading-sub">INSPECTOR</span></div>
+      <div class="inspector-scroll">
+        <div class="inspector-title"><svg class="ui-icon inspect-icon" aria-hidden="true" focusable="false"><use href="#i-atom"></use></svg>选中的结构</div>
+        <div class="inspect-file"><span class="file-ico"><svg class="ui-icon file-badge-icon" aria-hidden="true" focusable="false"><use href="#i-file-text"></use></svg><span>CIF</span></span><span><strong id="inspect-name">无选择</strong><small id="inspect-id">请选择左侧材料</small></span></div>
+        <table class="kv-table compact">
+          <tbody>
+            <tr><th>化学式</th><td id="prop-formula">—</td></tr>
+            <tr><th>原子总数</th><td id="prop-atoms">—</td></tr>
+            <tr><th>a / b / c (Å)</th><td id="prop-lengths">—</td></tr>
+            <tr><th>α / β / γ (°)</th><td id="prop-angles">—</td></tr>
+            <tr><th>三维周期性</th><td id="prop-pbc">—</td></tr>
+          </tbody>
+        </table>
+        <div class="inspector-title"><svg class="ui-icon inspect-icon" aria-hidden="true" focusable="false"><use href="#i-settings"></use></svg>计算方法</div>
+        <label class="field-label" for="compute-category">计算类型 / Calculation category</label>
+        <select id="compute-category" class="field">
+          <option value="ml">机器学习带隙误差修正</option>
+          <option value="gpu">GPU 带隙计算</option>
+          <option value="functional">数据驱动泛函带隙计算</option>
+        </select>
+        <label class="field-label" for="backend-select">具体计算方法 / Backend</label>
+        <select id="backend-select" class="field">
+          <option value="gnn-hse06">GNN-HSE06 · MACE</option>
+        </select>
+        <div id="backend-indicator" class="backend-indicator">正在检查后端状态</div>
+        <label class="field-label" for="device-select">GNN 运行设备</label>
+        <select id="device-select" class="field"><option value="cpu">CPU · 默认</option><option value="cuda">CUDA · 需可用 GPU 环境</option></select>
+        <div class="field-description" id="device-description">仅 GNN 使用。与 ABACUS CUDA 编译环境独立。</div>
+        <label class="field-label" for="abacus-path">ABACUS 可执行文件 (WSL 路径)</label>
+        <input id="abacus-path" class="field" type="text" placeholder="/home/guojin/BandGap-Studio/build/abacus-install/bin/abacus_pw_gpu" spellcheck="false"/>
+        <div class="field-description">启动时自动读取已编译的 GPU ABACUS 路径；功能 2/3 使用同一程序。可手动覆盖，建议先执行 <code>bgp doctor</code>。</div>
+        <label class="field-label" for="job-note">任务备注</label>
+        <textarea id="job-note" class="field area-field" rows="3" placeholder="输入实验目的或备注（可选）"></textarea>
+        <div class="inspector-title"><svg class="ui-icon inspect-icon" aria-hidden="true" focusable="false"><use href="#i-lock"></use></svg>科学参数 · 锁定</div>
+        <div class="lock-block"><span class="lock-symbol"><svg class="ui-icon lock-icon" aria-hidden="true" focusable="false"><use href="#i-lock"></use></svg></span><div><strong>Preset Controlled</strong><small id="preset-text">由甲方计算后端管理。不可任意修改 ecutwfc、kspacing、SOC 等参数。</small></div></div>
+        <button id="inspector-run" class="run-button"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#i-play"></use></svg><span class="tool-label">提交计算任务</span></button>
+        <div class="inspector-title"><svg class="ui-icon inspect-icon" aria-hidden="true" focusable="false"><use href="#i-list-todo"></use></svg>选中任务</div>
+        <table class="kv-table compact"><tbody>
+          <tr><th>任务编号</th><td id="prop-job-id">—</td></tr>
+          <tr><th>状态</th><td id="prop-job-state">—</td></tr>
+          <tr><th>计算方法</th><td id="prop-job-backend">—</td></tr>
+          <tr><th>带隙 (eV)</th><td id="prop-job-gap">—</td></tr>
+          <tr><th>计算目录</th><td id="prop-job-dir" class="wrap">—</td></tr>
+        </tbody></table>
+      </div>
+    </aside>
+  </section>
+
+  <div class="splitter splitter-h" id="drag-bottom" title="拖动调整控制台高度"><span class="grip"></span></div>
+  <section class="dock">
+    <div class="dock-tabs">
+      <button class="dock-tab active" data-dock="output"><svg class="ui-icon dock-icon" aria-hidden="true" focusable="false"><use href="#i-terminal"></use></svg>输出日志 <span id="log-led" class="small-led"></span></button>
+      <button class="dock-tab" data-dock="queue"><svg class="ui-icon dock-icon" aria-hidden="true" focusable="false"><use href="#i-list-todo"></use></svg>运行队列 <span id="queue-count" class="count">0</span></button>
+      <button class="dock-tab" data-dock="problems"><svg class="ui-icon dock-icon" aria-hidden="true" focusable="false"><use href="#i-alert-triangle"></use></svg>问题与警告 <span id="problems-count" class="count">0</span></button>
+      <span class="spacer"></span>
+      <label class="tinycheck dock-autoscroll"><input id="auto-scroll" type="checkbox" checked/>自动滚动</label>
+      <button id="dock-clear" class="tinybtn" title="清空本地日志显示（不删除文件）"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-eraser"></use></svg><span class="tool-label">清空显示</span></button>
+    </div>
+    <div id="dock-output" class="dock-body active">
+      <pre id="console" class="console">[system] GNNBGP Industrial Workbench 已就绪。
+[system] 选择材料后点击「启动计算」，日志将显示于此。</pre>
+    </div>
+    <div id="dock-queue" class="dock-body"><div id="queue-list" class="queue-list">暂无排队或运行中的任务</div></div>
+    <div id="dock-problems" class="dock-body"><div id="problems-list" class="problems-list">暂无问题</div></div>
+  </section>
+
+  <footer class="statusbar">
+    <div><span class="status-square"></span><span id="status-message">Ready</span></div>
+    <span class="status-sep"></span><span id="status-material">未选择材料</span>
+    <span class="spacer"></span><span id="status-jobs">0 tasks</span><span class="status-sep"></span>
+    <span>Python 3.11 / WSL</span><span class="status-sep"></span><span id="status-engine">bgp 0.1.0</span>
+  </footer>
+</div>
+
+<input type="file" id="file-input" accept=".cif,.vasp,.poscar,.contcar,.xyz" hidden/>
+<div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+<div id="modal-backdrop" class="modal-backdrop hidden" role="presentation">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-head"><strong id="modal-title">对话框</strong><button id="modal-close" class="tinybtn" aria-label="关闭"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-x"></use></svg></button></div>
+    <div id="modal-body" class="modal-content"></div>
+    <div class="modal-actions"><button id="modal-dismiss" class="button secondary"><svg class="ui-icon tiny-icon" aria-hidden="true" focusable="false"><use href="#i-check-circle"></use></svg><span class="tool-label">关闭</span></button></div>
+  </div>
+</div>
+</body></html>

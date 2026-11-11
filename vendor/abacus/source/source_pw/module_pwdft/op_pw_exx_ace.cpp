@@ -1,0 +1,371 @@
+#include "op_pw_exx.h"
+#include "source_base/parallel_comm.h"
+#include "source_base/parallel_device.h"
+#include "source_base/parallel_reduce.h"
+#include "source_io/module_parameter/parameter.h"
+#include "source_hamilt/module_xc/exx_info.h"
+
+#include <ostream>
+
+namespace hamilt
+{
+template <typename T, typename Device>
+void OperatorEXXPW<T, Device>::act_op_ace(const int nbands,
+                                          const int nbasis,
+                                          const int npol,
+                                          const T *tmpsi_in,
+                                          T *tmhpsi,
+                                          const int ngk_ik,
+                                          const bool is_first_node) const
+{
+    ModuleBase::timer::start("OperatorEXXPW", "act_op_ace");
+    //    std::cout << "act_op_ace" << std::endl;
+    // hpsi += -Xi^\dagger * Xi * psi
+    T* Xi_ace = Xi_ace_k[this->ik];
+    int nbands_tot = psi.get_nbands();
+    int nbasis_max = psi.get_nbasis();
+    std::size_t apply_count = 0;
+    if (!checked_exx_size_product(static_cast<std::size_t>(nbands_tot),
+                                  static_cast<std::size_t>(nbands),
+                                  apply_count)
+        || !checked_exx_allocation_bytes(apply_count, sizeof(T)))
+    {
+        ModuleBase::WARNING_QUIT("OperatorEXXPW::act_op_ace", "PW EXX ACE apply size overflows size_t");
+    }
+    int apply_count_int = 0;
+    if (!checked_exx_size_to_int(apply_count, apply_count_int))
+    {
+        ModuleBase::WARNING_QUIT("OperatorEXXPW::act_op_ace", "PW EXX ACE apply size exceeds INT_MAX");
+    }
+    if (Xi_psi_ace == nullptr || ace_apply_scratch_nbands_tot != nbands_tot || ace_apply_scratch_nbands != nbands)
+    {
+        delmem_complex_op()(Xi_psi_ace);
+        Xi_psi_ace = nullptr;
+        resmem_complex_op()(Xi_psi_ace, apply_count);
+        ace_apply_scratch_nbands_tot = nbands_tot;
+        ace_apply_scratch_nbands = nbands;
+    }
+    setmem_complex_op()(Xi_psi_ace, 0, apply_count);
+
+    char trans_N = 'N', trans_T = 'T', trans_C = 'C';
+    T intermediate_one = 1.0, intermediate_zero = 0.0, intermediate_minus_one = -1.0;
+    // Xi * psi
+    gemm_complex_op()(trans_N,
+                      trans_N,
+                      nbands_tot,
+                      nbands,
+                      nbasis,
+                      &intermediate_one,
+                      Xi_ace,
+                      nbands_tot,
+                      tmpsi_in,
+                      nbasis,
+                      &intermediate_zero,
+                      Xi_psi_ace,
+                      nbands_tot
+    );
+
+#ifdef __MPI
+    Parallel_Common::reduce_dev<T, Device>(Xi_psi_ace, apply_count_int, POOL_WORLD);
+#endif
+
+    // Xi^\dagger * (Xi * psi)
+    gemm_complex_op()(trans_C,
+                      trans_N,
+                      nbasis,
+                      nbands,
+                      nbands_tot,
+                      &intermediate_minus_one,
+                      Xi_ace,
+                      nbands_tot,
+                      Xi_psi_ace,
+                      nbands_tot,
+                      &intermediate_one,
+                      tmhpsi,
+                      nbasis
+    );
+
+    ModuleBase::timer::end("OperatorEXXPW", "act_op_ace");
+
+}
+
+template <typename T, typename Device>
+void OperatorEXXPW<T, Device>::construct_ace() const
+{
+    int nbands = psi.get_nbands();
+    int nbasis = psi.get_nbasis();
+    int nk = psi.get_nk();
+    std::size_t band_basis_count = 0;
+    std::size_t band_square_count = 0;
+    if (!checked_exx_size_product(static_cast<std::size_t>(nbands),
+                                  static_cast<std::size_t>(nbasis),
+                                  band_basis_count)
+        || !checked_exx_size_product(static_cast<std::size_t>(nbands),
+                                     static_cast<std::size_t>(nbands),
+                                     band_square_count)
+        || !checked_exx_allocation_bytes(band_basis_count, sizeof(T))
+        || !checked_exx_allocation_bytes(band_square_count, sizeof(T)))
+    {
+        ModuleBase::WARNING_QUIT("OperatorEXXPW::construct_ace", "PW EXX ACE allocation size overflows size_t");
+    }
+    int band_square_count_int = 0;
+    if (!checked_exx_size_to_int(band_square_count, band_square_count_int))
+    {
+        ModuleBase::WARNING_QUIT("OperatorEXXPW::construct_ace", "PW EXX ACE band-square size exceeds INT_MAX");
+    }
+
+    int* ik_ = const_cast<int*>(&this->ik);
+    int ik_save = this->ik;
+
+    T intermediate_one = 1.0, intermediate_zero = 0.0;
+
+    const bool resize_ace_scratch = (ace_scratch_nk != nk || ace_scratch_nbands != nbands
+                                     || ace_scratch_nbasis != nbasis);
+    if (resize_ace_scratch)
+    {
+        delmem_complex_op()(h_psi_ace);
+        h_psi_ace = nullptr;
+        delmem_complex_op()(psi_h_psi_ace);
+        psi_h_psi_ace = nullptr;
+        delmem_complex_op()(L_ace);
+        L_ace = nullptr;
+        for (auto& Xi_ace: Xi_ace_k)
+        {
+            delmem_complex_op()(Xi_ace);
+        }
+        Xi_ace_k.clear();
+        ace_scratch_nk = nk;
+        ace_scratch_nbands = nbands;
+        ace_scratch_nbasis = nbasis;
+    }
+
+    if (h_psi_ace == nullptr)
+    {
+        resmem_complex_op()(h_psi_ace, band_basis_count);
+        setmem_complex_op()(h_psi_ace, 0, band_basis_count);
+    }
+
+    if (Xi_ace_k.size() != nk)
+    {
+        Xi_ace_k.resize(nk);
+        for (int i = 0; i < nk; i++)
+        {
+            resmem_complex_op()(Xi_ace_k[i], band_basis_count);
+        }
+    }
+
+    for (int i = 0; i < nk; i++)
+    {
+        setmem_complex_op()(Xi_ace_k[i], 0, band_basis_count);
+    }
+
+    if (L_ace == nullptr)
+    {
+        resmem_complex_op()(L_ace, band_square_count);
+        setmem_complex_op()(L_ace, 0, band_square_count);
+    }
+
+    if (psi_h_psi_ace == nullptr)
+    {
+        resmem_complex_op()(psi_h_psi_ace, band_square_count);
+    }
+
+    if (first_iter) return;
+    ModuleBase::timer::start("OperatorEXXPW", "construct_ace");
+
+    int nk_max = kv->para_k.get_max_nks_pool();
+    int nspin_fac = PARAM.inp.nspin == 2 ? 2 : 1;
+    for (int ispin = 0; ispin < nspin_fac; ispin++)
+    {
+        for (int ik0 = 0; ik0 < nk_max; ik0++)
+        {
+            int ik = ik0 + ispin * wfcpw->nks / nspin_fac;
+
+            setmem_complex_op()(h_psi_ace, 0, band_basis_count);
+
+            setmem_complex_op()(h_psi_recip, 0, wfcpw->npwk_max);
+            setmem_complex_op()(h_psi_real, 0, rhopw_dev->nrxx);
+            setmem_complex_op()(density_real, 0, rhopw_dev->nrxx);
+            setmem_complex_op()(density_recip, 0, rhopw_dev->npw);
+            setmem_complex_op()(psi_nk_real, 0, wfcpw_exx->nrxx);
+            setmem_complex_op()(psi_mq_real, 0, wfcpw_exx->nrxx);
+
+            bool skip_ik = false;
+            if (ik >= wfcpw->nks)
+            {
+                skip_ik = true;
+            }
+            *ik_ = ik;
+            if (skip_ik)
+            {
+                if (std::is_same<Device, base_device::DEVICE_CPU>::value)
+                {
+                    act_op_qtile_cpu(nbands, nbasis, 1, nullptr, h_psi_ace, nbasis, false, false, ispin);
+                }
+                else
+                {
+                    act_op_qtile_gpu(nbands, nbasis, 1, nullptr, h_psi_ace, nbasis, false, false, ispin);
+                }
+            }
+            else
+            {
+                int npwk = wfcpw->npwk[ik];
+                T* Xi_ace = Xi_ace_k[ik];
+                psi.fix_kb(ik, 0);
+                T* p_psi = psi.get_pointer();
+
+                if (execution_context.kpar > 1 && execution_context.my_rank == 0
+                    && execution_context.running_log != nullptr)
+                {
+                    *execution_context.running_log << " EXX ACE KPAR: calling act_op_qtile for local ik = "
+                                                   << ik << ", spin = " << ispin << std::endl;
+                }
+                if (std::is_same<Device, base_device::DEVICE_CPU>::value)
+                {
+                    act_op_qtile_cpu(nbands, nbasis, 1, p_psi, h_psi_ace, nbasis, false, true, ispin);
+                }
+                else
+                {
+                    act_op_qtile_gpu(nbands, nbasis, 1, p_psi, h_psi_ace, nbasis, false, true, ispin);
+                }
+                // psi_h_psi_ace = psi^\dagger * h_psi_ace
+                // p_exx_helper->psi.fix_kb(0, 0);
+                gemm_complex_op()('C',
+                                  'N',
+                                  nbands,
+                                  nbands,
+                                  npwk,
+                                  &intermediate_one,
+                                  p_psi,
+                                  nbasis,
+                                  h_psi_ace,
+                                  nbasis,
+                                  &intermediate_zero,
+                                  psi_h_psi_ace,
+                                  nbands);
+
+                // reduction of psi_h_psi_ace, due to distributed memory
+#ifdef __MPI
+                Parallel_Common::reduce_dev<T, Device>(psi_h_psi_ace, band_square_count_int, POOL_WORLD);
+#endif
+
+                T intermediate_minus_one = -1.0;
+                axpy_complex_op()(band_square_count_int,
+                                  &intermediate_minus_one,
+                                  psi_h_psi_ace,
+                                  1,
+                                  L_ace,
+                                  1);
+
+
+                int info = 0;
+                char up = 'U', lo = 'L';
+
+                // for (int i = 0; i < nbands; ++i)
+                // {
+                //     for (int j = 0; j < nbands; ++j)
+                //     {
+                //         // std::cout << L_ace[i * nbands + j]. << " ";
+                //         if (L_ace[i * nbands + j].imag() >= 0.0)
+                //         {
+                //             std::cout << L_ace[i * nbands + j].real() << "+" << L_ace[i * nbands + j].imag() << "im ";
+                //         }
+                //         else
+                //         {
+                //             std::cout << L_ace[i * nbands + j].real() << L_ace[i * nbands + j].imag() << "im ";
+                //         }
+                //     }
+                //     std::cout << ";" << std::endl;
+                // }
+                // MPI_Barrier(MPI_COMM_WORLD);
+                // MPI_Abort(MPI_COMM_WORLD, 0);
+
+                lapack_potrf()(lo, nbands, L_ace, nbands);
+
+                // expand for-loop
+                for (int i = 0; i < nbands; ++i) {
+                    setmem_complex_op()(L_ace + i * nbands, 0, i);
+                }
+
+                // L_ace inv in place
+                char non = 'N';
+                lapack_trtri()(lo, non, nbands, L_ace, nbands);
+
+                // Xi_ace = L_ace^-1 * h_psi_ace^dagger
+                gemm_complex_op()('N',
+                                  'C',
+                                  nbands,
+                                  npwk,
+                                  nbands,
+                                  &intermediate_one,
+                                  L_ace,
+                                  nbands,
+                                  h_psi_ace,
+                                  nbasis,
+                                  &intermediate_zero,
+                                  Xi_ace,
+                                  nbands);
+
+                // clear mem
+                setmem_complex_op()(h_psi_ace, 0, band_basis_count);
+                setmem_complex_op()(psi_h_psi_ace, 0, band_square_count);
+                setmem_complex_op()(L_ace, 0, band_square_count);
+            }
+        }
+    }
+
+    *ik_ = ik_save;
+
+    ModuleBase::timer::end("OperatorEXXPW", "construct_ace");
+
+}
+
+template <typename T, typename Device>
+double OperatorEXXPW<T, Device>::cal_exx_energy_ace(psi::Psi<T, Device>* ppsi_) const
+{
+    double Eexx = 0;
+    int nspin_fac = PARAM.inp.nspin == 2 ? 2 : 1;
+    psi::Psi<T, Device> psi_ = *ppsi_;
+    int* ik_ = const_cast<int*>(&this->ik);
+    int ik_save = this->ik;
+    Real hybrid_alpha = GlobalC::exx_info.info_global.hybrid_alpha;
+    std::size_t band_basis_count = 0;
+    if (!checked_exx_size_product(static_cast<std::size_t>(psi_.get_nbands()),
+                                  static_cast<std::size_t>(psi_.get_nbasis()),
+                                  band_basis_count)
+        || !checked_exx_allocation_bytes(band_basis_count, sizeof(T)))
+    {
+        ModuleBase::WARNING_QUIT("OperatorEXXPW::cal_exx_energy_ace",
+                                 "PW EXX ACE energy scratch size overflows size_t");
+    }
+    for (int i = 0; i < wfcpw->nks; i++)
+    {
+        setmem_complex_op()(h_psi_ace, 0, band_basis_count);
+        *ik_ = i;
+        psi_.fix_kb(i, 0);
+        T* psi_i = psi_.get_pointer();
+        act_op_ace(psi_.get_nbands(), psi_.get_nbasis(), 1, psi_i, h_psi_ace, 0, true);
+
+        for (int nband = 0; nband < psi_.get_nbands(); nband++)
+        {
+            psi_.fix_kb(i, nband);
+            T* psi_i_n = psi_.get_pointer();
+            T* hpsi_i_n = h_psi_ace + nband * psi_.get_nbasis();
+            double wg_i_n = (*wg)(i, nband);
+            // Eexx += dot(psi_i_n, h_psi_i_n)
+            Eexx += dot_op()(psi_.get_nbasis(), psi_i_n, hpsi_i_n, false) * wg_i_n;
+        }
+    }
+
+    Parallel_Reduce::reduce_all(Eexx);
+    *ik_ = ik_save;
+    Eexx = Eexx / hybrid_alpha / 2; // This factor of 2 is from the definition of EXX energy.
+    return Eexx;
+}
+template class OperatorEXXPW<std::complex<float>, base_device::DEVICE_CPU>;
+template class OperatorEXXPW<std::complex<double>, base_device::DEVICE_CPU>;
+#if ((defined __CUDA) || (defined __ROCM))
+template class OperatorEXXPW<std::complex<float>, base_device::DEVICE_GPU>;
+template class OperatorEXXPW<std::complex<double>, base_device::DEVICE_GPU>;
+#endif
+}

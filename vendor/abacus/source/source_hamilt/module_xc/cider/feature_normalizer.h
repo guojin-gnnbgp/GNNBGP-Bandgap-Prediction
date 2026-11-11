@@ -1,0 +1,43 @@
+#ifndef MODULE_HAMILT_CIDER_FEATURE_NORMALIZER_H
+#define MODULE_HAMILT_CIDER_FEATURE_NORMALIZER_H
+
+#include "model.h"
+
+#include <cstddef>
+#include <vector>
+
+namespace hamilt
+{
+namespace cider
+{
+
+// All buffers use contiguous spin-major (nspin, nfeature, ngrids) order.
+// Every read-only input range must be disjoint from the writable output range;
+// read-only input ranges may overlap each other.
+// On any exception, the output range remains byte-for-byte unchanged.
+void normalize_features(const std::vector<Normalizer>& normalizers,
+                        SemilocalMode semilocal_mode,
+                        std::size_t nspin,
+                        std::size_t nfeature,
+                        std::size_t ngrids,
+                        const double* raw_features,
+                        std::size_t raw_size,
+                        double* normalized_features,
+                        std::size_t normalized_size);
+
+void accumulate_normalization_reverse(const std::vector<Normalizer>& normalizers,
+                                      SemilocalMode semilocal_mode,
+                                      std::size_t nspin,
+                                      std::size_t nfeature,
+                                      std::size_t ngrids,
+                                      const double* raw_features,
+                                      std::size_t raw_size,
+                                      const double* normalized_adjoint,
+                                      std::size_t normalized_adjoint_size,
+                                      double* raw_adjoint,
+                                      std::size_t raw_adjoint_size);
+
+} // namespace cider
+} // namespace hamilt
+
+#endif // MODULE_HAMILT_CIDER_FEATURE_NORMALIZER_H

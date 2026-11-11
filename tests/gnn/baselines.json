@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "device_after_load": "cpu",
+    "mace_torch": "0.3.14",
+    "torch": "2.2.1",
+    "note": "baselines regenerated in gnn-env on catapult01 (2026-11-02, round-2 aexx calibration)"
+  },
+  "feature_map_sha256": "cb90bd2257dbf8cfc4e6b2b6d4348d4616e8e9680f1339b1461137032e0f1894",
+  "gap_type_model": {
+    "architecture": "frozen round-2 fine-tuned 20250421 scalar backbone (InSb VASP HSE06+SOC aexx reference 0.241 eV) + graph-level direct/indirect head",
+    "training_data": "semiconductors only (HSE gap > 0.05 eV), 9464 train / 1045 test",
+    "test_accuracy": 0.6488,
+    "test_balanced_accuracy": 0.609,
+    "labels": "SNUMAT Direct_or_indirect_HSE"
+  },
+  "knn": 24,
+  "model_sha256": "299aa263144a237fef2ecc1463287819130ea1ebb5474ab771b54292827ef748",
+  "predictions_ev": {
+    "InSb": 0.2495250105857849,
+    "Si": 1.3845558166503906,
+    "GaAs": 0.9395874738693237,
+    "MgO": 6.4160356521606445
+  },
+  "predictions_gap_type": {
+    "InSb": "direct",
+    "Si": "indirect",
+    "GaAs": "direct",
+    "MgO": "direct"
+  }
+}

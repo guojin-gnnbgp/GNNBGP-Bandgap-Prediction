@@ -1,0 +1,51 @@
+{
+  "$defs": {
+    "BackendId": {
+      "description": "Stable identifiers for supported scientific backends.",
+      "enum": [
+        "gnn-hse06",
+        "abacus-hse06",
+        "abacus-pbe0",
+        "cider-pbe0"
+      ],
+      "title": "BackendId",
+      "type": "string"
+    }
+  },
+  "description": "A single-backend prediction request.",
+  "properties": {
+    "abacus_path": {
+      "anyOf": [
+        {
+          "format": "path",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Abacus Path"
+    },
+    "backend": {
+      "$ref": "#/$defs/BackendId"
+    },
+    "structure_path": {
+      "format": "path",
+      "title": "Structure Path",
+      "type": "string"
+    },
+    "work_root": {
+      "default": "bgp-runs",
+      "format": "path",
+      "title": "Work Root",
+      "type": "string"
+    }
+  },
+  "required": [
+    "structure_path",
+    "backend"
+  ],
+  "title": "PredictionRequest",
+  "type": "object"
+}

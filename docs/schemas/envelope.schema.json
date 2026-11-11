@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bandgap-predictor.invalid/schemas/envelope.schema.json",
+  "title": "bgp --json envelope",
+  "description": "PLANNED CONTRACT, NOT IMPLEMENTED in package 0.1.0. Planned for every --json command; exactly one such object is printed on stdout. Contract frozen in docs/superpowers/plans/2026-10-13-bandgap-web.md (Task 1) and docs/frontends.md (to be written).",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "command",
+    "ok",
+    "argv",
+    "result",
+    "bands",
+    "error",
+    "artifact_path",
+    "exit_code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "command": {
+      "type": "string",
+      "description": "Command that produced this envelope, e.g. predict, bands, structure show, runs list, runs show, backends, doctor, assets verify."
+    },
+    "ok": {
+      "type": "boolean",
+      "description": "True only when a successful result (status == success) was produced."
+    },
+    "argv": {"type": "array", "items": {"type": "string"}},
+    "result": {
+      "description": "result.json payload for gap commands; structure report for 'structure show'; run summary/list payload for 'runs'.",
+      "anyOf": [{"$ref": "result.schema.json"}, {"type": "object"}, {"type": "null"}]
+    },
+    "bands": {
+      "description": "bands.json payload when the command produced one; null otherwise.",
+      "anyOf": [{"$ref": "bands.schema.json"}, {"type": "null"}]
+    },
+    "error": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["kind", "message", "exit_code"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "enum": ["input", "preflight", "run", "parse", "interrupted", "unsupported", "internal"],
+              "description": "input=2, preflight=3, run=4, parse=5, interrupted=130, unsupported=2, internal=1"
+            },
+            "message": {"type": "string"},
+            "exit_code": {"type": "integer"}
+          }
+        }
+      ]
+    },
+    "artifact_path": {
+      "type": ["string", "null"],
+      "description": "Absolute path of the allocated run directory, present whenever one exists (including failed and interrupted runs)."
+    },
+    "exit_code": {"type": "integer", "description": "Process exit code of the command."}
+  }
+}

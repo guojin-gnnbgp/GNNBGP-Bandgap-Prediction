@@ -1,0 +1,16 @@
+# bandgap-predictor 0.1.0 运行依赖（gnn-hse06 后端实测通过版本，Python 3.11）
+# 安装：pip install -r requirements.txt
+#      然后 pip install -e .（安装本软件包）
+# ABACUS 三个第一性原理后端另需编译 vendor/abacus（见 docs/installation.md）
+torch==2.2.1
+mace-torch==0.3.14
+e3nn==0.4.4
+ase==3.25.0
+numpy==1.26.4
+click==8.1.7
+pydantic==2.9.2
+monty==2025.3.3
+scipy==1.14.1
+pyyaml==6.0.2
+# 开发/测试（可选）
+pytest>=8.0

@@ -1,0 +1,41 @@
+add_library(
+    xc_
+    OBJECT
+    xc_functional.cpp
+    xc_pot.cpp
+    xc_grad.cpp
+    xc_lda_wrap.cpp
+    xc_gga_wrap.cpp
+    xc_lda_exch.cpp
+    xc_lda_corr.cpp
+    xc_gga_exch.cpp
+    xc_gga_corr.cpp
+    xc_hcth.cpp
+    libxc_setup.cpp
+    libxc_tools.cpp
+    libxc_pot.cpp
+    libxc_lda_wrap.cpp
+    libxc_gga_wrap.cpp
+    libxc_mgga_wrap.cpp
+    exx_info.cpp
+)
+
+if(ENABLE_COVERAGE)
+  add_coverage(xc_)
+endif()
+
+if(ENABLE_CIDER)
+  add_subdirectory(cider)
+endif()
+
+if(BUILD_TESTING)
+  if(ENABLE_CIDER)
+    add_subdirectory(cider/test)
+  endif()
+  if(ENABLE_MPI)
+    if(ENABLE_LIBXC)
+      add_subdirectory(test)
+      add_subdirectory(kernels/test)
+    endif()
+  endif()
+endif()

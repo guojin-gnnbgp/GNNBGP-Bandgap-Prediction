@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "converged": true,
+  "nspin": 1,
+  "occupation_weighting": "abacus_k_weighted",
+  "spin_capacity": 2.0,
+  "energy_unit": "eV",
+  "fermi_energy_ev": 0.1,
+  "printed_gap_ev": 0.355,
+  "k_weights": [0.5, 0.5],
+  "eigenvalues_ev": [[-1.0, 0.0, 1.0], [-0.9, 0.1, 1.1]],
+  "occupations": [[0.5, 0.25, 0.0], [0.5, 0.25, 0.0]]
+}

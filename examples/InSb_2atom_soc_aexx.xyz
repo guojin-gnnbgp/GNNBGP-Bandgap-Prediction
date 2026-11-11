@@ -1,0 +1,4 @@
+2
+Lattice="2.30300358 1.32963974 3.76118783 -2.30300358 1.32963974 3.76118783 0.0 -2.65927947 3.76118783" Properties=species:S:1:pos:R:3 material_id=InSb_soc_aexx config_type=VASP_HSE06_soc_aexx band_gap_hse=0.241 band_gap_type=direct gap_is_semiconductor=1 pbc="T T T"
+In       0.00000000       0.00000000       0.00000000
+Sb      -0.00000000       0.00000001       8.46267250
